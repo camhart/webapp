@@ -1,0 +1,100 @@
+<html>
+<head>
+	<link rel='stylesheet' type='text/css' href='css/vp-page.css'/>
+	<link rel='stylesheet' type='text/css' href='css/vp-view.css'/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src="js/jquery.blockUI.js"></script>
+</head>
+<body>
+<div class='user-data'>
+	<div class='search'>
+		<input type='text' placeholder='Search'/>
+	</div>
+	<div class='user-signup'>
+		Sign Up
+	</div>
+	<div class='user-login'>
+		Log in
+	</div>
+</div>
+
+<div class='header'>
+	<div class='header-cell'>
+		<div class='header-content'>
+			<div>This is a header</div>
+			<div>This is a header</div>
+			<div id='show-sidebar'>Show / Hide Sidebar</div>
+			<div id='ui-block'>Block UI</div>
+			<div>This is a header</div>
+		</div>
+	</div>
+</div>
+
+<div class='toolbar'>
+	<div>
+		<select id='easing-select'>
+			<option>linear</option>
+			<option>swing</option>
+			<option>easeInQuad</option>
+			<option>easeOutQuad</option>
+			<option>easeInOutQuad</option>
+			<option>easeInCubic</option>
+			<option>easeOutCubic</option>
+			<option>easeInOutCubic</option>
+			<option>easeInQuart</option>
+			<option>easeOutQuart</option>
+			<option>easeInOutQuart</option>
+			<option>easeInQuint</option>
+			<option>easeOutQuint</option>
+			<option>easeInOutQuint</option>
+			<option>easeInExpo</option>
+			<option selected>easeOutExpo</option>
+			<option>easeInOutExpo</option>
+			<option>easeInSine</option>
+			<option>easeOutSine</option>
+			<option>easeInOutSine</option>
+			<option>easeInCirc</option>
+			<option>easeOutCirc</option>
+			<option>easeInOutCirc</option>
+			<option>easeInElastic</option>
+			<option>easeOutElastic</option>
+			<option>easeInOutElastic</option>
+			<option>easeInBack</option>
+			<option>easeOutBack</option>
+			<option>easeInOutBack</option>
+			<option>easeInBounce</option>
+			<option>easeOutBounce</option>
+			<option>easeInOutBounce</option>
+		</select>
+	</div>
+	<div>This is some toolbar content</div>
+	<div>This is some toolbar content</div>
+	<div>This is some toolbar content</div>
+</div>
+
+<div class='sidebar' id='vp-sidebar'>
+	<div>This is some sidebar content</div>
+	<div>This is some sidebar content</div>
+	<div>This is some sidebar content</div>
+	<div>This is some sidebar content</div>
+	<div>This is some sidebar content</div>
+	<div>This is some sidebar content</div>
+	<div>This is some sidebar content</div>
+</div>
+
+<div class='main'>
+
+	<div class='content-container' id='vp-main-view'>
+		<embed id="vp-applet" class='content'
+			type="application/x-java-applet;version=1.6"
+			archive="VirtualPedigree.jar"
+			code="virtualpedigree.VirtualPedigreeApplet"
+			pluginspage="http://java.com/download/"
+			width="100%"
+			height="100%"/>
+	</div>
+</div>
+<script type='text/javascript' src='js/vp-core.js'></script>
+</body>
+</html>
