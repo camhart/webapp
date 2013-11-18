@@ -1,4 +1,4 @@
-Virtual Pedigree�
+Virtual Pedigree™
 ======
 
 What need does this application meet and why will anyone want to use it?
@@ -7,7 +7,7 @@ Genealogists everywhere struggle with current genealogical applications. They te
 		
 Description
 -----------
-I propose to build a free web compatibility of the current applications. Elastic Paper� is a new framework for interactive, application for anyone to use that will resolve the constant context switching and lacking seamless GUIs for hierarchical data � perfect for genealogy. The app will allow a user to build their family history and a few basic features that will help them visualize their family history, including Topological Dates�, Pedigree Perspectives�, and a mini-map of their entire recorded genealogy.
+I propose to build a free web compatibility of the current applications. Elastic Paper™ is a new framework for interactive, application for anyone to use that will resolve the constant context switching and lacking seamless GUIs for hierarchical data - perfect for genealogy. The app will allow a user to build their family history and a few basic features that will help them visualize their family history, including Topological Dates™, Pedigree Perspectives™, and a mini-map of their entire recorded genealogy.
 	
 Features
 --------
