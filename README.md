@@ -1,12 +1,9 @@
 Virtual Pedigree™
 ======
 
-What need does this application meet?
+What need does this application meet and why will anyone want to use it?
 -------------------------------------
 Genealogists everywhere struggle with current genealogical applications. They tend to be behind in their technologies and user interface design, and successful research requires many context switches between different pages and views. This frustrates genealogists and limits their ability to research because they have to focus on the software rather than their research. In addition, many of the leading software applications are only Windows compatible, expensive, or both.
-Why will anyone want to use it?
--------------------------------	
-[fill this in]
 		
 Description
 -----------
@@ -17,9 +14,10 @@ Features
 - [ ] Mini map*
 - [ ] Topological Dates*
 - [ ] Import GEDCOM file*
+- [ ] Searchable*
+- [ ] Persistent user data*
 - [ ] Interconnected Family Trees
 - [ ] Real time updates
-- [ ] Concurrent updates
 
 *implemented this semester
 
@@ -28,6 +26,3 @@ Architecture
 * Database: RethinkDB
 * Back-end: Node.js
 * Front-end: AngularJS
-
-
-
