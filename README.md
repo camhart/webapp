@@ -20,6 +20,7 @@ Features
 - [ ] Interconnected Family Trees
 - [ ] Real time updates
 - [ ] Concurrent updates
+
 *implemented this semester
 
 Architecture
