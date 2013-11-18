@@ -1,4 +1,4 @@
-Virtual Pedigree™
+Virtual Pedigreeï¿½
 ======
 
 What need does this application meet and why will anyone want to use it?
@@ -7,15 +7,16 @@ Genealogists everywhere struggle with current genealogical applications. They te
 		
 Description
 -----------
-I propose to build a free web compatibility of the current applications. Elastic Paper™ is a new framework for interactive, application for anyone to use that will resolve the constant context switching and lacking seamless GUIs for hierarchical data – perfect for genealogy. The app will allow a user to build their family history and a few basic features that will help them visualize their family history, including Topological Dates™, Pedigree Perspectives™, and a mini-map of their entire recorded genealogy.
+I propose to build a free web compatibility of the current applications. Elastic Paperï¿½ is a new framework for interactive, application for anyone to use that will resolve the constant context switching and lacking seamless GUIs for hierarchical data ï¿½ perfect for genealogy. The app will allow a user to build their family history and a few basic features that will help them visualize their family history, including Topological Datesï¿½, Pedigree Perspectivesï¿½, and a mini-map of their entire recorded genealogy.
 	
 Features
 --------
-- [ ] Mini map*
-- [ ] Topological Dates*
-- [ ] Import GEDCOM file*
-- [ ] Searchable*
-- [ ] Persistent user data*
+- [ ] Mini map*: Since users' trees can be very big and only a portion of the tree can fit on-screen at a time, we are building a mini-map that shows where the user is in relation to the whole tree. It will be interactive, allowing the user to click a spot to instantly scroll their screen to that position.
+- [ ] Topological Dates*: Visualize ancestors' birth- and death-dates relative to one another using "topological" lines to show who was born or died in chronological proximity to one another.
+- [ ] Import GEDCOM file*: A GEDCOM file is a universal genealogical data file. By importing it, we can allow users to easily transport their genealogy data from other services.
+- [ ] Searchable*: User can search for people in their tree using name, birth-date, birth-place or any other identifying information. Possible results will be highlighted in the mini-map, allowing the user to click in that region and find the highlighted results.
+- [ ] Persistent user data*: The user can edit their tree information and the changes will be saved in our database.
+- [ ] Pedigree Perspectives: Select person and time to show all known information for that person at that time and hide all other extraneous information.
 - [ ] Interconnected Family Trees
 - [ ] Real time updates
 
