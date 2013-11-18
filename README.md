@@ -19,9 +19,9 @@ Features (all of them if we had unlimited time)
 *implemented this semester
 
 Architecture
-*Database: RethinkDB
-*Back-end: Node.js
-*Front-end: AngularJS
+* Database: RethinkDB
+* Back-end: Node.js
+* Front-end: AngularJS
 
 
 
