@@ -16,6 +16,7 @@ Features (all of them if we had unlimited time)
 - [ ] Interconnected Family Trees
 - [ ] Real time updates
 - [ ] Concurrent updates
+
 *implemented this semester
 
 Architecture
