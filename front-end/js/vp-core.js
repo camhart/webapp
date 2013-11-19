@@ -1,24 +1,21 @@
-var easing = 'easeOutExpo'
-
 $('#show-sidebar').click(function(e)
 {
 	var sidebar = $('#vp-sidebar')
 	var left = sidebar.css('left')
-	left = 0 - sidebar.outerWidth() - Number(left.substring(0, left.length - 2))
-	console.log('animating using easing function', easing)
+	left = Number(left.substring(0, left.length - 2))
+	var target = left == 0 ? -sidebar.outerWidth() : 0
+
+	var sidebar_visible = sidebar.css('left') == '0'
+	var easing = 'easeOutExpo'
+	if (left == '0')
+		easing = 'easeInExpo'
+
 	sidebar.animate({
-		left: left + 'px'
+		left: target + 'px'
 	}, {
-		duration: 600,
+		duration: 400,
 		easing: easing
 	})
-});
-
-$('#easing-select').change(function()
-{
-	console.log('setting easing to', this.value)
-
-	easing = this.value
 });
 
 $('#ui-block').click(function(e)
@@ -27,3 +24,15 @@ $('#ui-block').click(function(e)
 
 	setTimeout($.unblockUI, 2000)
 });
+
+$('#test-js-java').click(function(e)
+{
+	applet.testString = "Hello this is JavaScript code"
+	var result = applet.testMethod("I am JavaScript")
+	alert("calling Java method testMethod(String) returned " + result)
+});
+
+function jsMethod(param)
+{
+	alert("JavaScript method called from Java with parameter: " + param)
+}
