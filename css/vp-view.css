@@ -1,0 +1,12 @@
+.graphic
+{
+	display: inline;
+	border-radius: 5px;
+	padding: 8px;
+	background: #aef;
+	border: 1px solid #333;
+	position: absolute;
+	width: 150px;
+	cursor: default;
+	z-index: -100;
+}
