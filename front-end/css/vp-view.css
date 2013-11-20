@@ -1,12 +1,33 @@
 .graphic
 {
-	display: inline;
+	position: relative;
+	cursor: pointer;
 	border-radius: 5px;
 	padding: 8px;
-	background: #aef;
 	border: 1px solid #333;
-	position: absolute;
-	width: 150px;
-	cursor: default;
-	z-index: -100;
+	width: 250px;
+	z-index: 100;
+}
+
+.graphic[gender=m]
+{
+	background: #aef;
+}
+
+.graphic[gender=f]
+{
+	background: #fae;
+}
+
+.graphic .id
+{
+	float: right;
+	background: #777;
+	color: white;
+	border-radius: 8px;
+	padding: 2px;
+	position: relative;
+	top: -2px;
+	min-width: 20px;
+	text-align: center;
 }

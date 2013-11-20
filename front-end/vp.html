@@ -1,7 +1,8 @@
-<html>
+<html ng-app='vp'>
 <head>
 	<link rel='stylesheet' type='text/css' href='css/vp-page.css'/>
 	<link rel='stylesheet' type='text/css' href='css/vp-view.css'/>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src="js/jquery.blockUI.js"></script>
@@ -49,17 +50,15 @@
 </div>
 
 <div class='main'>
-
-	<div class='content-container' id='vp-main-view'>
-		<embed id="applet" class='content'
-			type="application/x-java-applet;version=1.6"
-			archive="VirtualPedigree.jar"
-			code="virtualpedigree.VirtualPedigreeApplet"
-			pluginspage="http://java.com/download/"
-			width="100%"
-			height="100%"/>
+	<div class='content' ng-controller='Content'>
+		<div class='graphic' ng-repeat='graphic in graphics' draggable gender={{graphic.gender}}>
+			<div class='id'>{{graphic.id}}</div>
+			{{graphic.displayname}}<br>
+			<span ng-if='graphic.ahn'>Ahnentafel Number: {{graphic.ahn}}</span>
+		</div>
 	</div>
 </div>
 <script type='text/javascript' src='js/vp-core.js'></script>
+<script type='text/javascript' src='js/vp-ng-config.js'></script>
 </body>
 </html>

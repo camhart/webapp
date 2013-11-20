@@ -1,3 +1,0 @@
-Permissions: all-permissions
-Codebase: students.cs.byu.edu
-Application-Name: Virtual Pedigree Web Applet

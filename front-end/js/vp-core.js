@@ -5,16 +5,11 @@ $('#show-sidebar').click(function(e)
 	left = Number(left.substring(0, left.length - 2))
 	var target = left == 0 ? -sidebar.outerWidth() : 0
 
-	var sidebar_visible = sidebar.css('left') == '0'
-	var easing = 'easeOutExpo'
-	if (left == '0')
-		easing = 'easeInExpo'
-
 	sidebar.animate({
 		left: target + 'px'
 	}, {
 		duration: 400,
-		easing: easing
+		easing: 'easeOutExpo'
 	})
 });
 
@@ -25,14 +20,27 @@ $('#ui-block').click(function(e)
 	setTimeout($.unblockUI, 2000)
 });
 
-$('#test-js-java').click(function(e)
-{
-	applet.testString = "Hello this is JavaScript code"
-	var result = applet.testMethod("I am JavaScript")
-	alert("calling Java method testMethod(String) returned " + result)
-});
+$.extend($.blockUI.defaults.css, {
+	padding:        '10px 0',
+    color:          '#333',
+    border:         'none',
+    'border-radius':'6px',
+})
 
-function jsMethod(param)
+function Content($scope)
 {
-	alert("JavaScript method called from Java with parameter: " + param)
+	$scope.graphics = [
+		{
+			id: 1,
+			displayname: 'Ryan Cheatham',
+			gender: 'm',
+			ahn: 1
+		},
+		{
+			id: 2,
+			displayname: 'Robyn Abrahamson',
+			gender: 'f',
+			ahn: false
+		}
+	]
 }
