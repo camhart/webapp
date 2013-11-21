@@ -1,20 +1,30 @@
 
 
-// how to install node.js (General)
-http://howtonode.org/how-to-install-nodejs
+install rethinkdb
+	- http://www.rethinkdb.com/docs/install/
 
-// how to install node.js (Ubuntu)
-sudo apt-get install python-software-properties python g++ make
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get update
-sudo apt-get install nodejs
+For MAC try this or google it?
+	- http://howtonode.org/how-to-install-nodejs
+	- http://shapeshed.com/setting-up-nodejs-and-npm-on-mac-osx/
 
-// how to install node express
-sudo apt-get install npm
+install node.js (Ubuntu)
+	- sudo apt-get install python-software-properties python g++ make
+	- sudo add-apt-repository ppa:chris-lea/node.js
+	- sudo apt-get update
+	- sudo apt-get install nodejs
 
-// how to install nodemon (to avoid restarting server when changes are made)
-sudo npm install -g nodemon
+install npm (Ubuntu)
+	- sudo apt-get install npm
 
-// how to run server
-nodemon app.js
+install express
+	- npm install -g express
+	
+install rethinkdb
+	- npm install rethinkdb
+
+install nodemon (to avoid restarting server when changes are made)
+	- npm install -g nodemon
+
+runserver
+	- nodemon app.js (same as: node app (manual restarts required)
 
