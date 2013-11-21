@@ -146,6 +146,7 @@ body
 	position: fixed;
 	left: -371px;
 	background: #fff;
+	z-index: 200;
 }
 
 .content
