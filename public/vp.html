@@ -1,7 +1,7 @@
 <html ng-app='vp'>
 <head>
 	<link rel='stylesheet' type='text/css' href='css/vp-page.css'/>
-	<link rel='stylesheet' type='text/css' href='css/vp-view.css'/>
+	<link rel='stylesheet' type='text/css' href='css/vp-core.css'/>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -24,7 +24,7 @@
 	<div class='header-cell'>
 		<div class='header-content'>
 			<div>This is a header</div>
-			<div id='test-js-java'>Run some Java code!</div>
+			<div>This is a header</div>
 			<div id='show-sidebar'>Show / Hide Sidebar</div>
 			<div id='ui-block'>Block UI</div>
 			<div>This is a header</div>
@@ -50,15 +50,26 @@
 </div>
 
 <div class='main'>
-	<div class='content' ng-controller='Content'>
-		<div class='graphic' ng-repeat='graphic in graphics' draggable gender={{graphic.gender}}>
-			<div class='id'>{{graphic.id}}</div>
-			{{graphic.displayname}}<br>
-			<span ng-if='graphic.ahn'>Ahnentafel Number: {{graphic.ahn}}</span>
+	<div class='content' id='content' ng-controller='Content'>
+		<div class='graphic' gender={{people[0].gender}} id='g-0'>
+			<div class='id'>{{people[0].id}}</div>
+			{{people[0].displayname}}<br>
+			<span ng-if='people[0].ahn'>Ahnentafel Number: {{people[0].ahn}}</span>
 		</div>
+		<!--div ng-if='people["0w"]' class='graphic' gender='f' id='g-0w'>
+			<div class='id'>{{people['0w'].id}}</div>
+			{{people['0w'].displayname}}
+		</div>
+		<div ng-if='people["0h"]' class='graphic' gender='m' id='g-0h'>
+			<div class='id'>{{people['0h'].id}}</div>
+			{{people['0h'].displayname}}
+		</div-->
 	</div>
 </div>
+<script type='text/javascript' src='js/vp-page.js'></script>
 <script type='text/javascript' src='js/vp-core.js'></script>
+<script type='text/javascript' src='js/vp-defaults.js'></script>
+<script type='text/javascript' src='js/vp-motion.js'></script>
 <script type='text/javascript' src='js/vp-ng-config.js'></script>
 </body>
 </html>
