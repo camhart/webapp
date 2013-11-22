@@ -1,61 +1,44 @@
-function Content($scope)
+$.getScript('js/vp-page.js')
+$.getScript('js/core/vp-graphic.js')
+$.getScript('js/core/vp-motion.js')
+$.getScript('js/util/vp-defaults.js')
+$.getScript('js/util/vp-offsets.js')
+
+var app = angular.module('vp-app', []);
+var content
+app.controller('Content', function($scope)
 {
-	$scope.people = {
-		'0': {
-			id: 1,
-			displayname: 'Ryan Cheatham',
+	content = $scope
+	$scope.people = [
+		{
+			givenname: 'Ryan',
+			surname: 'Cheatham',
 			gender: 'm',
-			ahn: 1
+			path: '0'
 		},
-		'0w': {
-			id: 2,
-			displayname: 'Robyn Abrahamson',
-			gender: 'f',
-			ahn: false
-		},
-		'00': {
-			id: 3,
-			displayname: 'Max Todd Cheatham',
+		{
+			givenname: 'Max Todd',
+			surname: 'Cheatham',
 			gender: 'm',
-			ahn: 2
+			path: '00'
 		},
-		'01': {
-			id: 4,
-			displayname: 'Nancy Price',
+		{
+			givenname: 'Nancy',
+			surname: 'Price',
 			gender: 'f',
-			ahn: 3
-		},
-		'000': {
-			id: 5,
-			displayname: 'Clair Cheatham',
-			gender: 'm',
-			ahn: 4
-		},
-		'001': {
-			id: 6,
-			displayname: 'Vida Frances Nation',
-			gender: 'f',
-			ahn: 5
-		},
-		'010': {
-			id: 7,
-			displayname: 'Delmar Obray Price',
-			gender: 'm',
-			ahn: 6
-		},
-		'011': {
-			id: 8,
-			displayname: 'Marilyn Jensen',
-			gender: 'f',
-			ahn: 7
+			path: '01'
 		}
-	}
+	]
+
+	$scope.graphics = [
+		new Graphic($scope.people[0].givenname, $scope.people[0].surname, $scope.people[0].gender, $scope.people[0].path)
+	]
 
 	setTimeout(function()
 	{
-		watch($scope)
+		update()
 	}, 100)
-}
+})
 
 var top_of_view = null
 
@@ -63,38 +46,19 @@ $(document).ready(function()
 {
 	var $root = $('#g-0')
 
-	GRAPHIC_WIDTH = $root.outerWidth()
-	GRAPHIC_HEIGHT = $root.outerHeight()
-	top_of_view = $root.parent().offset().top
-
-	var top = ($root.parent().height() - GRAPHIC_HEIGHT) / 2 + top_of_view
-	var left = $root.parent().width() / 4 - GRAPHIC_WIDTH / 2
-	$root.css('top', top + 'px')
-	$root.css('left', left + 'px')
-
-	if ($('#g-0w').length > 0)
-	{
-		$wife = $('#g-0w')
-		var wtop = top + GRAPHIC_HEIGHT * 2
-		$wife.css('top', wtop + 'px')
-		$wife.css('left', left + 'px')
-	}
-	else if ($('#g-0h').length > 0)
-	{
-		$husband = $('#g-0h')
-		var htop = top - GRAPHIC_HEIGHT * 2
-		$husband.css('top', htop + 'px')
-		$husband.css('left', left + 'px')
-	}
-
-	setTimeout(vp_content_update, 0)
+	var x = $root.parent().width() / 4 - GRAPHIC_WIDTH / 2
+	var y = ($root.parent().height() - GRAPHIC_HEIGHT) / 2
+	content.graphics[0].translate(x, y)
 });
 
-function watch($scope)
+function update()
 {
 	// update all visible graphics
 
+	content.$apply()
 
-
-	setTimeout(vp_content_update, 30)
+	setTimeout(function()
+	{
+		update()
+	}, 10)
 }

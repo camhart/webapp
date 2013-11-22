@@ -1,4 +1,5 @@
-<html ng-app='vp'>
+<!doctype html>
+<html ng-app='vp-app'>
 <head>
 	<link rel='stylesheet' type='text/css' href='css/vp-page.css'/>
 	<link rel='stylesheet' type='text/css' href='css/vp-core.css'/>
@@ -51,25 +52,17 @@
 
 <div class='main'>
 	<div class='content' id='content' ng-controller='Content'>
-		<div class='graphic' gender={{people[0].gender}} id='g-0'>
-			<div class='id'>{{people[0].id}}</div>
-			{{people[0].displayname}}<br>
-			<span ng-if='people[0].ahn'>Ahnentafel Number: {{people[0].ahn}}</span>
+		<div ng-repeat='g in graphics' class='graphic' graphic gender={{g.gender}} id='g-{{g.id}}' style='left:{{g.center.x - GRAPHIC_HALF_WIDTH}}px;top:{{g.center.y - GRAPHIC_HALF_HEIGHT}}px;'>
+			<div class='id'>{{g.id}}</div>
+			{{g.displayname}}<br>
+			<span ng-if='g.ahn'>Ahnentafel Number: {{g.ahn}}</span>
 		</div>
-		<!--div ng-if='people["0w"]' class='graphic' gender='f' id='g-0w'>
-			<div class='id'>{{people['0w'].id}}</div>
-			{{people['0w'].displayname}}
-		</div>
-		<div ng-if='people["0h"]' class='graphic' gender='m' id='g-0h'>
-			<div class='id'>{{people['0h'].id}}</div>
-			{{people['0h'].displayname}}
-		</div-->
 	</div>
 </div>
-<script type='text/javascript' src='js/vp-page.js'></script>
 <script type='text/javascript' src='js/vp-core.js'></script>
-<script type='text/javascript' src='js/vp-defaults.js'></script>
-<script type='text/javascript' src='js/vp-motion.js'></script>
 <script type='text/javascript' src='js/vp-ng-config.js'></script>
+<script type='text/javascript' src='js/core/vp-graphic.js'></script>
+<script type='text/javascript' src='js/util/vector2d.js'></script>
+<script type='text/javascript' src='js/util/vp-defaults.js'></script>
 </body>
 </html>

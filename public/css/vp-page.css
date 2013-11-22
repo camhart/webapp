@@ -1,8 +1,10 @@
 body
 {
-	display: table;
-	width: 100%;
-	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	margin: 0px;
 	font-family: Helvetica;
 	font-size: 11pt;
@@ -10,14 +12,19 @@ body
 
 .header
 {
-	display: table-row;
+	display: block;
 	height: 50px;
 	text-align: center;
+	position: relative;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 200;
 }
 
 .header-cell
 {
-	display: table-cell;
+	display: block;
 	vertical-align: bottom;
 }
 
@@ -64,6 +71,7 @@ body
 	position: absolute;
 	top: 6px;
 	right: 10px;
+	z-index:201;
 }
 
 .user-data > div
@@ -111,9 +119,11 @@ body
 
 .toolbar
 {
-	display: table-row;
 	text-align: center;
 	border-bottom: 2px solid #ccc;
+	z-index: 200;
+	position: relative;
+	background: #fff;
 }
 
 .toolbar > div
@@ -131,7 +141,7 @@ body
 
 .main
 {
-	display: table-row;
+	display: block;
 	height: 100%;
 }
 
@@ -154,4 +164,5 @@ body
 	height: 100%;
 	box-shadow: 0px 8px 6px -6px #ccc inset;
 	padding-top: 8px;
+	cursor: move;
 }
