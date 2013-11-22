@@ -1,43 +1,66 @@
 $.getScript('js/vp-page.js')
-$.getScript('js/core/vp-graphic.js')
 $.getScript('js/core/vp-motion.js')
-$.getScript('js/util/vp-defaults.js')
-$.getScript('js/util/vp-offsets.js')
+$.getScript('js/core/vp-creation.js')
 
 var app = angular.module('vp-app', []);
-var content
+var content, canvas
 app.controller('Content', function($scope)
 {
 	content = $scope
-	$scope.people = [
-		{
+	$scope.people = {
+		'.': {
 			givenname: 'Ryan',
 			surname: 'Cheatham',
 			gender: 'm',
-			path: '0'
+			empty: false
 		},
-		{
-			givenname: 'Max Todd',
+		'.0': {
+			givenname: 'Max',
 			surname: 'Cheatham',
 			gender: 'm',
-			path: '00'
+			empty: false
 		},
-		{
+		'.1': {
 			givenname: 'Nancy',
 			surname: 'Price',
 			gender: 'f',
-			path: '01'
+			empty: false
+		},
+		'.00': {
+			givenname: 'Clair',
+			surname: 'Cheatham',
+			gender: 'm',
+			empty: false
+		},
+		// '.01': {
+		// 	givenname: 'Vida',
+		// 	surname: 'Nation',
+		// 	gender: 'f',
+		// 	empty: false
+		// },
+		'.10': {
+			givenname: 'Delmar',
+			surname: 'Price',
+			gender: 'm',
+			empty: false
+		},
+		'.11': {
+			givenname: 'Marilyn',
+			surname: 'Jensen',
+			gender: 'f',
+			empty: false
 		}
-	]
+	}
 
-	$scope.graphics = [
-		new Graphic($scope.people[0].givenname, $scope.people[0].surname, $scope.people[0].gender, $scope.people[0].path)
-	]
+	$scope.graphics = {
+		'.': new Graphic($scope.people['.'], '.')
+	}
 
-	setTimeout(function()
-	{
-		update()
-	}, 100)
+	$scope.showedit = {}
+	content.dirty = true
+
+	setTimeout(refresh, 100)
+	setTimeout(update, 100)
 })
 
 var top_of_view = null
@@ -48,17 +71,34 @@ $(document).ready(function()
 
 	var x = $root.parent().width() / 4 - GRAPHIC_WIDTH / 2
 	var y = ($root.parent().height() - GRAPHIC_HEIGHT) / 2
-	content.graphics[0].translate(x, y)
+	content.graphics['.'].translate(x, y)
+
+	canvas = $('#content')
 });
+
+function refresh()
+{
+	if (content.dirty)
+	{
+		// refresh lines
+
+		// refresh all graphics
+		content.$apply()
+
+		content.dirty = false
+	}
+
+	setTimeout(refresh, 10)
+}
 
 function update()
 {
-	// update all visible graphics
+	// update visible graphics
+	createGraphics()
+	destroyGraphics()
 
-	content.$apply()
-
-	setTimeout(function()
-	{
-		update()
-	}, 10)
+	setTimeout(update, 50)
 }
+
+var createGraphics = function() {}
+var destroyGraphics = function() {}
