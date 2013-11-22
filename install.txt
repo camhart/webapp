@@ -1,0 +1,41 @@
+
+install node.js
+	- sudo apt-get install python-software-properties python g++ make
+	- sudo add-apt-repository ppa:chris-lea/node.js
+	- sudo apt-get update
+	- sudo apt-get install nodejs
+
+install npm
+	- sudo apt-get install npm
+
+setup project
+	- npm install
+	
+install rethinkdb
+	- sudo add-apt-repository ppa:rethinkdb/ppa
+	- sudo apt-get update   
+	- sudo apt-get install rethinkdb
+	
+install rethinkdb (for node)
+	- npm install rethinkdb
+
+view rethinkdb
+	- localhost:8080
+
+install express
+	- npm install -g express
+	
+install nodemon (optional: to avoid restarting server when file changes are made)
+	- npm install -g nodemon
+
+runserver
+	- nodemon app.js (or just 'node app' without nodemon)
+	
+	
+
+	
+	
+	
+	
+	
+
