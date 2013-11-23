@@ -96,7 +96,7 @@ body
 	background: #afe;
 }
 
-.search input
+input
 {
 	transition: 0.4s;
 	-webkit-transition: 0.4s;
@@ -104,12 +104,17 @@ body
 	border-radius: 10px;
 	border: 1px solid #444;
 	width: 200px;
+	background: #fff;
+}
+
+.search input
+{
 	background: url('../img/search-icon.png') no-repeat;
 	background-size: 16px;
 	background-position: 5px 2px;
 }
 
-.search input:focus
+input:focus
 {
 	border-color: #66afe9;
 	outline: 0;

@@ -101,12 +101,12 @@
 
 .graphic:hover
 {
-	box-shadow: 0px 0px 30px -5px #aaa;
+	box-shadow: 0px 0px 30px -5px #555;
 }
 
 .edit-info input
 {
 	border-radius: 6px;
-	padding: 2px;
+	padding: 2px 5px;
 	width: 80%;
 }

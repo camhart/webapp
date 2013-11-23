@@ -69,8 +69,8 @@ $(document).ready(function()
 {
 	var $root = $('#g-0')
 
-	var x = $root.parent().width() / 4 - GRAPHIC_WIDTH / 2
-	var y = ($root.parent().height() - GRAPHIC_HEIGHT) / 2
+	var x = $root.parent().width() - GRAPHIC_HORIZ_OFFSET * 3.5
+	var y = $root.parent().height() / 2
 	content.graphics['.'].translate(x, y)
 
 	canvas = $('#content')

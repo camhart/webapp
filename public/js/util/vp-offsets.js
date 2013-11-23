@@ -120,7 +120,7 @@ VPOffsets.getVerticalOffsetToChild_v = function(parentCenter)
 VPOffsets.getVerticalOffsetToParent = function(child)
 {
     var distanceFromRightSide = canvas.width() - child.getTopLeftCorner().x;
-    return getHalfVerticalOffset_f(distanceFromRightSide);
+    return this.getHalfVerticalOffset_f(distanceFromRightSide);
 }
 
 /**
@@ -134,7 +134,7 @@ VPOffsets.getVerticalOffsetToParent_v = function(childCenter)
 {
     var topLeftX = childCenter.x - GRAPHIC_HALF_WIDTH;
     var distanceFromRightSide = canvas.width() - topLeftX;
-    return getHalfVerticalOffset_f(distanceFromRightSide);
+    return this.getHalfVerticalOffset_f(distanceFromRightSide);
 }
 
 /**
@@ -150,7 +150,7 @@ VPOffsets.getVerticalOffsetToParent_gs = function(child, scale)
 {
     var leftSideOfParent = child.getCenterPoint().x + ((GRAPHIC_WIDTH / 2 + GRAPHIC_HORIZ_OFFSET) * scale);
     var distanceFromRightSide = canvas.width() - leftSideOfParent;
-    return getHalfVerticalOffset_fs(distanceFromRightSide, scale);
+    return this.getHalfVerticalOffset_fs(distanceFromRightSide, scale);
 }
 
 VPOffsets.getCenterOfNeighbor_v = function(center, id, isNorthChild)

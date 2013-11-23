@@ -68,3 +68,8 @@ Graphic.prototype.calculateAhn = function()
 	while(this.line.length < 2)
 		this.line += '0'
 }
+
+Graphic.prototype.isNorthChild = function()
+{
+	return this.path.substring(this.path.length - 1) == '0'
+}
