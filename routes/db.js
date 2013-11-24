@@ -7,7 +7,7 @@ var r = require('rethinkdb')
 
 var user_tbl = 'user'
 
-exports.addUserToDB = function(connection, user, callback){
+function addUserToDB(connection, user, callback){
     r.tableList().run(connection, function(err, result){
         if (err) throw err
         if(result.indexOf(user_tbl) == -1){
@@ -27,10 +27,13 @@ exports.addUserToDB = function(connection, user, callback){
     })
 }
 
-exports.getUserFromDB = function(connection, email, callback){
+function getUserFromDB(connection, email, callback){
     r.table(user_tbl).get(email).run(connection, function(err, result){
         if (err) throw err
         console.log('FOUND: ', result)
         callback(result)
     })
 }
+
+exports.addUserToDB = addUserToDB
+exports.getUserFromDB = getUserFromDB
