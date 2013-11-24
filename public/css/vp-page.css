@@ -180,3 +180,44 @@ input:focus
 	padding-top: 8px;
 	cursor: move;
 }
+
+.overlay
+{
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background:rgba(100, 100, 100, 0.3);
+	opacity:0;
+	z-index:-50;
+	-webkit-transition:opacity 0.25s;
+	transition:opacity 0.25s;
+}
+
+.overlay.overlay-visible
+{
+	z-index:250;
+	opacity:1;
+	-webkit-transition:opacity 0.25s;
+	transition:opacity 0.25s;
+}
+
+.overlay-visible > div
+{
+	opacity:1;
+}
+
+.signup
+{
+	margin: 50px auto;
+	width: 500px;
+	height: 700px;
+	background:#fff;
+	padding:10px 50px;
+}
+
+.signup h1
+{
+	text-align:center;
+}

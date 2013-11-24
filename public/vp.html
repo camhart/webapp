@@ -13,11 +13,11 @@
 	<div class='search'>
 		<input type='text' placeholder='Search'/>
 	</div>
-	<div class='user-signup'>
-		Sign Up
+	<div class='user-signup' id='user-signup'>
+		Sign up
 	</div>
-	<div class='user-login'>
-		Log in
+	<div class='user-login' id='user-login'>
+		Sign in
 	</div>
 </div>
 
@@ -55,18 +55,25 @@
 		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.id}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
 			<div class='id'>{{g.id}}</div>
 			<span ng-if='!g.empty'>
-				{{g.displayname}} ({{g.center.x}}, {{g.center.y}})<br>
+				{{g.givenname}} {{g.surname}} ({{g.center.x}}, {{g.center.y}})<br>
 				<span ng-if='g.ahn'>Ahnentafel Number: {{g.ahn}}</span>
 			</span>
 			<input ng-if='g.empty' type='checkbox' id='add-{{g.id}}-show' ng-model='showedit[g.id]' ng-init='showedit[g.id]=false'/>
 			<label ng-if='g.empty && !showedit[g.id]' for='add-{{g.id}}-show'><span>click to add</span></label>
 			<span ng-if='showedit[g.id]' class='edit-info'>
-				<input placeholder='Given Name'/><br>
-				<input placeholder='Surname'/><br>
+				<input placeholder='Given Name' ng-model='g.givenname'/><br>
+				<input placeholder='Surname' ng-model='g.surname'/><br>
 				<label >Save</label>
 				<label for='add-{{g.id}}-show'>Cancel</label>
 			</span>
 		</div>
+	</div>
+</div>
+
+<div class='overlay' id='overlay'>
+	<div class='signup'>
+		<h1>Sign up or Sign in</h1>
+		<p>Signing up is easy! Just sign in using your Google account.</p>
 	</div>
 </div>
 <script type='text/javascript' src='js/vp-core.js'></script>

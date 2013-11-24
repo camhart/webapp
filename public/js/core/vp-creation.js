@@ -11,7 +11,7 @@ createGraphics = function()
 		{
 			// get parents
 			var fp = g.path + '0'
-			// var mp = g.path + '1'
+			var mp = g.path + '1'
 
 			if (/*!g.empty && /**/!(fp in content.graphics))
 			{
@@ -25,16 +25,16 @@ createGraphics = function()
 				content.dirty = true
 			}
 
-			// if (/*!g.empty && /**/!(mp in content.graphics))
-			// {
-			// 	var m = getPerson(mp)
+			if (/*!g.empty && /**/!(mp in content.graphics))
+			{
+				var m = getPerson(mp)
 
-			// 	var mg = new Graphic(m, mp)
-			// 	var mc = VPOffsets.getCenterOfSouthChild(g)
-			// 	mg.translate(mc)
-			// 	content.graphics[mp] = mg
-			// 	content.dirty = true
-			// }
+				var mg = new Graphic(m, mp)
+				var mc = VPOffsets.getCenterOfSouthChild(g)
+				mg.translate(mc)
+				content.graphics[mp] = mg
+				content.dirty = true
+			}
 
 			// get child
 			if (g.path.length > 1)
@@ -103,7 +103,7 @@ function getPerson(path)
 		return content.people[path]
 	else
 	{
-		g = path[path.length - 1] === '0' ? 'f' : 'm'
+		g = path[path.length - 1] === '0' ? 'm' : 'f'
 		return { empty: true, gender: g }
 	}
 }

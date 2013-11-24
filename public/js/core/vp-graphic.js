@@ -7,7 +7,6 @@ function Graphic(person, path)
 	this.empty = person.empty
 	if (!this.empty)
 	{
-		this.displayname = person.givenname + ' ' + person.surname
 		this.givenname = person.givenname
 		this.surname = person.surname
 	}
@@ -71,5 +70,5 @@ Graphic.prototype.calculateAhn = function()
 
 Graphic.prototype.isNorthChild = function()
 {
-	return this.path.substring(this.path.length - 1) == '0'
+	return this.path[this.path.length - 1] == '0'
 }
