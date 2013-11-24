@@ -3,6 +3,7 @@
 <head>
 	<link rel='stylesheet' type='text/css' href='css/vp-page.css'/>
 	<link rel='stylesheet' type='text/css' href='css/vp-core.css'/>
+	<link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -22,31 +23,24 @@
 	<div class='search'>
 		<input type='text' placeholder='Search'/>
 	</div>
-	<div class='user-signup' id='user-signup'>
+	<div class='user-signup btn btn-primary' id='user-signup'>
 		Sign up
 	</div>
-	<div class='user-login' id='user-login'>
+	<div class='user-login btn btn-danger' id='user-login'>
 		Sign in
 	</div>
 </div>
 
 <div class='header'>
-	<div class='header-cell'>
-		<div class='header-content'>
-			<div>This is a header</div>
-			<div>This is a header</div>
-			<div id='show-sidebar'>Show / Hide Sidebar</div>
-			<div id='ui-block'>Block UI</div>
-			<div>This is a header</div>
-		</div>
+	<div class='header-content'>
+		<div>This is a header</div>
+		<div>This is a header</div>
+		<div id='show-sidebar'>Show / Hide Sidebar</div>
+		<div id='ui-block'>Block UI</div>
+		<div>This is a header</div>
 	</div>
 </div>
 
-<div class='toolbar'>
-	<div>This is some toolbar content</div>
-	<div>This is some toolbar content</div>
-	<div>This is some toolbar content</div>
-	<div>This is some toolbar content</div>
 </div>
 
 <div class='sidebar' id='vp-sidebar'>
@@ -63,26 +57,51 @@
 	<div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
 		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.id}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
 			<div class='id'>{{g.id}}</div>
-			<span ng-if='!g.empty'>
-				{{g.givenname}} {{g.surname}} ({{g.center.x}}, {{g.center.y}})<br>
+			<span ng-if='!g.empty && !showedit[g.id]'>
+				<span class='name'>{{g.givenname}} {{g.surname}} ({{g.center.x}}, {{g.center.y}})</span><br>
 				<span ng-if='g.ahn'>Ahnentafel Number: {{g.ahn}}</span>
 			</span>
-			<input ng-if='g.empty' type='checkbox' id='add-{{g.id}}-show' ng-model='showedit[g.id]' ng-init='showedit[g.id]=false'/>
-			<label ng-if='g.empty && !showedit[g.id]' for='add-{{g.id}}-show'><span>click to add</span></label>
-			<span ng-if='showedit[g.id]' class='edit-info'>
-				<input placeholder='Given Name' ng-model='g.givenname'/><br>
-				<input placeholder='Surname' ng-model='g.surname'/><br>
-				<label >Save</label>
-				<label for='add-{{g.id}}-show'>Cancel</label>
-			</span>
+			<input type='checkbox' id='add-{{g.id}}-show' ng-model='showedit[g.id]' ng-init='showedit[g.id]=false'/>
+			<label ng-if='!showedit[g.id]' for='add-{{g.id}}-show'><span ng-if='g.empty'>click to add</span></label>
+			<form ng-submit='addPerson(g.id)' ng-if='showedit[g.id]' class='edit-info'>
+				<input type='hidden' id='path-{{g.id}}' value='{{path}}'/>
+				<input type='submit'/>
+				<input id='given-{{g.id}}' placeholder='Given Name' ng-model='g.givenname'/><br>
+				<input id='sur-{{g.id}}' placeholder='Surname' ng-model='g.surname'/><br>
+				<label ng-if='g.empty' for='add-{{g.id}}-show' ng-click='addPerson(g.id)'>Save</label>
+				<label ng-if='g.empty' for='add-{{g.id}}-show'>Cancel</label>
+				<label ng-if='!g.empty' for='add-{{g.id}}-show' ng-click='removePerson(g.id)'>Remove</label>
+				<label ng-if='!g.empty' for='add-{{g.id}}-show'>Done</label>
+			</form>
 		</div>
 	</div>
 </div>
 
 <div class='overlay' id='overlay'>
-	<div class='signup'>
+	<div class='signup-content'>
+		<div id='overlay-close' class='btn btn-default'>&times;</div>
 		<h1>Sign up or Sign in</h1>
-		<p>Signing up is easy! Just sign in using your Google account.</p>
+
+		<div class='signup-form'>
+			<button class='btn btn-danger' id='signup-btn'>Sign up</button><br>
+			<form id='sign-up-container' onsubmit='return signUp()'>
+				<p>Signing up is easy! Just enter your name and email address
+					and we&apos;ll take care of the rest.</p>
+
+				<input placeholder='Name'/>
+				<input placeholder='Email'/>
+				<br>
+				<br>
+				<button class='btn btn-default submit'>Submit</button>
+			</form>
+			<button class='btn btn-danger' id='signin-btn'>Sign in</button><br>
+			<form id='sign-in-container' onsubmit='return signIn()'>
+				<input placeholder='Email'/>
+				<br>
+				<br>
+				<button class='btn btn-default submit'>Submit</button>
+			</form>
+		</div>
 	</div>
 </div>
 <script type='text/javascript' src='js/vp-core.js'></script>

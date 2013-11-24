@@ -1,0 +1,22 @@
+Scheme link: http://colorschemedesigner.com/#3C32IY4SFGPFf
+
+Primary Color:
+026BE8
+356299
+003779
+539EF7
+94C1F7
+
+Secondary Color A:
+D4FD00
+95A639
+6E8400
+E3FE54
+EEFE97
+
+Secondary Color B:
+F10092
+9E3675
+7D004C
+FA53B8
+FA95D2

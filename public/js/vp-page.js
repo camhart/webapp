@@ -20,7 +20,7 @@ $('#show-sidebar').click(function(e)
 
 $('#ui-block').click(function(e)
 {
-	$.blockUI()
+	$.blockUI({ message: '<h1>Click here to close</h1>' })
 
 	$('.blockMsg').click(function(e)
 	{
@@ -29,32 +29,71 @@ $('#ui-block').click(function(e)
 });
 
 $.extend($.blockUI.defaults.css, {
-	padding:        '10px 0',
-    color:          '#333',
-    border:         'none',
-    'border-radius':'6px',
+	padding: '10px 0',
+    color: '#333',
+    border: 'none',
+    'border-radius': '6px',
 })
+
+function showOverlay(e)
+{
+	$('body').append($overlay)
+
+	setTimeout(function()
+	{
+		$overlay.addClass('overlay-visible')
+	}, 50)
+
+	$('.signup-content').click(function(e)
+	{
+		e.stopPropagation()
+	})
+
+	$overlay.click(closeOverlay)
+	$('#overlay-close').click(closeOverlay)
+
+	$('#signup-btn').click(function(e)
+	{
+		$('#sign-in-container').hide('blind', { }, 250)
+		$('#sign-up-container').show('blind', { }, 250)
+	})
+
+	$('#signin-btn').click(function(e)
+	{
+		$('#sign-in-container').show('blind', { }, 250)
+		$('#sign-up-container').hide('blind', { }, 250)
+	})
+
+	$('#sign-in-container button.submit').click(signIn)
+	$('#sign-up-container button.submit').click(signUp)
+}
+
+function closeOverlay(e)
+{
+	$overlay.removeClass('overlay-visible')
+	setTimeout(function()
+	{
+		$('#sign-in-container, #sign-up-container').hide()
+		$overlay.remove()
+	}, 250)
+}
 
 $(document).ready(function()
 {
 	$overlay = $('#overlay')
 	$overlay.remove()
 
-	$('#user-login, #user-signup').click(function(e)
-	{
-		$('body').append($overlay)
-		setTimeout(function()
-		{
-			$overlay.addClass('overlay-visible')
-		}, 50)
-
-		$overlay.click(function(e)
-		{
-			$overlay.removeClass('overlay-visible')
-			setTimeout(function()
-			{
-				$overlay.remove()
-			}, 250)
-		})
-	})
+	$('#user-login, #user-signup').click(showOverlay)
 })
+
+function signIn(clickEvent)
+{
+	alert('Sign-in functionality has not yet been implemented!')
+	return false
+}
+
+function signUp(clickEvent)
+{
+	alert('Sign-up functionality has not yet been implemented!')
+	return false
+}

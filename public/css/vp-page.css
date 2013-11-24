@@ -13,57 +13,70 @@ body
 .header
 {
 	height: 50px;
-	text-align: center;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	z-index: 200;
 	background: #fff;
+	border-bottom: 2px solid #ccc;
 }
 
-.header-cell
+.header
 {
 	display: block;
-	vertical-align: bottom;
+	border-bottom: 1px solid #ccc;
+	font-size: 0;
+	width:100%;
+	background:#fff;
 }
 
 .header-content
 {
-	display: inline-block;
-	border-bottom: 2px solid #ccc;
-	padding: 0 30px;
-	font-size: 0;
+	display:table;
+	height:100%;
 }
 
 .header-content > div
 {
-	display: inline-block;
-	padding: 8px 10px 2px;
-	margin: 5px 0;
-	border-left: 1px solid #000;
+	display: table-cell;
+	vertical-align:middle;
+	padding: 5px 10px;
+	border-right: 1px solid #000;
 	font-size: 11pt;
-	-webkit-transition: 0.3s;
-	transition: 0.3s;
 	cursor: pointer;
-	box-shadow: 0px 2px 8px 3px #fff inset;
-}
-
-.header-content > div:hover
-{
-	background: #afe;
+	color:#111;
 }
 
 .header-content > div:active
 {
-	background: #acf;
-	-webkit-transition: none;
-	transition: none;
+	background: #539EF7;
 }
 
-.header-content > div:last-child
+input
 {
-	border-right: 1px solid #000;
+	transition: 0.4s;
+	-webkit-transition: 0.4s;
+	border: 1px solid #444;
+	background: #fff;
+}
+
+input:focus
+{
+	border-color: #66afe9;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 5px rgba(102,175,233,0.6);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 5px rgba(102,175,233,0.6);
+}
+
+.search input
+{
+	border-radius: 10px;
+	width: 200px;
+	padding: 3px 8px 3px 25px;
+	background: #fff url('../img/search-icon.png') no-repeat;
+	background-size: 16px;
+	background-position: 5px 2px;
 }
 
 .user-data
@@ -81,78 +94,11 @@ body
 	display: inline-block;
 }
 
-.user-data > div:hover
-{
-	text-decoration: underline;
-}
-
-.user-login
-{
-	background: #aef;
-}
-
-.user-signup
-{
-	background: #afe;
-}
-
-input
-{
-	transition: 0.4s;
-	-webkit-transition: 0.4s;
-	padding: 3px 8px 3px 25px;
-	border-radius: 10px;
-	border: 1px solid #444;
-	width: 200px;
-	background: #fff;
-}
-
-.search input
-{
-	background: url('../img/search-icon.png') no-repeat;
-	background-size: 16px;
-	background-position: 5px 2px;
-}
-
-input:focus
-{
-	border-color: #66afe9;
-	outline: 0;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 5px rgba(102,175,233,0.6);
-	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 5px rgba(102,175,233,0.6);
-}
-
-.toolbar
-{
-	text-align: center;
-	border-bottom: 2px solid #ccc;
-	z-index: 200;
-	position: fixed;
-	top:50px;
-	left:0;
-	right:0;
-	height:60px;
-	background: #fff;
-}
-
-.toolbar > div
-{
-	display: inline-block;
-	height: 40px;
-	padding: 8px;
-	margin: 15px 0 5px 0;
-}
-
-.toolbar > div + div
-{
-	margin-left: 10px;
-}
-
 .main
 {
 	display: block;
 	position:fixed;
-	top:112px;
+	top:51px;
 	left:0;
 	right:0;
 	bottom:0;
@@ -160,15 +106,14 @@ input:focus
 
 .sidebar
 {
-	float: left;
+	top:51px;
+	bottom:0;
 	width: 350px;
 	border-right: 1px solid #ccc;
 	box-shadow: 0px 8px 6px -6px #ccc inset;
 	padding: 10px;
 	position: fixed;
 	left: -371px;
-	top:112px;
-	bottom:0;
 	background: #fff;
 	z-index: 200;
 }
@@ -207,18 +152,82 @@ input:focus
 	opacity:1;
 }
 
-.signup
+#overlay-close
+{
+	font-size: 14pt;
+	font-weight: bold;
+	float: right;
+	margin-right: -40px;
+	width: 22px;
+	cursor: pointer;
+	border-radius: 4px;
+	text-align: center;
+	border: 1px solid #fff;
+	padding: 0px 1px 2px 1px;
+	line-height:normal;
+}
+
+#overlay-close:hover
+{
+	border:1px solid #bbb;
+}
+
+#overlay-close:active
+{
+	background:#ddd;
+}
+
+.signup-content
 {
 	margin: 50px auto;
 	width: 500px;
 	height: 700px;
 	background:#fff;
 	padding:10px 50px;
+	display:table;
 }
 
-.signup h1
+.signup-content h1
 {
 	text-align:center;
+	color:#026BE8;
+	margin-top:100px;
+	margin-bottom:50px;
+}
+
+.signup-content p
+{
+	color:#333;
+}
+
+.signup-form
+{
+	text-align:center;
+}
+
+.signup-form button
+{
+	width:200px;
+	height:40px;
+	margin:5px;
+}
+
+#sign-up-container,
+#sign-in-container
+{
+	width:60%;
+	margin:10px auto;
+	display:none;
+}
+
+#sign-in-container input,
+#sign-up-container input
+{
+	border-radius:5px;
+	padding:4px 7px;
+	width:95%;
+	font-size:120%;
+	border:1px solid #aaa;
 }
 
 noscript

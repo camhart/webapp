@@ -56,12 +56,54 @@ app.controller('Content', function($scope)
 		'.': new Graphic($scope.people['.'], '.')
 	}
 
+	$scope.graphics['.'].createdby = 'root'
+
 	$scope.showedit = {}
 	content.dirty = true
 	content.demo = false
 
 	setTimeout(refresh, 100)
 	setTimeout(update, 100)
+
+	$scope.addPerson = function(id)
+	{
+		var path = $('#path-' + id).val()
+		var givenname = $('#given-' + id).val()
+		var surname = $('#sur-' + id).val()
+
+		if (givenname.length > 0 || surname.length > 0)
+		{
+			var person = {
+				givenname: $('#given-' + id).val(),
+				surname: $('#sur-' + id).val(),
+				gender: $('#g-' + id).attr('gender'),
+				empty: false
+			}
+
+			content.people[path] = person
+			if (content.graphics[path].empty)
+			{
+				delete content.graphics[path]
+				content.dirty = true
+			}
+			else
+			{
+				content.showedit[id] = false
+			}
+		}
+		else
+		{
+			alert('Cannot add person - You did not supply enough information!')
+		}
+	}
+
+	$scope.removePerson = function(id)
+	{
+		var path = $('#path-' + id).val()
+		delete content.people[path]
+		delete content.graphics[path]
+		content.dirty = true
+	}
 })
 
 var top_of_view = null
