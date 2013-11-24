@@ -58,7 +58,7 @@ app.controller('Content', function($scope)
 
 	$scope.showedit = {}
 	content.dirty = true
-	content.demo = true
+	content.demo = false
 
 	setTimeout(refresh, 100)
 	setTimeout(update, 100)

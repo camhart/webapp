@@ -220,3 +220,22 @@ input:focus
 {
 	text-align:center;
 }
+
+noscript
+{
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:1500;
+	background:white;
+	text-align:center;
+	line-height:1.5;
+}
+
+noscript div
+{
+	width:35%;
+	margin:10% auto;
+}
