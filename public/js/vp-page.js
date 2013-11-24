@@ -22,7 +22,10 @@ $('#ui-block').click(function(e)
 {
 	$.blockUI()
 
-	setTimeout($.unblockUI, 2000)
+	$('.blockMsg').click(function(e)
+	{
+		$.unblockUI()
+	})
 });
 
 $.extend($.blockUI.defaults.css, {
@@ -32,17 +35,26 @@ $.extend($.blockUI.defaults.css, {
     'border-radius':'6px',
 })
 
-$('#user-signup').click(function(e)
+$(document).ready(function()
 {
-	$('#overlay').addClass('overlay-visible')
-})
+	$overlay = $('#overlay')
+	$overlay.remove()
 
-$('#user-login').click(function(e)
-{
-	$('#overlay').addClass('overlay-visible')
-})
+	$('#user-login, #user-signup').click(function(e)
+	{
+		$('body').append($overlay)
+		setTimeout(function()
+		{
+			$overlay.addClass('overlay-visible')
+		}, 50)
 
-$('#overlay').click(function(e)
-{
-	$(this).removeClass('overlay-visible')
+		$overlay.click(function(e)
+		{
+			$overlay.removeClass('overlay-visible')
+			setTimeout(function()
+			{
+				$overlay.remove()
+			}, 250)
+		})
+	})
 })

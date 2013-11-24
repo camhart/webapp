@@ -190,14 +190,13 @@ input:focus
 	bottom:0;
 	background:rgba(100, 100, 100, 0.3);
 	opacity:0;
-	z-index:-50;
+	z-index:900;
 	-webkit-transition:opacity 0.25s;
 	transition:opacity 0.25s;
 }
 
 .overlay.overlay-visible
 {
-	z-index:250;
 	opacity:1;
 	-webkit-transition:opacity 0.25s;
 	transition:opacity 0.25s;

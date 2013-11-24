@@ -51,7 +51,7 @@
 </div>
 
 <div class='main'>
-	<div class='content' id='content' ng-controller='Content'>
+	<div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
 		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.id}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
 			<div class='id'>{{g.id}}</div>
 			<span ng-if='!g.empty'>

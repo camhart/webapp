@@ -110,3 +110,8 @@
 	padding: 2px 5px;
 	width: 80%;
 }
+
+.demo
+{
+	background:url('../img/demo.png');
+}
