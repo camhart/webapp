@@ -30,7 +30,8 @@ h1
 	padding-top:0.5em;
 }
 
-h2
+.main > h2,
+.assignment > h2
 {
 	margin:0;
 }
