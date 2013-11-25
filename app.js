@@ -43,6 +43,7 @@ app.get('/', routes.home)
 app.get('/login', routes.login)
 app.get('/logout', routes.logout)
 app.get('/contact', routes.contact)
+app.get('/assignments', routes.assignments)
 
 app.get('/adduser', function(req, res){
     routes.adduser(req, res, connection)

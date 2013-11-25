@@ -3,6 +3,7 @@
 var db = require('./db')
 var dummy = require('./dummydata')
 var homepage = './public/vp.html'
+var assignmentpage = './public/assignment.html'
 
 exports.home = function(req, res){
     console.log("Main Page!")
@@ -21,7 +22,13 @@ exports.logout = function(req, res){
 
 exports.contact = function(req, res){
     console.log("Contact Page!")
-    res.sendfile(homepage) 
+    res.sendfile(homepage)
+}
+
+exports.assignments = function(req, res)
+{
+    console.log('Assignment Page!')
+    res.sendfile(assignmentpage)
 }
 
 exports.adduser = function(req, res, connection){
@@ -34,6 +41,6 @@ exports.adduser = function(req, res, connection){
 exports.getuser = function(req, res, connection){
     var email = 'email1'
     db.getUserFromDB(connection, email, function(user){
-        res.send('200', user)   
+        res.send('200', user)
     })
 }
