@@ -70,7 +70,7 @@
 				<input id='sur-{{g.id}}' placeholder='Surname' ng-model='g.surname'/><br>
 				<label ng-if='g.empty' for='add-{{g.id}}-show' ng-click='addPerson(g.id)'>Save</label>
 				<label ng-if='g.empty' for='add-{{g.id}}-show'>Cancel</label>
-				<label ng-if='!g.empty' for='add-{{g.id}}-show' ng-click='removePerson(g.id)'>Remove</label>
+				<label ng-if='!g.empty && graphics[path + "0"].empty && graphics[path + "1"].empty' for='add-{{g.id}}-show' ng-click='removePerson(g.id)'>Remove</label>
 				<label ng-if='!g.empty' for='add-{{g.id}}-show'>Done</label>
 			</form>
 		</div>

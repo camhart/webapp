@@ -100,9 +100,14 @@ app.controller('Content', function($scope)
 	$scope.removePerson = function(id)
 	{
 		var path = $('#path-' + id).val()
-		delete content.people[path]
-		delete content.graphics[path]
-		content.dirty = true
+		if (content.graphics[path + '0'].empty && content.graphics[path + '1'].empty)
+		{
+			delete content.people[path]
+			delete content.graphics[path]
+			delete content.graphics[path + '0']
+			delete content.graphics[path + '1']
+			content.dirty = true
+		}
 	}
 })
 
