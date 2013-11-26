@@ -32,15 +32,15 @@ $('#content').mousedown(function(e)
 
 function translate_graphics(dx, dy, y)
 {
+	var exp = (dx * -1.0) / GRAPHIC_HORIZ_OFFSET
+	var dyscale = Math.pow(2, exp) - 1
+
 	for (i in content.graphics)
 	{
 		var vec = new Vector2D(dx, dy)
 		var g = content.graphics[i]
 
-        var yOff = g.center.y - y;
-        var exp = (vec.x * -1.0) / GRAPHIC_HORIZ_OFFSET;
-        var dyOff = yOff * (Math.pow(2, exp) - 1);
-        vec.y += dyOff;
+        vec.y += (g.center.y - y) * dyscale
 
 		g.translate(vec)
 	}

@@ -9,44 +9,44 @@ app.controller('Content', function($scope)
 	content = $scope
 	$scope.people = {
 		'.': {
-			givenname: 'Ryan',
-			surname: 'Cheatham',
+			givenname: 'Jack',
+			surname: 'Doe',
 			gender: 'm',
 			empty: false
 		},
 		'.0': {
-			givenname: 'Max',
-			surname: 'Cheatham',
+			givenname: 'John',
+			surname: 'Doe',
 			gender: 'm',
 			empty: false
 		},
 		'.1': {
-			givenname: 'Nancy',
-			surname: 'Price',
+			givenname: 'Jane',
+			surname: 'Johnson',
 			gender: 'f',
 			empty: false
 		},
 		'.00': {
-			givenname: 'Clair',
-			surname: 'Cheatham',
+			givenname: 'Robert',
+			surname: 'Doe',
 			gender: 'm',
 			empty: false
 		},
 		'.01': {
-			givenname: 'Vida',
-			surname: 'Nation',
+			givenname: 'Elizabeth',
+			surname: 'Smith',
 			gender: 'f',
 			empty: false
 		},
 		'.10': {
-			givenname: 'Delmar',
-			surname: 'Price',
+			givenname: 'William',
+			surname: 'Johnson',
 			gender: 'm',
 			empty: false
 		},
 		'.11': {
-			givenname: 'Marilyn',
-			surname: 'Jensen',
+			givenname: 'Mary',
+			surname: 'Jones',
 			gender: 'f',
 			empty: false
 		}
