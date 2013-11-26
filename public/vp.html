@@ -55,7 +55,7 @@
 
 <div class='main'>
 	<div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
-		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.id}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
+		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}{{motionClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.id}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
 			<div class='id'>{{g.id}}</div>
 			<span ng-if='!g.empty && !showedit[g.id]'>
 				<span class='name'>{{g.givenname}} {{g.surname}} <!--({{g.center.x}}, {{g.center.y}})--></span><br>

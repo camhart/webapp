@@ -16,6 +16,8 @@ function _content_mouseup(e)
 {
 	$('body').unbind('mousemove', _content_mousemove)
 	$('body').unbind('mouseup', _content_mouseup)
+	content.moving = false
+	content.dirty = true
 }
 
 $('#content').mousedown(function(e)
@@ -25,6 +27,7 @@ $('#content').mousedown(function(e)
 	y = e.clientY -_content_top
 	$('body').on('mousemove', _content_mousemove)
 	$('body').on('mouseup', _content_mouseup)
+	content.moving = true
 })
 
 function translate_graphics(dx, dy, y)

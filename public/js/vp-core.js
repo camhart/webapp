@@ -116,6 +116,15 @@ app.controller('Content', function($scope)
 			content.dirty = true
 		}
 	}
+
+	$scope.moving = false
+	$scope.motionClass = function()
+	{
+		if ($scope.moving)
+			return ' moving'
+		else
+			return ''
+	}
 })
 
 var top_of_view = null
@@ -134,7 +143,6 @@ function refresh()
 {
 	if (content.dirty)
 	{
-		// refresh lines
 
 		// refresh all graphics
 		content.$apply()
