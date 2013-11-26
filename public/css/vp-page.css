@@ -230,6 +230,11 @@ input:focus
 	border:1px solid #aaa;
 }
 
+.signup-content form button
+{
+	margin-top:22px;
+}
+
 noscript
 {
 	position:fixed;

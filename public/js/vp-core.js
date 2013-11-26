@@ -32,12 +32,12 @@ app.controller('Content', function($scope)
 			gender: 'm',
 			empty: false
 		},
-		// '.01': {
-		// 	givenname: 'Vida',
-		// 	surname: 'Nation',
-		// 	gender: 'f',
-		// 	empty: false
-		// },
+		'.01': {
+			givenname: 'Vida',
+			surname: 'Nation',
+			gender: 'f',
+			empty: false
+		},
 		'.10': {
 			givenname: 'Delmar',
 			surname: 'Price',
@@ -83,6 +83,7 @@ app.controller('Content', function($scope)
 			content.people[path] = person
 			if (content.graphics[path].empty)
 			{
+				destroyConnectionLine_parent(content.graphics[path])
 				delete content.graphics[path]
 				content.dirty = true
 			}
@@ -100,9 +101,15 @@ app.controller('Content', function($scope)
 	$scope.removePerson = function(id)
 	{
 		var path = $('#path-' + id).val()
-		if (content.graphics[path + '0'].empty && content.graphics[path + '1'].empty)
+		var del = true
+		// del = confirm("Are you sure you would like to remove " + content.people[path].givenname + ' ' + content.people[path].surname + '?')
+		if (content.graphics[path + '0'].empty && content.graphics[path + '1'].empty && del)
 		{
 			delete content.people[path]
+
+			destroyConnectionLines_child(content.graphics[path])
+			destroyConnectionLine_parent(content.graphics[path])
+
 			delete content.graphics[path]
 			delete content.graphics[path + '0']
 			delete content.graphics[path + '1']

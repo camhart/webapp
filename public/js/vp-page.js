@@ -52,6 +52,11 @@ function showOverlay(e)
 	$overlay.click(closeOverlay)
 	$('#overlay-close').click(closeOverlay)
 
+	if (this.id === 'user-signup')
+		$('#sign-up-container').show('blind', { }, 250)
+	else if (this.id === 'user-login')
+		$('#sign-in-container').show('blind', { }, 250)
+
 	$('#signup-btn').click(function(e)
 	{
 		$('#sign-in-container').hide('blind', { }, 250)
