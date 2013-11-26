@@ -32,7 +32,7 @@ $('#content').mousedown(function(e)
 
 function translate_graphics(dx, dy, y)
 {
-	var exp = (dx * -1.0) / GRAPHIC_HORIZ_OFFSET
+	var exp = -dx / GRAPHIC_HORIZ_OFFSET
 	var dyscale = Math.pow(2, exp) - 1
 
 	for (i in content.graphics)

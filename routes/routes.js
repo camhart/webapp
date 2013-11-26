@@ -3,7 +3,7 @@
 var db = require('./db')
 var dummy = require('./dummydata')
 var homepage = './public/vp.html'
-var assignmentpage = './public/assignment.html'
+var assignmentpage = './public/overview.html'
 
 exports.home = function(req, res){
     console.log("Main Page!")
@@ -27,7 +27,7 @@ exports.contact = function(req, res){
 
 exports.assignments = function(req, res)
 {
-    console.log('Assignment Page!')
+    console.log('Overview Page!')
     res.sendfile(assignmentpage)
 }
 
