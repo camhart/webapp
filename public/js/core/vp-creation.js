@@ -21,6 +21,7 @@ createGraphics = function()
 				var fc = VPOffsets.getCenterOfNorthChild(g)
 				fg.translate(fc)
 				content.graphics[fp] = fg
+				drawConnectionLines(g, fg)
 				content.dirty = true
 			}
 
@@ -32,6 +33,7 @@ createGraphics = function()
 				var mc = VPOffsets.getCenterOfSouthChild(g)
 				mg.translate(mc)
 				content.graphics[mp] = mg
+				drawConnectionLines(g, mg)
 				content.dirty = true
 			}
 
@@ -58,7 +60,7 @@ createGraphics = function()
 				var np = (g.ahn - 1).toString(2)
 				np = '.' + np.substring(1)
 
-				if (!(np in content.graphics))
+				if (!(np in content.graphics) && np in content.people)
 				{
 					var n = getPerson(np)
 					var ng = new Graphic(n, np)
@@ -76,7 +78,7 @@ createGraphics = function()
 				var sp = (g.ahn + 1).toString(2)
 				sp = '.' + sp.substring(1)
 
-				if (!(sp in content.graphics))
+				if (!(sp in content.graphics) && sp in content.people)
 				{
 					var s = getPerson(sp)
 					var sg = new Graphic(s, sp)
@@ -115,7 +117,35 @@ destroyGraphics = function()
 			|| g.center.y < -margin
 			|| g.center.y > canvas.height() + margin)
 		{
+			destroyConnectionLines_child(content.graphics[i])
+			destroyConnectionLine_parent(content.graphics[i])
 			delete content.graphics[i]
+		}
+	}
+}
+
+function drawConnectionLines(child, parent)
+{
+
+}
+
+function destroyConnectionLines_child(child)
+{
+	if (child)
+	{
+
+	}
+}
+
+function destroyConnectionLine_parent(parent)
+{
+	if (parent && parent.path && parent.path.length > 1)
+	{
+		var path = parent.path.substring(0, parent.path.length - 1)
+		var g = content.graphics[path]
+		if (g)
+		{
+
 		}
 	}
 }
