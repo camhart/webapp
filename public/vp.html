@@ -58,7 +58,7 @@
 		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.id}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
 			<div class='id'>{{g.id}}</div>
 			<span ng-if='!g.empty && !showedit[g.id]'>
-				<span class='name'><!--{{g.givenname}} {{g.surname}}--> ({{g.center.x}}, {{g.center.y}}) {{g.getGenClass()}}</span><br>
+				<span class='name'>{{g.givenname}} {{g.surname}} <!--({{g.center.x}}, {{g.center.y}})--></span><br>
 				<span ng-if='g.ahn'>Ahnentafel Number: {{g.ahn}}</span>
 			</span>
 			<input type='checkbox' id='add-{{g.id}}-show' ng-model='showedit[g.id]' ng-init='showedit[g.id]=false'/>
