@@ -3,6 +3,7 @@ var x, y, _content_top = 110
 function _content_mousemove(e)
 {
 	e.preventDefault()
+	e.stopPropagation()
 	var dx = e.clientX - x
 	var dy = e.clientY - _content_top - y
 	x = e.clientX
