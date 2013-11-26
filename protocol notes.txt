@@ -1,0 +1,26 @@
+	/ - get
+	/user - GET - login
+			POST - register
+			DELETE - unregister
+	logout
+	
+	person - upsert - update/add (list of people, could just be one)
+		delete - list of people to remove
+	
+	Database
+	
+	2 tables
+	User
+		user stuff
+		email address - unique key
+		afn 
+		id - dual unique key
+	
+	Person
+		individual person stuff with server_id + afn as unique key
+		
+		
+authentication - OAuth, gmail, fb, twitter, familysearch, ancestry?, others..
+
+offline mode
+	don't clear cookies
