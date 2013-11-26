@@ -3,7 +3,7 @@ $.getScript('js/core/vp-motion.js')
 $.getScript('js/core/vp-creation.js')
 
 var app = angular.module('vp-app', []);
-var content, canvas
+var content
 app.controller('Content', function($scope)
 {
 	content = $scope
@@ -119,6 +119,7 @@ app.controller('Content', function($scope)
 })
 
 var top_of_view = null
+var canvas = $('#content')
 
 $(document).ready(function()
 {
@@ -127,8 +128,6 @@ $(document).ready(function()
 	var x = $root.parent().width() - GRAPHIC_HORIZ_OFFSET * 3.5
 	var y = $root.parent().height() / 2
 	content.graphics['.'].translate(x, y)
-
-	canvas = $('#content')
 });
 
 function refresh()
