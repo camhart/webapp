@@ -51,37 +51,38 @@ $('#buttons button[value=put]').click(function(){
     })
 })
 
-function ajaxComplete(result, status, xhr){
-    try {
-        var json = JSON.stringify(result.responseJSON, undefined, 2)
-        var text = syntaxHighlight(json)
-        $('#results').html('<span>' + text + '</span>')
-    } catch(e) {
-        console.log(e)
-        var msg = "RESULT: " + result.responseJSON + " (see console)"
-        var err = "ERROR: " + e
-        $('#results').html("<span>" + msg + "<br>" + err + "</span>")
-        throw e
+function ajaxComplete(result, status){
+    var msg = ""
+    if (result.status == 500) {
+      msg = 'Server Error (500)'
+    } else if (result.status == 404) {
+      msg = 'Page Not Found (404)'
+    } else {
+        // var json = JSON.stringify(, undefined, 2)
+        msg = syntaxHighlight(result.responseJSON)
     }
+    $('#results').html('<span>' + msg + '</span>')
 }
 
 $('#user-generate').click(function(){
     json = {}
+    json.id = $('.user-content input[name=id]').val()
     json.firstname = $('.user-content input[name=firstname]').val()
     json.lastname = $('.user-content input[name=lastname]').val()
     json.gender = $('.user-content input[name=gender]').val()
     json.email = $('.user-content input[name=email]').val()
-    $('#url').val('user/' + json.email)
+    $('#url').val('user/' + json.id)
     $('#body').val(JSON.stringify(json, undefined, 2))
 })
 
 $('#person-generate').click(function(){
     json = {}
+    json.id = $('.person-content input[name=userid]').val()
+    json.afn = $('.person-content input[name=afn]').val()
     json.surname = $('.person-content input[name=surname]').val()
     json.lastname = $('.person-content input[name=lastname]').val()
     json.gender = $('.person-content input[name=gender]').val()
-    json.key = $('.person-content input[name=key]').val()
-    $('#url').val('person/' + json.key)
+    $('#url').val('person/' + json.userid + "_" + json.id)
     $('#body').val(JSON.stringify(json, undefined, 2))
 })
 

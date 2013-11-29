@@ -2,107 +2,67 @@
 
 var dummy = require('../test/dummydata')
 var db = require('./db')
-var homepage = './public/vp.html'
-var protocolpage = './test/protocol.html'
-var assignmentpage = './public/overview.html'
+
+var HOMEPAGE = './public/vp.html'
+var PROTOCOLPAGE = './test/protocol.html'
+var ASSIGNMENTSPAGE = './public/overview.html'
 
 // static pages
 function home(req, res){
     console.log("Main Page!")
-    res.sendfile(homepage)
+    res.sendfile(HOMEPAGE)
 }
 
 function contact(req, res){
     console.log("Contact Page!")
-    res.sendfile(homepage)
+    res.sendfile(HOMEPAGE)
 }
 
 function assignments(req, res){
     console.log('Assignment Page!')
-    res.sendfile(assignmentpage)
+    res.sendfile(ASSIGNMENTSPAGE)
 }
 
 // login/logout requests
 function login(req, res){
     console.log("Loggining In!")
-    res.sendfile(homepage)
+    res.sendfile(HOMEPAGE)
 }
 
 function logout(req, res){
     console.log("Loggining Out!")
-    res.sendfile(homepage)
+    res.sendfile(HOMEPAGE)
 }
 
 function protocol(req, res){
-    res.sendfile(protocolpage)
+    res.sendfile(PROTOCOLPAGE)
 }
 
 function resetdb(req, res){
-    db.reset(function(){
-        db.populate(function(){
-            res.send('200', "<h1>Database Reset and Populated!</h1>")
-        })
+    db.reset(function(results){
+        console.log(results)
+        var header = "<h1>Database Reset!</h1>"
+        var output = "<p>" + JSON.stringify(results) + "<p>"
+        console.log(output)
+        res.send('200', header + output)
     })
 }
 
-// user functions (add, get, update, delete)
-function userAdd(req, res){
-    user = dummy.getDummyUser(['.', '.0', '.01', '.10', '.11', '111', '.00'])
-    db.userAdd(user, function(result){
-        res.send('200', result)
+function populatedb(req, res){
+    db.reset(function(results){
+        console.log(results)
+        var header = "<h1>Database Populated!</h1>"
+        var output = "<p>" + JSON.stringify(results) + "<p>"
+        console.log(output)
+        res.send('200', header + output)
     })
 }
-
-function userGet(req, res){
-    var email = req.params.id
-    db.userGet(email, function(user){
-        res.send('200', user)
-    })
-}
-
-function userUpdate(req, res){
-    console.log(req.body)
-    console.log(req.params.id)
-    res.send('200', 'Update User')
-}
-
-function userDelete(req, res){
-    res.send('200', 'Delete User')
-}
-
-// person functions (add, get, update, delete)
-function personAdd(req, res){
-    res.send('200', 'Add Person')
-}
-
-function personGet(req, res){
-    res.send('200', 'Get Person')
-}
-
-function personUpdate(req, res){
-    res.send('200', 'Update Person')
-}
-
-function personDelete(req, res){
-    res.send('200', 'Delete Person')
-}
-
 
 exports.home = home
-exports.logout = logout
-exports.login = login
 exports.contact = contact
-
 exports.assignments = assignments
+exports.login = login
+exports.logout = logout
 exports.protocol = protocol
 exports.resetdb = resetdb
-
-exports.userAdd = userAdd
-exports.userGet = userGet
-exports.userUpdate = userUpdate
-exports.userDelete = userDelete
-
-exports.personAdd = personAdd
-exports.personGet = personGet
-exports.personUpdate = personUpdate
-exports.personDelete = personDelete
+exports.populatedb = populatedb

@@ -1,6 +1,7 @@
 
 
-var model = require('../routes/model.js')
+var user = require('../routes/user.js')
+var person = require('../routes/person.js')
 
 var d_user_id  = 0
 var d_person_id  = 0
@@ -10,7 +11,7 @@ function getDummyUser(afns){
     data = {}
     for(i = 0; i < afns.length; i++)
         data[(afns[i])] = getDummyPerson(afns[i])
-    user = new model.User(
+    user = new user.User(
         'firstname' + d_user_id, 
         'lastname' + d_user_id, 
         'm',
@@ -21,7 +22,7 @@ function getDummyUser(afns){
 
 function getDummyPerson(afn){
     d_person_id += 1
-    person = new model.Person(
+    person = new person.Person(
         afn,
         'firstname' + d_person_id, 
         'lastname' + d_person_id, 

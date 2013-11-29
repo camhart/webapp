@@ -1,24 +1,40 @@
 
 // global Settings
-exports.server_port = 8000
-exports.db_port = 28015
-exports.db_host = 'localhost'
-exports.db_name = 'vp'
-exports.user_tbl = 'user'
-exports.env = 'development'
+var env = 'development'
+var server_port = 8000
+var db_port = 28015
+var db_host = 'localhost'
+var db_name = 'vp'
+var tbl_user = 'user'
+var tbl_person = 'person'
+var con = null
+
+var routes = require('./routes/routes')
+var user = require('./routes/user')
+var person = require('./routes/person')
 
 // module dependencies.
-var express = require('express')
-var routes = require('./routes/routes')
 var http = require('http')
 var path = require('path')
+var r = require('rethinkdb')
+var express = require('express')
+
+r.connect( {host: db_host, port: db_port, db: this.db_name}, function(err, connection) {
+    if (err) {
+        console.log(err)
+        console.log('ERROR: Running Without Rethinkdb!')
+        return
+    }
+    con = connection
+    exports.con = con
+})
 
 // express
 var app = express()
 
 // all environments
-app.set('port', process.env.PORT || this.server_port)
-app.set('env', this.env)
+app.set('port', process.env.PORT || server_port)
+app.set('env', env)
 app.use(express.favicon())
 app.use(express.logger('dev'))
 app.use(express.json())
@@ -29,39 +45,42 @@ app.use(app.router)
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'test')))
 
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler())
 }
 
-// home
 app.get('/', routes.home)
 app.get('/contact', routes.contact)
-app.post('/login', routes.login)
-app.post('/logout', routes.logout)
-
-// user
-app.put(   '/user/:id', routes.userAdd)
-app.get(   '/user/:id', routes.userGet)
-app.post(  '/user/:id', routes.userUpdate)
-app.delete('/user/:id', routes.userDelete)
-
-// person
-app.put(   '/person/:id', routes.personAdd)
-app.get(   '/person/:id', routes.personGet)
-app.post(  '/person/:id', routes.personUpdate)
-app.delete('/person/:id', routes.personDelete)
-
-// other
 app.get('/overview', routes.assignments)
 app.get('/protocol', routes.protocol)
 app.get('/resetdb', routes.resetdb)
 
+app.post('/login', routes.login)
+app.post('/logout', routes.logout)
 
+// user
+app.get(   '/user/:id', user.userGet)
+app.delete('/user/:id', user.userDelete)
+app.put(   '/user', user.userAdd)
+app.post(  '/user', user.userUpdate)
+
+// person
+app.get(   '/person/:id', person.personGet)
+app.delete('/person/:id', person.personDelete)
+app.put(   '/person', person.personAdd)
+app.post(  '/person', person.personUpdate)
 
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
   console.log('(' + app.get('env') + ') Express Server listening on port ', app.get('port'))
 })
+
+exports.db_name = db_name
+exports.tbl_user = tbl_user
+exports.tbl_person = tbl_person
+// exports.con = con
+
 
