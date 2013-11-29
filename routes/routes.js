@@ -3,10 +3,8 @@
 var dummy = require('../test/dummydata')
 var db = require('./db')
 var homepage = './public/vp.html'
-
-var assignmentpage = './public/assignment.html'
 var protocolpage = './test/protocol.html'
-
+var assignmentpage = './public/overview.html'
 
 // static pages
 function home(req, res){

@@ -3,50 +3,50 @@ $.getScript('js/core/vp-motion.js')
 $.getScript('js/core/vp-creation.js')
 
 var app = angular.module('vp-app', []);
-var content, canvas
+var content
 app.controller('Content', function($scope)
 {
 	content = $scope
 	$scope.people = {
 		'.': {
-			givenname: 'Ryan',
-			surname: 'Cheatham',
+			givenname: 'Jack',
+			surname: 'Doe',
 			gender: 'm',
 			empty: false
 		},
 		'.0': {
-			givenname: 'Max',
-			surname: 'Cheatham',
+			givenname: 'John',
+			surname: 'Doe',
 			gender: 'm',
 			empty: false
 		},
 		'.1': {
-			givenname: 'Nancy',
-			surname: 'Price',
+			givenname: 'Jane',
+			surname: 'Johnson',
 			gender: 'f',
 			empty: false
 		},
 		'.00': {
-			givenname: 'Clair',
-			surname: 'Cheatham',
+			givenname: 'Robert',
+			surname: 'Doe',
 			gender: 'm',
 			empty: false
 		},
 		'.01': {
-			givenname: 'Vida',
-			surname: 'Nation',
+			givenname: 'Elizabeth',
+			surname: 'Smith',
 			gender: 'f',
 			empty: false
 		},
 		'.10': {
-			givenname: 'Delmar',
-			surname: 'Price',
+			givenname: 'William',
+			surname: 'Johnson',
 			gender: 'm',
 			empty: false
 		},
 		'.11': {
-			givenname: 'Marilyn',
-			surname: 'Jensen',
+			givenname: 'Mary',
+			surname: 'Jones',
 			gender: 'f',
 			empty: false
 		}
@@ -116,9 +116,19 @@ app.controller('Content', function($scope)
 			content.dirty = true
 		}
 	}
+
+	$scope.moving = false
+	$scope.motionClass = function()
+	{
+		if ($scope.moving)
+			return ' moving'
+		else
+			return ''
+	}
 })
 
 var top_of_view = null
+var canvas = $('#content')
 
 $(document).ready(function()
 {
@@ -127,15 +137,12 @@ $(document).ready(function()
 	var x = $root.parent().width() - GRAPHIC_HORIZ_OFFSET * 3.5
 	var y = $root.parent().height() / 2
 	content.graphics['.'].translate(x, y)
-
-	canvas = $('#content')
 });
 
 function refresh()
 {
 	if (content.dirty)
 	{
-		// refresh lines
 
 		// refresh all graphics
 		content.$apply()

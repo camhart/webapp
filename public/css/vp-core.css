@@ -12,6 +12,16 @@
 	background: #ddd;
 }
 
+.graphic.moving
+{
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 .graphic[ahn='00']
 {
 	background: #f55;
@@ -51,7 +61,7 @@
 	white-space:nowrap;
 	text-overflow:ellipsis;
 	overflow:hidden;
-	width:90%;
+	width:85%;
 	display:inline-block;
 }
 
@@ -132,3 +142,60 @@
 {
 	background:url('../img/demo.png');
 }
+
+.graphic:not(.empty):after
+{
+	content:'';
+	background-image:url('../img/line-right.png');
+	position:absolute;
+	left:100%;
+	width:17px;
+	background-size:17px 340px;
+}
+
+.graphic:before
+{
+	content:' ';
+	font-size:1px;
+	position:absolute;
+	right:100%;
+	width:17px;
+	border-left:1px solid #000;
+}
+
+.graphic[gender='m']:before
+{
+	top:50%;
+	border-top-left-radius:10px;
+	border-top:1px solid #000;
+}
+
+.graphic[gender='f']:before
+{
+	bottom:50%;
+	border-bottom-left-radius:10px;
+	border-bottom:1px solid #000;
+}
+
+.graphic.cgen-none:before{border:none;}
+.graphic.cgen-0:before{height:21px;}
+.graphic.cgen-1:before{height:27px;}
+.graphic.cgen-1b:before{height:40px;}
+.graphic.cgen-2:before{height:67px;}
+.graphic.cgen-3:before{height:140px;}
+.graphic.cgen-4:before{height:295px;}
+.graphic.cgen-5:before{height:605px;}
+.graphic.cgen-6:before{height:1225px;}
+.graphic.cgen-7:before{height:1920px;}
+.graphic.cgen-8:before{height:3840px;}
+.graphic.cgen-9:before{height:7680px;}
+
+.graphic.gen-0:after{top:-6px;background-position-y:4px;height:11px;}
+.graphic.gen-1:after{top:14px;background-position-y:-158px;height:23px;}
+.graphic.gen-2:after{top:7px;background-position-y:-150px;height:39px;}
+.graphic.gen-3:after{top:-22px;background-position-y:-121px;height:97px;}
+.graphic.gen-4:after{top:-80px;background-position-y:-63px;height:213px;}
+.graphic.gen-5:after{top:-198px;background-position-y:55px;height:448px;}
+.graphic.gen-6:after{top:-435px;background-position-y:-218px;height:918px;background-image:url('../img/line-right-lg.png');background-size:17px 1360px;}
+.graphic.gen-7:after{top:-885px;background-position-y:232px;height:1849px;background-image:url('../img/line-right-lg.png');background-size:17px 1360px;}
+.graphic.gen-8:after{top:-1664px;background-position-y:1662px;height:3328px;background-image:url('../img/line-right-lg.png');background-size:17px 1360px;}

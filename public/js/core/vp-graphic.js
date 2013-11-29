@@ -15,6 +15,7 @@ function Graphic(person, path)
 
 	this.path = path
 	this.center = new Vector2D()
+	this.topleft =  this.getTopLeftCorner()
 	this.translate(0, 0)
 	this.calculateAhn()
 }
@@ -57,7 +58,9 @@ Graphic.prototype.translate = function(x, y)
 	this.center.add(x, y)
 	this.center.x = Math.round(this.center.x * 100) / 100
 	this.center.y = Math.round(this.center.y * 100) / 100
-	this.topleft = this.getTopLeftCorner()
+	this.topleft.add(x, y)
+	this.topleft.x = Math.round(this.topleft.x * 100) / 100
+	this.topleft.y = Math.round(this.topleft.y * 100) / 100
 }
 
 Graphic.prototype.calculateAhn = function()
@@ -71,4 +74,26 @@ Graphic.prototype.calculateAhn = function()
 Graphic.prototype.isNorthChild = function()
 {
 	return this.path[this.path.length - 1] == '0'
+}
+
+Graphic.prototype.getGenClass = function()
+{
+	var gen = Math.ceil((canvas.width() - this.topleft.x) / GRAPHIC_HORIZ_OFFSET)
+	var result = ' gen-' + gen
+
+	if (this.path === '.')
+		return result + ' cgen-none'
+
+	var dfromright = canvas.width() - this.center.x
+	if (dfromright >= 65 && dfromright <= 180)
+	{
+		result += ' cgen-1b'
+	}
+	else
+	{
+		gen = Math.ceil(dfromright / GRAPHIC_HORIZ_OFFSET)
+		result += ' cgen-' + gen
+	}
+
+	return result
 }

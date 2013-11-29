@@ -34,3 +34,7 @@ Architecture
 * Database: RethinkDB
 * Back-end: Node.js
 * Front-end: AngularJS
+
+Application Layout
+------------------
+http://54.201.103.45:8000/overview

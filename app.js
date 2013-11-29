@@ -1,58 +1,67 @@
 
+// global Settings
+exports.server_port = 8000
+exports.db_port = 28015
+exports.db_host = 'localhost'
+exports.db_name = 'vp'
+exports.user_tbl = 'user'
+exports.env = 'development'
+
 // module dependencies.
 var express = require('express')
 var routes = require('./routes/routes')
 var http = require('http')
 var path = require('path')
-var r = require('rethinkdb')
 
-// global Settings
-var server_port = 8000
-var db_port = 28015
-var db_host = 'localhost'
-var db_name = 'vp'
-var env = 'development'
-var connection = null
-
-// connect to database
-r.connect( {host: db_host, port: db_port, db: db_name}, function(err, _conn) {
-    if (err) throw err
-    connection = _conn
-})
-
+// express
 var app = express()
 
 // all environments
-app.set('port', process.env.PORT || server_port)
-app.set('env', env)
+app.set('port', process.env.PORT || this.server_port)
+app.set('env', this.env)
 app.use(express.favicon())
 app.use(express.logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(express.methodOverride())
+app.use(express.bodyParser())
 app.use(app.router)
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'test')))
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler())
 }
 
-// get/post request
+// home
 app.get('/', routes.home)
-app.get('/login', routes.login)
-app.get('/logout', routes.logout)
 app.get('/contact', routes.contact)
-app.get('/assignments', routes.assignments)
+app.post('/login', routes.login)
+app.post('/logout', routes.logout)
 
-app.get('/adduser', function(req, res){
-    routes.adduser(req, res, connection)
-})
+// user
+app.put(   '/user/:id', routes.userAdd)
+app.get(   '/user/:id', routes.userGet)
+app.post(  '/user/:id', routes.userUpdate)
+app.delete('/user/:id', routes.userDelete)
 
-app.get('/getuser', function(req, res){
-    routes.getuser(req, res, connection)
-})
+// person
+app.put(   '/person/:id', routes.personAdd)
+app.get(   '/person/:id', routes.personGet)
+app.post(  '/person/:id', routes.personUpdate)
+app.delete('/person/:id', routes.personDelete)
 
+// other
+app.get('/overview', routes.assignments)
+app.get('/protocol', routes.protocol)
+app.get('/resetdb', routes.resetdb)
+
+
+
+
+// start server
 http.createServer(app).listen(app.get('port'), function(){
   console.log('(' + app.get('env') + ') Express Server listening on port ', app.get('port'))
 })
+
