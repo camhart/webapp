@@ -4,6 +4,29 @@ $(document).ready(function() {
 
 });
 
+$('#user-generate').click(function(){
+    json = {}
+    json.id = $('.user-content input[name=id]').val()
+    json.firstname = $('.user-content input[name=firstname]').val()
+    json.lastname = $('.user-content input[name=lastname]').val()
+    json.gender = $('.user-content input[name=gender]').val()
+    json.email = $('.user-content input[name=email]').val()
+    $('#url').val('user/' + json.id)
+    $('#body').val(JSON.stringify(json, undefined, 2))
+})
+
+$('#person-generate').click(function(){
+    json = {}
+    json.userid = $('.person-content input[name=userid]').val()
+    json.afn = $('.person-content input[name=afn]').val()
+    json.id = json.userid + '_' + json.afn
+    json.surname = $('.person-content input[name=surname]').val()
+    json.lastname = $('.person-content input[name=lastname]').val()
+    json.gender = $('.person-content input[name=gender]').val()
+    $('#url').val('person/' + json.id)
+    $('#body').val(JSON.stringify(json, undefined, 2))
+})
+
 $('#buttons button[value=get]').click(function(){
     $.ajax({
         type : 'GET',
@@ -15,21 +38,19 @@ $('#buttons button[value=get]').click(function(){
     })
 })
 
-$('#buttons button[value=post]').click(function(){
+$('#buttons button[value=delete]').click(function(){
     $.ajax({
-        type : 'POST',
+        type : 'DELETE',
         contentType: 'application/json',
-        dataType: 'json',
         url : $('#url').val(),
         headers: $('#headers').val(),
-        data: $('#body').val(),
         complete: ajaxComplete
     })
 })
 
-$('#buttons button[value=delete]').click(function(){
+$('#buttons button[value=post]').click(function(){
     $.ajax({
-        type : 'DELETE',
+        type : 'POST',
         contentType: 'application/json',
         dataType: 'json',
         url : $('#url').val(),
@@ -53,38 +74,15 @@ $('#buttons button[value=put]').click(function(){
 
 function ajaxComplete(result, status){
     var msg = ""
-    if (result.status == 500) {
-      msg = 'Server Error (500)'
-    } else if (result.status == 404) {
-      msg = 'Page Not Found (404)'
+    if (result.status >= 500) {
+      msg = 'Server Error (' + result.status + ')<br>[' + result.responseText + ']'
+    } else if (result.status >= 400) {
+      msg = 'Client Error (' + result.status + ')<br>[' + result.responseText + ']'
     } else {
-        // var json = JSON.stringify(, undefined, 2)
         msg = syntaxHighlight(result.responseJSON)
     }
     $('#results').html('<span>' + msg + '</span>')
 }
-
-$('#user-generate').click(function(){
-    json = {}
-    json.id = $('.user-content input[name=id]').val()
-    json.firstname = $('.user-content input[name=firstname]').val()
-    json.lastname = $('.user-content input[name=lastname]').val()
-    json.gender = $('.user-content input[name=gender]').val()
-    json.email = $('.user-content input[name=email]').val()
-    $('#url').val('user/' + json.id)
-    $('#body').val(JSON.stringify(json, undefined, 2))
-})
-
-$('#person-generate').click(function(){
-    json = {}
-    json.id = $('.person-content input[name=userid]').val()
-    json.afn = $('.person-content input[name=afn]').val()
-    json.surname = $('.person-content input[name=surname]').val()
-    json.lastname = $('.person-content input[name=lastname]').val()
-    json.gender = $('.person-content input[name=gender]').val()
-    $('#url').val('person/' + json.userid + "_" + json.id)
-    $('#body').val(JSON.stringify(json, undefined, 2))
-})
 
 function syntaxHighlight(json) {
     if (typeof json != 'string') {

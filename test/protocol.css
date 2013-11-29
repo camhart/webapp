@@ -63,7 +63,6 @@ pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
 
 .model-content .user-content, .person-content {
     width: 200px;
-    /*height: 246px;*/
     margin: 10px;
     padding: 10px;
     border: 3px solid #2E2E1F;
@@ -82,7 +81,6 @@ pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
     min-height: 510px;
     float: left;
     margin-top: 10px;
-    /*border: 3px solid #2E2E1F;*/
 }
 
 

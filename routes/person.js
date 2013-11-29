@@ -5,9 +5,9 @@ var r = require('rethinkdb')
 var NULL_RESPONSE = { 'results' : 'null' }
 
 function Person(userid, afn, givenname, surname, gender){
-    this.id = userid + "_" + afn
     this.userid = userid
     this.afn = afn
+    this.id = userid + "_" + afn
     this.givenname = givenname
     this.surname= surname
     this.gender = gender
