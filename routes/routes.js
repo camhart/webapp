@@ -1,46 +1,110 @@
 
 
+var dummy = require('../test/dummydata')
 var db = require('./db')
-var dummy = require('./dummydata')
 var homepage = './public/vp.html'
-var assignmentpage = './public/assignment.html'
 
-exports.home = function(req, res){
+var assignmentpage = './public/assignment.html'
+var protocolpage = './test/protocol.html'
+
+
+// static pages
+function home(req, res){
     console.log("Main Page!")
     res.sendfile(homepage)
 }
 
-exports.login = function(req, res){
-    console.log("Loggining In!")
-    res.sendfile(homepage)
-}
-
-exports.logout = function(req, res){
-    console.log("Loggining Out!")
-    res.sendfile(homepage)
-}
-
-exports.contact = function(req, res){
+function contact(req, res){
     console.log("Contact Page!")
     res.sendfile(homepage)
 }
 
-exports.assignments = function(req, res)
-{
+function assignments(req, res){
     console.log('Assignment Page!')
     res.sendfile(assignmentpage)
 }
 
-exports.adduser = function(req, res, connection){
+// login/logout requests
+function login(req, res){
+    console.log("Loggining In!")
+    res.sendfile(homepage)
+}
+
+function logout(req, res){
+    console.log("Loggining Out!")
+    res.sendfile(homepage)
+}
+
+function protocol(req, res){
+    res.sendfile(protocolpage)
+}
+
+function resetdb(req, res){
+    db.reset(function(){
+        db.populate(function(){
+            res.send('200', "<h1>Database Reset and Populated!</h1>")
+        })
+    })
+}
+
+// user functions (add, get, update, delete)
+function userAdd(req, res){
     user = dummy.getDummyUser(['.', '.0', '.01', '.10', '.11', '111', '.00'])
-    db.addUserToDB(connection, user, function(result){
+    db.userAdd(user, function(result){
         res.send('200', result)
     })
 }
 
-exports.getuser = function(req, res, connection){
-    var email = 'email1'
-    db.getUserFromDB(connection, email, function(user){
+function userGet(req, res){
+    var email = req.params.id
+    db.userGet(email, function(user){
         res.send('200', user)
     })
 }
+
+function userUpdate(req, res){
+    console.log(req.body)
+    console.log(req.params.id)
+    res.send('200', 'Update User')
+}
+
+function userDelete(req, res){
+    res.send('200', 'Delete User')
+}
+
+// person functions (add, get, update, delete)
+function personAdd(req, res){
+    res.send('200', 'Add Person')
+}
+
+function personGet(req, res){
+    res.send('200', 'Get Person')
+}
+
+function personUpdate(req, res){
+    res.send('200', 'Update Person')
+}
+
+function personDelete(req, res){
+    res.send('200', 'Delete Person')
+}
+
+
+exports.home = home
+exports.logout = logout
+exports.login = login
+exports.contact = contact
+
+exports.assignments = assignments
+exports.protocol = protocol
+exports.resetdb = resetdb
+
+exports.userAdd = userAdd
+exports.userGet = userGet
+exports.userUpdate = userUpdate
+exports.userDelete = userDelete
+
+exports.personAdd = personAdd
+exports.personGet = personGet
+exports.personUpdate = personUpdate
+exports.personDelete = personDelete

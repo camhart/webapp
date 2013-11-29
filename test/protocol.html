@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>VP Tests</title>
+    <link rel='stylesheet' type='text/css' href='protocol.css'/>
+</head>
+
+<body>
+    <div class='header'>
+        <h1>Protocol Tester</h1>
+    </div>
+    <div class='main-content'>
+        <div class='model-content'>
+            <div class='user-content'>
+                <h2>User</h2>
+                <input type="text" name="firstname" placeholder=' First Name'><br>
+                <input type="text" name="lastname" placeholder=' Last Name'><br>
+                <input type="text" name="gender" placeholder=' Gender (m or f)'><br>
+                <input type="text" name="email" placeholder=' Email'><br>
+                <div id='user-button'>
+                    <button id='user-generate' type='button'>To JSON!</button>
+                </div>
+            </div>
+            <div class='person-content'>
+                <h2>Person</h2>
+                <input type="text" name="surname" placeholder=' Surname'><br>
+                <input type="text" name="lastname" placeholder=' Last Name'><br>
+                <input type="text" name="gender" placeholder=' Gender'><br>
+                <input type="text" name="key" placeholder=' Gender'><br>
+                <br>
+                <button id='person-generate' type='button'>To JSON!</button>
+            </div>
+        </div>
+        <div class='input-content'>
+            <input id='url' col=1 placeholder='URL'></textarea>
+            <textarea id='headers' placeholder='Headers (JSON)'></textarea>
+            <textarea id='body' placeholder='Body (JSON)'></textarea>
+            <div id='buttons'>
+                <button type='button' value='get'>GET!</button>
+                <button type='button' value='post'>POST!</button>
+                <button type='button' value='delete'>DEL!</button>
+                <button type='button' value='put'>PUT!</button>
+            </div>
+        </div>
+        <div class='result-content'>
+            <pre id='results' placeholder='Results'></pre>
+        </div>
+    </div>
+</body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src='protocol.js'></script>
+</html>
