@@ -81,7 +81,7 @@ $('#person-generate').click(function(){
     json.lastname = $('.person-content input[name=lastname]').val()
     json.gender = $('.person-content input[name=gender]').val()
     json.key = $('.person-content input[name=key]').val()
-    $('#url').val('person/' + json.email)
+    $('#url').val('person/' + json.key)
     $('#body').val(JSON.stringify(json, undefined, 2))
 })
 
