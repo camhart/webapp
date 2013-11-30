@@ -44,10 +44,9 @@ function createPersonTable(callback){
 
 function populate(callback){
     user = dummy.getDummyUser([0, 1, 2, 3])
-    console.log('\n----------------------\ntest\n')
-    console.log(user)
-    userAdd(user, callback)
-    // callback()
+    userAdd(user, function(result){
+        callback(result)
+    })
 }
 exports.reset = reset
 exports.populate = populate
