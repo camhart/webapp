@@ -45,8 +45,28 @@ function personUpdate(req, res){
     })
 }
 
+function batchPersonAdd(req, res) {
+    
+}
+
+function batchPersonUpdate(req, res) {
+
+}
+
+function batchPersonDelete(req, res) {
+
+}
+
+function batchPersonGet(req, res) {
+    
+}
+
 exports.Person = Person
 exports.personAdd = personAdd
 exports.personGet = personGet
 exports.personUpdate = personUpdate
 exports.personDelete = personDelete
+exports.batchPersonAdd = batchPersonAdd
+exports.batchPersonUpdate = batchPersonUpdate
+exports.batchPersonDelete = batchPersonDelete
+exports.batchPersonGet = batchPersonGet

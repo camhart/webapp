@@ -15,28 +15,28 @@ function reset(callback){
 }
 
 function dropDatabase(callback){
-    r.dbDrop(app.db_name).run(con, function(err, result){
+    r.dbDrop(app.db_name).run(app.con, function(err, result){
         if (err) throw err
         callback(result)
     })
 }
 
 function createDatabase(callback){
-    r.dbCreate(app.db_name).run(con, function(err, result){
+    r.dbCreate(app.db_name).run(app.con, function(err, result){
         if (err) throw err
         callback(result)
     })
 }
 
 function createUserTable(callback){
-    r.db(app.db_name).tableCreate(app.tbl_user).run(con, function(err, result){
+    r.db(app.db_name).tableCreate(app.tbl_user).run(app.con, function(err, result){
         if (err) throw err
         callback(result)
     })
 }
 
 function createPersonTable(callback){
-    r.db(app.db_name).tableCreate(app.tbl_person).run(con, function(err, result){
+    r.db(app.db_name).tableCreate(app.tbl_person).run(app.con, function(err, result){
         if (err) throw err
         callback(result)
     })
@@ -44,6 +44,8 @@ function createPersonTable(callback){
 
 function populate(callback){
     user = dummy.getDummyUser([0, 1, 2, 3])
+    console.log('\n----------------------\ntest\n')
+    console.log(user)
     userAdd(user, callback)
     // callback()
 }

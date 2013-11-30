@@ -56,6 +56,7 @@ app.get('/contact', routes.contact)
 app.get('/overview', routes.assignments)
 app.get('/protocol', routes.protocol)
 app.get('/resetdb', routes.resetdb)
+app.get('/populate', routes.populatedb)
 
 app.post('/login', routes.login)
 app.post('/logout', routes.logout)
@@ -72,6 +73,11 @@ app.delete('/person/:id', person.personDelete)
 app.put(   '/person', person.personAdd)
 app.post(  '/person', person.personUpdate)
 
+//batch person
+app.get('/persons/:id', person.batchPersonGet)
+app.put('/persons/:id', person.batchPersonAdd)
+app.delete('/persons/:id', person.batchPersonDelete)
+app.post('/persons/:id', person.batchPersonUpdate)
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
