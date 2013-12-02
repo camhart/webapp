@@ -51,6 +51,12 @@
 	<div>This is some sidebar content</div>
 	<div>This is some sidebar content</div>
 	<div>This is some sidebar content</div>
+	<div class='minimap' id='vp-minimap'>
+		<!-- <div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
+			<div ng-repeat='(path, p) in mapPoints' class='minimapPoint' id='g-{{p.id}}' style='left:{{p.topleft.x/10}}px;top:{{p.topleft.y/10}}px;'>
+			</div>
+		</div>-->
+	</div>
 </div>
 
 <div class='main'>
@@ -105,8 +111,16 @@
 <script type='text/javascript' src='js/vp-core.js'></script>
 <script type='text/javascript' src='js/vp-ng-config.js'></script>
 <script type='text/javascript' src='js/core/vp-graphic.js'></script>
+<script type='text/javascript' src='js/core/vp-mapPoint.js'></script>
 <script type='text/javascript' src='js/util/vector2d.js'></script>
 <script type='text/javascript' src='js/util/vp-defaults.js'></script>
 <script type='text/javascript' src='js/util/vp-offsets.js'></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#vp-minimap").width(MINIMAP_WIDTH);
+	$("#vp-minimap").height(MINIMAP_HEIGHT);
+});
+</script>
 </body>
 </html>

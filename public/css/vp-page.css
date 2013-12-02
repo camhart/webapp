@@ -118,6 +118,27 @@ input:focus
 	z-index: 200;
 }
 
+.minimap
+{
+	top:-120px;
+	width: 350px;
+	height: 250px;
+	border: 1px solid #ccc;
+	box-shadow: 0px 8px 6px -6px #ccc inset;
+	padding: 10px;
+	position: relative;
+	left: 370px;
+	background: #fff;
+	z-index: 300;
+}
+
+.minimapPoint
+{
+	width:10px;
+	height:10px;
+	background: black;
+}
+
 .content
 {
 	height: 100%;

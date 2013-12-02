@@ -52,6 +52,13 @@ app.controller('Content', function($scope)
 		}
 	}
 
+	$scope.mapPoints = new Array();
+
+	for(var i=0; i<$scope.people.length; i++)
+	{
+		mapPoints[i] = new MapPoint();
+	}
+
 	$scope.graphics = {
 		'.': new Graphic($scope.people['.'], '.')
 	}
