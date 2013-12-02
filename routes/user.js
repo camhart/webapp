@@ -1,6 +1,7 @@
 
 var app = require('../app.js')
 var r = require('rethinkdb')
+var gedcom = require('../gedcom')
 
 var NULL_RESPONSE = { 'results' : 'null' }
 
@@ -44,8 +45,28 @@ function userUpdate(req, res){
     })
 }
 
+function parse(req, res)
+{
+    console.log('parsing')
+    gedcom.parse('/Users/ryan/Documents/Family History/MaxEsplin1.ged', function(top)
+    {
+        var ret = JSON.stringify(top.INDI, function(index, value)
+        {
+            if (index === 'parent')
+                return -1
+            else
+                return value
+        })
+
+        console.log(top.INDI)
+
+        res.send('200', ret)
+    })
+}
+
 exports.User = User
 exports.userAdd = userAdd
 exports.userGet = userGet
 exports.userUpdate = userUpdate
 exports.userDelete = userDelete
+exports.parse = parse
