@@ -165,7 +165,7 @@
 
 .graphic[gender='m']:before
 {
-	top:50%;
+	top:25px;
 	border-top-left-radius:10px;
 	border-top:1px solid #000;
 }
