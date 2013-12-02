@@ -53,7 +53,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.home)
 app.get('/contact', routes.contact)
-app.get('/overview', routes.assignments)
+app.get('/overview', routes.overview)
 app.get('/protocol', routes.protocol)
 app.get('/resetdb', routes.resetdb)
 app.get('/populate', routes.populatedb)
