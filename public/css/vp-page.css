@@ -177,7 +177,7 @@ input:focus
 	background:#ddd;
 }
 
-.signup-content
+.overlay-content
 {
 	margin: 50px auto;
 	width: 500px;
@@ -187,7 +187,7 @@ input:focus
 	display:table;
 }
 
-.signup-content h1
+.overlay-content h1
 {
 	text-align:center;
 	color:#026BE8;
@@ -195,17 +195,22 @@ input:focus
 	margin-bottom:50px;
 }
 
-.signup-content p
+.overlay-content p
 {
 	color:#333;
 }
 
-.signup-form
+#signup-form
 {
 	text-align:center;
 }
 
-.signup-form button
+#gedcom-form
+{
+	text-align:center;
+}
+
+.overlay-content button
 {
 	width:200px;
 	height:40px;
@@ -220,8 +225,7 @@ input:focus
 	display:none;
 }
 
-#sign-in-container input,
-#sign-up-container input
+.overlay-content input
 {
 	border-radius:5px;
 	padding:4px 7px;
@@ -230,7 +234,7 @@ input:focus
 	border:1px solid #aaa;
 }
 
-.signup-content form button
+.overlay-content form button
 {
 	margin-top:22px;
 }

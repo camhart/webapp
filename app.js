@@ -86,7 +86,7 @@ http.createServer(app).listen(app.get('port'), function(){
 })
 
 // gedcom parse
-app.get('/parse', user.parse)
+app.post('/parse', user.parse)
 
 exports.db_name = db_name
 exports.tbl_user = tbl_user

@@ -47,7 +47,8 @@ function userUpdate(req, res){
 
 function parse(req, res)
 {
-    console.log('parsing')
+    console.log('Parsing GEDCOM file!')
+    console.log(req)
     gedcom.parse('/Users/ryan/Documents/Family History/MaxEsplin1.ged', function(top)
     {
         var ret = JSON.stringify(top.INDI, function(index, value)
@@ -57,8 +58,6 @@ function parse(req, res)
             else
                 return value
         })
-
-        console.log(top.INDI)
 
         res.send('200', ret)
     })
