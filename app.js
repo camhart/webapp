@@ -65,14 +65,21 @@ app.post('/logout', routes.logout)
 // user
 app.get(   '/user/:id', user.userGet)
 app.delete('/user/:id', user.userDelete)
+// app.get(   '/user/:id', user.userGet)
+// app.delete('/user', user.userDelete)
 app.put(   '/user', user.userAdd)
 app.post(  '/user', user.userUpdate)
 
 // person
-app.get(   '/person', person.personGet)
+app.get('/person', person.personGet)
+app.post(   '/personget', person.personGet)
 app.delete('/person', person.personDelete)
 app.put(   '/person', person.personAdd)
 app.post(  '/person', person.personUpdate)
+
+//debugging, returns table
+app.get('/usertable', user.table)
+app.get('/persontable', person.table)
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){

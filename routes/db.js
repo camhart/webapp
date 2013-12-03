@@ -38,7 +38,7 @@ function createUserTable(callback){
 }
 
 function createPersonTable(callback){
-    r.db(app.db_name).tableCreate(app.tbl_person).run(app.con, function(err, result){
+    r.db(app.db_name).tableCreate(app.tbl_person, {primaryKey: 'id'}).run(app.con, function(err, result){
         if (err) throw err
         callback(result)
     })

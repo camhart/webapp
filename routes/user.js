@@ -22,28 +22,16 @@ function userGet(req, res){
 }
 
 function userDelete(req, res){
-    var deleted = []
-    r.expr(req.body.ids).forEach(function(id) {
-      deleted[deleted.length] = id
-      return r.db('vp').table('user').get(id).delete();
-    });
-    res.send('200', deleted);
-
-    // r.db(app.db_name).table(app.tbl_user).get(req.params.id).delete().run(app.con, function(err, result){
-    //     if (err) throw err 
-    //     if(result == null) result = NULL_RESPONSE
-    //     res.send('200', result)
-    // })
-// =======
-//     r.db(app.db_name).table(app.tbl_user).get(req.params.id).delete().run(app.con, function(err, result){
-//         if (err) throw err
-//         if(result == null) result = NULL_RESPONSE
-//         res.send('200', result)
-//     })
-// >>>>>>> d1cb585b446d0efc9bd258d24e762f746a7393bd
+    r.db(app.db_name).table(app.tbl_user).get(req.params.id).delete().run(app.con, function(err, result){
+        if (err) throw err
+        if(result == null) result = NULL_RESPONSE
+        res.send('200', result)
+    })
 }
 
 function userAdd(req, res){
+    console.log(req.body)
+    //console.log(res)
     r.db(app.db_name).table(app.tbl_user).insert(req.body).run(app.con, function(err, result){
         if (err) throw err
         if(result == null) result = NULL_RESPONSE
@@ -57,6 +45,18 @@ function userUpdate(req, res){
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
     })
+}
+
+function table(req, res){
+    // r.db(app.db_name).table(app.tbl_user).filter(function(user) {
+    //     return user.hasFields("id");
+    // }).run(app.con, function(err, result){
+    //     if (err) throw err
+    //     if(result == null) result = NULL_RESPONSE
+    //     console.log(result)
+    //     res.send('200', result)
+    // })
+    res.send('200', "not fully implemented");
 }
 
 function parse(req, res)
@@ -83,3 +83,4 @@ exports.userGet = userGet
 exports.userUpdate = userUpdate
 exports.userDelete = userDelete
 exports.parse = parse
+exports.table = table

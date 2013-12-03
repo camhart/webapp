@@ -70,6 +70,16 @@ pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
     float: left;
 }
 
+.model-content .database-content {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 3px solid #2E2E1F;
+    display: inline-block;
+    position: relative;
+    float: bottom;
+}
+
 .model-content .batch-content {
     width: 200px;
     margin: 10px;
