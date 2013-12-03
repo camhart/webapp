@@ -68,16 +68,10 @@ app.put(   '/user', user.userAdd)
 app.post(  '/user', user.userUpdate)
 
 // person
-app.get(   '/person/:id', person.personGet)
-app.delete('/person/:id', person.personDelete)
+app.get(   '/person', person.personGet)
+app.delete('/person', person.personDelete)
 app.put(   '/person', person.personAdd)
 app.post(  '/person', person.personUpdate)
-
-//batch person
-app.get('/persons/:id', person.batchPersonGet)
-app.put('/persons/:id', person.batchPersonAdd)
-app.delete('/persons/:id', person.batchPersonDelete)
-app.post('/persons/:id', person.batchPersonUpdate)
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){

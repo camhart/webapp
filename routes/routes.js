@@ -50,11 +50,16 @@ function resetdb(req, res){
 
 function populatedb(req, res){
     db.reset(function(results){
-        console.log(results)
+        console.log('req: ' + req)
+        var outputa = '';
+        for (property in req) {
+          outputa += property + ': ' + req[property]+'; ';
+        }
+
         var header = "<h1>Database Populated!</h1>"
         var output = "<p>" + JSON.stringify(results) + "<p>"
         console.log(output)
-        res.send('200', header + output)
+        res.send('200', header + output + '<br>' + req + '<br>' + outputa)
     })
 }
 

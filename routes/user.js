@@ -21,11 +21,18 @@ function userGet(req, res){
 }
 
 function userDelete(req, res){
-    r.db(app.db_name).table(app.tbl_user).get(req.params.id).delete().run(app.con, function(err, result){
-        if (err) throw err 
-        if(result == null) result = NULL_RESPONSE
-        res.send('200', result)
-    })
+    var deleted = []
+    r.expr(req.body.ids).forEach(function(id) {
+      deleted[deleted.length] = id
+      return r.db('vp').table('user').get(id).delete();
+    });
+    res.send('200', deleted);
+
+    // r.db(app.db_name).table(app.tbl_user).get(req.params.id).delete().run(app.con, function(err, result){
+    //     if (err) throw err 
+    //     if(result == null) result = NULL_RESPONSE
+    //     res.send('200', result)
+    // })
 }
 
 function userAdd(req, res){
@@ -38,7 +45,7 @@ function userAdd(req, res){
 
 function userUpdate(req, res){
     r.db(app.db_name).table(app.tbl_user).get(req.body.id).replace(req.body).run(app.con, function(err, result){
-        if (err) throw err 
+        if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
     })
