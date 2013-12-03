@@ -8,6 +8,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src="js/jquery.blockUI.js"></script>
+	<script src="js/jquery.fileupload.js"></script>
 </head>
 <body>
 <noscript>
@@ -34,7 +35,7 @@
 <div class='header'>
 	<div class='header-content'>
 		<div>This is a header</div>
-		<div>This is a header</div>
+		<div id='upload-gedcom'>Upload GEDCOM</div>
 		<div id='show-sidebar'>Show / Hide Sidebar</div>
 		<div id='ui-block'>Block UI</div>
 		<div>This is a header</div>
@@ -85,9 +86,9 @@
 </div>
 
 <div class='overlay' id='overlay'>
-	<div class='signup-content'>
+	<div class='overlay-content'>
 		<div id='overlay-close' class='btn btn-default'>&times;</div>
-		<div class='signup-form'>
+		<div id='signup-form'>
 			<h1>Sign up or Sign in</h1>
 
 			<button class='btn btn-danger' id='signup-btn'>Sign up</button><br>
@@ -96,13 +97,21 @@
 					and we&apos;ll take care of the rest.</p>
 
 				<input placeholder='Name'/>
-				<input placeholder='Email'/>
+				<input type='email' placeholder='Email'/>
 				<button class='btn btn-default submit'>Submit</button>
 			</form>
 			<button class='btn btn-danger' id='signin-btn'>Sign in</button><br>
 			<form id='sign-in-container' onsubmit='return signIn()'>
 				<input placeholder='Email'/>
 				<button class='btn btn-default submit'>Submit</button>
+			</form>
+		</div>
+		<div id='gedcom-form'>
+			<h1>Upload GEDCOM File</h1>
+
+			<form onsubmit='return uploadFiles()'>
+				<input id='gedcom-file' type='file'/>
+				<button class='btn btn-default submit'>Upload</button>
 			</form>
 		</div>
 	</div>
