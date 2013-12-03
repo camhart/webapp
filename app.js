@@ -18,6 +18,7 @@ var http = require('http')
 var path = require('path')
 var r = require('rethinkdb')
 var express = require('express')
+var gedcom = require('./gedcom')
 
 r.connect( {host: db_host, port: db_port, db: this.db_name}, function(err, connection) {
     if (err) {
@@ -53,7 +54,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.home)
 app.get('/contact', routes.contact)
-app.get('/overview', routes.assignments)
+app.get('/overview', routes.overview)
 app.get('/protocol', routes.protocol)
 app.get('/resetdb', routes.resetdb)
 app.get('/populate', routes.populatedb)
@@ -83,6 +84,9 @@ app.post('/persons/:id', person.batchPersonUpdate)
 http.createServer(app).listen(app.get('port'), function(){
   console.log('(' + app.get('env') + ') Express Server listening on port ', app.get('port'))
 })
+
+// gedcom parse
+app.get('/parse', user.parse)
 
 exports.db_name = db_name
 exports.tbl_user = tbl_user

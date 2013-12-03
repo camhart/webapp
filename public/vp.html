@@ -62,10 +62,9 @@
 <div class='main'>
 	<div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
 		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}{{motionClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.id}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
-			<div class='id'>{{g.id}}</div>
+			<div class='id'>{{g.ahn}}</div>
 			<span ng-if='!g.empty && !showedit[g.id]'>
 				<span class='name'>{{g.givenname}} {{g.surname}} <!--({{g.center.x}}, {{g.center.y}})<br>--></span>
-				<span ng-if='g.ahn'>Ahnentafel Number: {{g.ahn}}</span>
 			</span>
 			<!--span ng-if='!showedit[g.id] && g.empty && g.ahn' class='name'>Ahn#: {{g.ahn}}<br></span>
 			<span ng-if='!showedit[g.id] && g.empty'>Path: {{g.path}}</span-->
@@ -88,9 +87,9 @@
 <div class='overlay' id='overlay'>
 	<div class='signup-content'>
 		<div id='overlay-close' class='btn btn-default'>&times;</div>
-		<h1>Sign up or Sign in</h1>
-
 		<div class='signup-form'>
+			<h1>Sign up or Sign in</h1>
+
 			<button class='btn btn-danger' id='signup-btn'>Sign up</button><br>
 			<form id='sign-up-container' onsubmit='return signUp()'>
 				<p>Signing up is easy! Just enter your name and email address
@@ -109,12 +108,15 @@
 	</div>
 </div>
 <script type='text/javascript' src='js/vp-core.js'></script>
+<script type='text/javascript' src='js/vp-page.js'></script>
 <script type='text/javascript' src='js/vp-ng-config.js'></script>
 <script type='text/javascript' src='js/core/vp-graphic.js'></script>
 <script type='text/javascript' src='js/core/vp-mapPoint.js'></script>
 <script type='text/javascript' src='js/util/vector2d.js'></script>
 <script type='text/javascript' src='js/util/vp-defaults.js'></script>
 <script type='text/javascript' src='js/util/vp-offsets.js'></script>
+<script type='text/javascript' src='js/core/vp-creation.js'></script>
+<script type='text/javascript' src='js/io/vp-load.js'></script>
 <script type="text/javascript">
 $(document).ready(function()
 {

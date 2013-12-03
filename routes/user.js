@@ -1,6 +1,7 @@
 
 var app = require('../app.js')
 var r = require('rethinkdb')
+var gedcom = require('../gedcom')
 
 var NULL_RESPONSE = { 'results' : 'null' }
 
@@ -14,7 +15,7 @@ function User(firstname, lastname, gender, email){
 // user functions (add, get, update, delete)
 function userGet(req, res){
     r.db(app.db_name).table(app.tbl_user).get(req.params.id).run(app.con, function(err, result){
-        if (err) throw err 
+        if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
     })
@@ -22,7 +23,7 @@ function userGet(req, res){
 
 function userDelete(req, res){
     r.db(app.db_name).table(app.tbl_user).get(req.params.id).delete().run(app.con, function(err, result){
-        if (err) throw err 
+        if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
     })
@@ -33,14 +34,33 @@ function userAdd(req, res){
         if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
-    }) 
+    })
 }
 
 function userUpdate(req, res){
     r.db(app.db_name).table(app.tbl_user).get(req.body.id).replace(req.body).run(app.con, function(err, result){
-        if (err) throw err 
+        if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
+    })
+}
+
+function parse(req, res)
+{
+    console.log('parsing')
+    gedcom.parse('/Users/ryan/Documents/Family History/MaxEsplin1.ged', function(top)
+    {
+        var ret = JSON.stringify(top.INDI, function(index, value)
+        {
+            if (index === 'parent')
+                return -1
+            else
+                return value
+        })
+
+        console.log(top.INDI)
+
+        res.send('200', ret)
     })
 }
 
@@ -49,3 +69,4 @@ exports.userAdd = userAdd
 exports.userGet = userGet
 exports.userUpdate = userUpdate
 exports.userDelete = userDelete
+exports.parse = parse
