@@ -15,10 +15,12 @@ function reset(callback){
 }
 
 function dropDatabase(callback){
-    r.dbDrop(app.db_name).run(app.con, function(err, result){
-        if (err) throw err
-        callback(result)
-    })
+    var exsists = r.db('vp').info()
+    if(exsists) {
+        r.dbDrop(app.db_name).run(app.con, function(err, result){
+            callback(result)
+        })
+    }
 }
 
 function createDatabase(callback){

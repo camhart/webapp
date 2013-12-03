@@ -15,7 +15,12 @@ function Person(userid, afn, givenname, surname, gender){
 
 // user functions (add, get, update, delete)
 function personGet(req, res){
-    r.db(app.db_name).table(app.tbl_person).get(req.params.id).run(app.con, function(err, result){
+    // r.db(app.db_name).table(app.tbl_person).get(req.params.id).run(app.con, function(err, result){
+    //     if (err) throw err 
+    //     if(result == null) result = NULL_RESPONSE
+    //     res.send('200', result)
+    // })
+    r.db(app.db_name).table(app.tbl_person).get(req.body).run(app.con, function(err, result){
         if (err) throw err 
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)

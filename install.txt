@@ -30,6 +30,11 @@ install nodemon (optional: to avoid restarting server when file changes are made
 
 runserver
 	- nodemon app.js (or just 'node app' without nodemon)
+
+
+Others
+	https://npmjs.org/package/connect-rethinkdb
+	npm install connect-rethinkdb 
 	
 	
 

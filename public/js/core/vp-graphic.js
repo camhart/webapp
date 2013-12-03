@@ -71,6 +71,11 @@ Graphic.prototype.calculateAhn = function()
 		this.line += '0'
 }
 
+Graphic.calculateAhn = function(path)
+{
+	return parseInt('1' + this.path.substring(1), 2)
+}
+
 Graphic.prototype.isNorthChild = function()
 {
 	return this.path[this.path.length - 1] == '0'

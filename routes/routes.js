@@ -5,7 +5,7 @@ var db = require('./db')
 
 var HOMEPAGE = './public/vp.html'
 var PROTOCOLPAGE = './test/protocol.html'
-var ASSIGNMENTSPAGE = './public/overview.html'
+var OVERVIEWPAGE = './public/overview.html'
 
 // static pages
 function home(req, res){
@@ -18,9 +18,9 @@ function contact(req, res){
     res.sendfile(HOMEPAGE)
 }
 
-function assignments(req, res){
+function overview(req, res){
     console.log('Assignment Page!')
-    res.sendfile(ASSIGNMENTSPAGE)
+    res.sendfile(OVERVIEWPAGE)
 }
 
 // login/logout requests
@@ -65,7 +65,7 @@ function populatedb(req, res){
 
 exports.home = home
 exports.contact = contact
-exports.assignments = assignments
+exports.overview = overview
 exports.login = login
 exports.logout = logout
 exports.protocol = protocol

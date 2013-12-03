@@ -1,7 +1,3 @@
-$.getScript('js/vp-page.js')
-$.getScript('js/core/vp-motion.js')
-$.getScript('js/core/vp-creation.js')
-
 var app = angular.module('vp-app', []);
 var content
 app.controller('Content', function($scope)
@@ -50,6 +46,13 @@ app.controller('Content', function($scope)
 			gender: 'f',
 			empty: false
 		}
+	}
+
+	$scope.mapPoints = new Array();
+
+	for(var i=0; i<$scope.people.length; i++)
+	{
+		mapPoints[i] = new MapPoint();
 	}
 
 	$scope.graphics = {

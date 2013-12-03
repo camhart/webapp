@@ -1,6 +1,7 @@
 
 var app = require('../app.js')
 var r = require('rethinkdb')
+var gedcom = require('../gedcom')
 
 var NULL_RESPONSE = { 'results' : 'null' }
 
@@ -14,7 +15,7 @@ function User(firstname, lastname, gender, email){
 // user functions (add, get, update, delete)
 function userGet(req, res){
     r.db(app.db_name).table(app.tbl_user).get(req.params.id).run(app.con, function(err, result){
-        if (err) throw err 
+        if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
     })
@@ -33,6 +34,13 @@ function userDelete(req, res){
     //     if(result == null) result = NULL_RESPONSE
     //     res.send('200', result)
     // })
+// =======
+//     r.db(app.db_name).table(app.tbl_user).get(req.params.id).delete().run(app.con, function(err, result){
+//         if (err) throw err
+//         if(result == null) result = NULL_RESPONSE
+//         res.send('200', result)
+//     })
+// >>>>>>> d1cb585b446d0efc9bd258d24e762f746a7393bd
 }
 
 function userAdd(req, res){
@@ -40,7 +48,7 @@ function userAdd(req, res){
         if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
-    }) 
+    })
 }
 
 function userUpdate(req, res){
@@ -51,8 +59,27 @@ function userUpdate(req, res){
     })
 }
 
+function parse(req, res)
+{
+    console.log('Parsing GEDCOM file!')
+    console.log(req)
+    gedcom.parse('/Users/ryan/Documents/Family History/MaxEsplin1.ged', function(top)
+    {
+        var ret = JSON.stringify(top.INDI, function(index, value)
+        {
+            if (index === 'parent')
+                return -1
+            else
+                return value
+        })
+
+        res.send('200', ret)
+    })
+}
+
 exports.User = User
 exports.userAdd = userAdd
 exports.userGet = userGet
 exports.userUpdate = userUpdate
 exports.userDelete = userDelete
+exports.parse = parse
