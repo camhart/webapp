@@ -25,7 +25,7 @@ button:active {
     color: #06266f;
 }
 
-pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; white-space: pre-wrap;}
 .string { color: green; }
 .number { color: darkorange; }
 .boolean { color: blue; }
@@ -115,8 +115,7 @@ pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
 }
 
 .result-content #results{ 
-    min-width: 300px;
-    max-width: 600px;
+    width: 300px;
     min-height: 510px;
     float: left;
     margin-top: 10px;

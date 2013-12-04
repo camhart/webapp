@@ -78,8 +78,8 @@ app.put(   '/person', person.personAdd)
 app.post(  '/person', person.personUpdate)
 
 //debugging, returns table
-app.get('/usertable', user.table)
-app.get('/persontable', person.table)
+app.get('/usertable', user.usersAll)
+app.get('/persontable', person.personsAll)
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){

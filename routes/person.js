@@ -48,15 +48,13 @@ function personUpdate(req, res){
     })
 }
 
-function table(req, res){
-    // r.db(app.db_name).table(app.tbl_user).filter(function(person) {
-    //     return person.hasFields("id");
-    // }).run(app.con, function(err, result){
-    //     if (err) throw err
-    //     if(result == null) result = NULL_RESPONSE
-    //     res.send('200', result)
-    // })
-    res.send('200', "not fully implemented");
+function personsAll(req, res){
+    r.db(app.db_name).table(app.tbl_person).run(app.con, function(err, cursor){
+        if(err) throw err
+        cursor.toArray(function(err, results){
+            res.send('200', results);
+        })
+    })
 }
 
 exports.Person = Person
@@ -64,4 +62,4 @@ exports.personAdd = personAdd
 exports.personGet = personGet
 exports.personUpdate = personUpdate
 exports.personDelete = personDelete
-exports.table = table
+exports.personsAll = personsAll
