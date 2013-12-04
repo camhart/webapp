@@ -6,6 +6,9 @@
 	
 	person - upsert - update/add (list of people, could just be one)
 		delete - list of people to remove
+
+	/persons/id -> id is a user id, get all of the user data
+	/person/id -> id is a person id, get that individual person id
 	
 	Database
 	

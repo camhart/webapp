@@ -15,10 +15,13 @@ function Person(userid, afn, givenname, surname, gender){
 
 // user functions (add, get, update, delete)
 function personGet(req, res){
-    r.db(app.db_name).table(app.tbl_person).get(req.params.id).run(app.con, function(err, result){
-        if (err) throw err 
-        if(result == null) result = NULL_RESPONSE
-        res.send('200', result)
+    console.log(req.params.data)
+    console.log(req.params.body)
+    console.log(req.data)
+    console.log(req.body)
+    r.expr(req.body).eqJoin(function(doc) { return doc; }, r.db('vp').table("person")).run(app.con, function(err, result) {
+        console.log(JSON.stringify(result));
+        res.send('200', JSON.stringify(result));        
     })
 }
 
@@ -45,20 +48,15 @@ function personUpdate(req, res){
     })
 }
 
-function batchPersonAdd(req, res) {
-    
-}
-
-function batchPersonUpdate(req, res) {
-
-}
-
-function batchPersonDelete(req, res) {
-
-}
-
-function batchPersonGet(req, res) {
-    
+function table(req, res){
+    // r.db(app.db_name).table(app.tbl_user).filter(function(person) {
+    //     return person.hasFields("id");
+    // }).run(app.con, function(err, result){
+    //     if (err) throw err
+    //     if(result == null) result = NULL_RESPONSE
+    //     res.send('200', result)
+    // })
+    res.send('200', "not fully implemented");
 }
 
 exports.Person = Person
@@ -66,7 +64,4 @@ exports.personAdd = personAdd
 exports.personGet = personGet
 exports.personUpdate = personUpdate
 exports.personDelete = personDelete
-exports.batchPersonAdd = batchPersonAdd
-exports.batchPersonUpdate = batchPersonUpdate
-exports.batchPersonDelete = batchPersonDelete
-exports.batchPersonGet = batchPersonGet
+exports.table = table

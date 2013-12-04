@@ -18,6 +18,7 @@ var http = require('http')
 var path = require('path')
 var r = require('rethinkdb')
 var express = require('express')
+var gedcom = require('./gedcom')
 
 var ged = require('./gedcom')
 
@@ -55,7 +56,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.home)
 app.get('/contact', routes.contact)
-app.get('/overview', routes.assignments)
+app.get('/overview', routes.overview)
 app.get('/protocol', routes.protocol)
 app.get('/resetdb', routes.resetdb)
 app.get('/populate', routes.populatedb)
@@ -70,21 +71,23 @@ app.put(   '/user', user.userAdd)
 app.post(  '/user', user.userUpdate)
 
 // person
-app.get(   '/person/:id', person.personGet)
-app.delete('/person/:id', person.personDelete)
+app.get('/person', person.personGet)
+app.post(   '/personget', person.personGet)
+app.delete('/person', person.personDelete)
 app.put(   '/person', person.personAdd)
 app.post(  '/person', person.personUpdate)
 
-//batch person
-app.get('/persons/:id', person.batchPersonGet)
-app.put('/persons/:id', person.batchPersonAdd)
-app.delete('/persons/:id', person.batchPersonDelete)
-app.post('/persons/:id', person.batchPersonUpdate)
+//debugging, returns table
+app.get('/usertable', user.table)
+app.get('/persontable', person.table)
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
   console.log('(' + app.get('env') + ') Express Server listening on port ', app.get('port'))
 })
+
+// gedcom parse
+app.post('/parse', user.parse)
 
 exports.db_name = db_name
 exports.tbl_user = tbl_user

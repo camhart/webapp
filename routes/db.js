@@ -17,10 +17,12 @@ function reset(callback){
 }
 
 function dropDatabase(callback){
-    r.dbDrop(app.db_name).run(app.con, function(err, result){
-        if (err) throw err
-        callback(result)
-    })
+    var exsists = r.db('vp').info()
+    if(exsists) {
+        r.dbDrop(app.db_name).run(app.con, function(err, result){
+            callback(result)
+        })
+    }
 }
 
 function createDatabase(callback){
@@ -38,7 +40,7 @@ function createUserTable(callback){
 }
 
 function createPersonTable(callback){
-    r.db(app.db_name).tableCreate(app.tbl_person).run(app.con, function(err, result){
+    r.db(app.db_name).tableCreate(app.tbl_person, {primaryKey: 'id'}).run(app.con, function(err, result){
         if (err) throw err
         callback(result)
     })

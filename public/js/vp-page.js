@@ -35,7 +35,7 @@ $.extend($.blockUI.defaults.css, {
     'border-radius': '6px',
 })
 
-function showOverlay(e)
+function showOverlay(e, divid)
 {
 	$('body').append($overlay)
 
@@ -44,7 +44,7 @@ function showOverlay(e)
 		$overlay.addClass('overlay-visible')
 	}, 50)
 
-	$('.signup-content').click(function(e)
+	$('.overlay-content').click(function(e)
 	{
 		e.stopPropagation()
 	})
@@ -53,9 +53,22 @@ function showOverlay(e)
 	$('#overlay-close').click(closeOverlay)
 
 	if (this.id === 'user-signup')
+	{
+		$('#gedcom-form').hide()
+		$('#signup-form').show()
 		$('#sign-up-container').show('blind', { }, 250)
+	}
 	else if (this.id === 'user-login')
+	{
+		$('#gedcom-form').hide()
+		$('#signup-form').show()
 		$('#sign-in-container').show('blind', { }, 250)
+	}
+	else if (this.id === 'upload-gedcom')
+	{
+		$('#signup-form').hide()
+		$('#gedcom-form').show()
+	}
 
 	$('#signup-btn').click(function(e)
 	{
@@ -88,7 +101,10 @@ $(document).ready(function()
 	$overlay = $('#overlay')
 	$overlay.remove()
 
-	$('#user-login, #user-signup').click(showOverlay)
+	$('#user-login, #user-signup, #upload-gedcom').click(showOverlay)
+	$('#gedcom-file').fileupload({
+		url: '/parse'
+	})
 })
 
 function signIn(clickEvent)
@@ -100,5 +116,22 @@ function signIn(clickEvent)
 function signUp(clickEvent)
 {
 	alert('Sign-up functionality has not yet been implemented!')
+	return false
+}
+
+function uploadFiles(e)
+{
+	// var file = $('#gedcom-file').files[0]
+	// console.log(file)
+
+	// $.ajax({
+	// 	url: '/parse',
+	// 	type: 'post',
+	// 	success: function(response)
+	// 	{
+	// 		alert('received ' + response.length + ' bytes of data')
+	// 		// console.log(response)
+	// 	}
+	// })
 	return false
 }

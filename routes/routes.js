@@ -5,7 +5,7 @@ var db = require('./db')
 
 var HOMEPAGE = './public/vp.html'
 var PROTOCOLPAGE = './test/protocol/protocol.html'
-var ASSIGNMENTSPAGE = './public/overview.html'
+var OVERVIEWPAGE = './public/overview.html'
 
 // static pages
 function home(req, res){
@@ -18,9 +18,9 @@ function contact(req, res){
     res.sendfile(HOMEPAGE)
 }
 
-function assignments(req, res){
+function overview(req, res){
     console.log('Assignment Page!')
-    res.sendfile(ASSIGNMENTSPAGE)
+    res.sendfile(OVERVIEWPAGE)
 }
 
 // login/logout requests
@@ -48,18 +48,22 @@ function resetdb(req, res){
 }
 
 function populatedb(req, res){
-    db.populate(function(results){
-        console.log(results)
+    db.reset(function(results){
+        console.log('req: ' + req)
+        var outputa = '';
+        for (property in req) {
+          outputa += property + ': ' + req[property]+'; ';
+        }
+        console.log(output)
         var header = "<h1>Database Populated!</h1>"
         var output = "<p>" + JSON.stringify(results) + "<p>"
-        console.log(output)
-        res.send('200', header + output)
+        res.send('200', header + output + '<br>' + req + '<br>' + outputa)
     })
 }
 
 exports.home = home
 exports.contact = contact
-exports.assignments = assignments
+exports.overview = overview
 exports.login = login
 exports.logout = logout
 exports.protocol = protocol

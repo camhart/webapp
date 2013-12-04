@@ -1,10 +1,10 @@
 function load()
 {
-	$.ajax({
-		url: 'something?name=me&hello=hi',
-		success: function(response)
-		{
-			content.people[n] = response
-		}
-	})
+	var filename = '/Users/ryan/Documents/Family History/MaxEsplin1.ged'
+	Gedcom.parse(filename, loadCallback)
+}
+
+function loadCallback(element_top)
+{
+	console.log('loaded!', element_top)
 }
