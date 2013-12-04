@@ -13,7 +13,7 @@ createGraphics = function()
 			var fp = g.path + '0'
 			var mp = g.path + '1'
 
-			if (/*!g.empty && /**/!(fp in content.graphics))
+			if (!g.empty && /**/!(fp in content.graphics))
 			{
 				var f = getPerson(fp)
 
@@ -25,7 +25,7 @@ createGraphics = function()
 				content.dirty = true
 			}
 
-			if (/*!g.empty && /**/!(mp in content.graphics))
+			if (!g.empty && /**/!(mp in content.graphics))
 			{
 				var m = getPerson(mp)
 
@@ -55,7 +55,7 @@ createGraphics = function()
 			}
 
 			// get north neighbor
-			if (/*!g.empty && /**/g.path.indexOf('1') !== -1)
+			if (!g.empty && /**/g.path.indexOf('1') !== -1)
 			{
 				var np = (g.ahn - 1).toString(2)
 				np = '.' + np.substring(1)
@@ -73,7 +73,7 @@ createGraphics = function()
 			}
 
 			// get south neighbor
-			if (/*!g.empty && /**/g.path.indexOf('0') !== -1)
+			if (!g.empty && /**/g.path.indexOf('0') !== -1)
 			{
 				var sp = (g.ahn + 1).toString(2)
 				sp = '.' + sp.substring(1)

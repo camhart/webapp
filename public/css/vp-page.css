@@ -139,14 +139,13 @@ input:focus
 
 .minimap
 {
-	top:-120px;
+	bottom: 10px;
 	width: 350px;
 	height: 250px;
 	border: 1px solid #ccc;
-	box-shadow: 0px 8px 6px -6px #ccc inset;
 	padding: 10px;
-	position: relative;
-	left: 370px;
+	position: absolute;
+	left: 380px;
 	background: #fff;
 	z-index: 300;
 }
@@ -325,4 +324,43 @@ input:focus
 	display:inline-block;
 	margin:10px;
 	vertical-align:middle;
+}
+
+.gedcom-results-container table
+{
+	margin-top:25px;
+	width:100%;
+}
+
+.gedcom-results-container table thead th
+{
+	background: #aef;
+	border-radius: 4px;
+	padding: 6px;
+	font-size: 110%;
+}
+
+.gedcom-results-container table tbody
+{
+	text-align:start;
+}
+
+.gedcom-results-container table tr
+{
+	margin:0;
+}
+
+.gedcom-results-container table tr td
+{
+	margin:0;
+}
+
+.gedcom-results-container img
+{
+	margin-top:50px;
+}
+
+.gedcom-results-container h1
+{
+	margin-top:30px;
 }

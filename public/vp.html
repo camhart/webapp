@@ -15,7 +15,7 @@
 	<div>
 		<h1>JavaScript disabled</h1>
 
-		<p>Your browser has disabled JavaScript.</p>
+		<p>JavaScript is disabled in your browser.</p>
 		<p>This web application requires JavaScript. If you would like to use this page, please go to
 			your browser&apos;s settings and enable JavaScript.</p>
 	</div>
@@ -34,11 +34,9 @@
 
 <div class='header'>
 	<div class='header-content'>
-		<div>This is a header</div>
+		<div id='show-sidebar'>Tools</div>
 		<div id='upload-gedcom'>Upload GEDCOM</div>
-		<div id='show-sidebar'>Show / Hide Sidebar</div>
 		<div id='ui-block'>Block UI</div>
-		<div>This is a header</div>
 	</div>
 </div>
 
@@ -114,6 +112,8 @@
 				<input type='file' id='file-upload' multiple/>
 				<div id='uploaded-file-container'></div>
 			</div>
+
+			<div id='gedcom-results' class='gedcom-results-container'></div>
 		</div>
 	</div>
 </div>
@@ -121,11 +121,12 @@
 <script type='text/javascript' src='js/vp-page.js'></script>
 <script type='text/javascript' src='js/vp-ng-config.js'></script>
 <script type='text/javascript' src='js/core/vp-graphic.js'></script>
+<script type='text/javascript' src='js/core/vp-creation.js'></script>
+<script type='text/javascript' src='js/core/vp-motion.js'></script>
 <script type='text/javascript' src='js/core/vp-mapPoint.js'></script>
 <script type='text/javascript' src='js/util/vector2d.js'></script>
 <script type='text/javascript' src='js/util/vp-defaults.js'></script>
 <script type='text/javascript' src='js/util/vp-offsets.js'></script>
-<script type='text/javascript' src='js/core/vp-creation.js'></script>
 <script type='text/javascript' src='js/io/vp-load.js'></script>
 <script type="text/javascript">
 $(document).ready(function()

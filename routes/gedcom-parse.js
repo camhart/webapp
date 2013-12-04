@@ -8,15 +8,14 @@ function processGCData(data)
     var families = buildFamiliyList(data.FAM)
     console.log(JSON.stringify(families, null, 4))
 
-    return {
-        people: people,
-        families: families
-    }
+    var result = linkFamilies(people, families)
+
+    return result
 }
 
 function buildPeopleList(data)
 {
-    var people = []
+    var people = {}
 
     for (var i in data)
     {
@@ -24,7 +23,7 @@ function buildPeopleList(data)
 
         var pdata = data[i]
 
-        person.id = parseID(pdata.id)
+        var personid = parseID(pdata.id)
         var name = pdata.NAME
         if (name)
         {
@@ -83,17 +82,9 @@ function buildPeopleList(data)
         if (!Object.isEmpty(ords))
             person.lds_ordinances = ords
 
-        // for (var j in pdata)
-        // {
-        //     console.log(j)
-        // }
-
-        people.push(person)
-
-        // break
+        people[personid] = person
     }
 
-    // console.log(JSON.strinburialgify(people, null, 4))
     return people
 }
 
@@ -144,13 +135,15 @@ function parseLDSOrdinance(ordinance, pdata)
 
 function buildFamiliyList(data)
 {
-    var families = []
+    var families = {}
 
     for (var key in data)
     {
         data[key].simplify()
         var fdata = data[key],
             family = {}
+
+        var familyid = parseID(fdata.id)
 
         var husb = fdata.HUSB
         if (husb)
@@ -193,10 +186,25 @@ function buildFamiliyList(data)
         if (!Object.isEmpty(ords))
             family.lds_ordinances = ords
 
-        families.push(family)
+        families[familyid] = family
     }
 
     return families
+}
+
+function linkFamilies(people, families)
+{
+    for (var i in families)
+    {
+        var family = families[i]
+
+        // TODO link
+    }
+
+    return {
+        people: people,
+        families: families
+    }
 }
 
 function parseID(id)

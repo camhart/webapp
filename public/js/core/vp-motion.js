@@ -24,7 +24,7 @@ $('#content').mousedown(function(e)
 {
 	_content_top = $('#content').offset().top
 	x = e.clientX
-	y = e.clientY -_content_top
+	y = e.clientY - _content_top
 	$('body').on('mousemove', _content_mousemove)
 	$('body').on('mouseup', _content_mouseup)
 	content.moving = true
