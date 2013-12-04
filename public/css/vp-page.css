@@ -289,15 +289,12 @@ input:focus
 	width:100%;
 	border-radius:5px;
 	border:1px solid #aaa;
-	text-align:start;
 	min-height:65px;
 }
 
 .file-upload-container button
 {
-	float:right;
-	width:100px;
-	height:55px;
+	margin:12px;
 }
 
 .uploaded-file

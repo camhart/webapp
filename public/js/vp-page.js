@@ -154,17 +154,11 @@ function setUpUploader()
 		},
 		onFinishOne: function(event, response, name, number, total)
 		{
-			console.log(event, response, name, number, total)
 			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ok'></span> <span>Done</span>")
 		},
 		onError: function(event, name, error)
 		{
-			console.log(event, name, error)
 			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ban-circle'></span> <span>Error</span>")
-		},
-		onFinish: function(event, total)
-		{
-			console.log(event, total)
 		}
 	})
 }
