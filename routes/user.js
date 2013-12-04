@@ -103,7 +103,7 @@ function parse(req, res)
 
         console.log('parse success!')
         removeFile(filepath)
-        res.end(JSON.stringify({ result: data }))
+        res.end(JSON.stringify(data))
     })
 }
 
@@ -123,96 +123,11 @@ function processFile(filepath, cb)
 {
     gedcom.parse(filepath, function(top)
     {
-        var people = processGCData(top.INDI)
+        var parser = require('./gedcom-parse')
+        var data = parser.parse(top)
 
-        cb(false, JSON.stringify(people))
+        cb(false, data)
     })
-}
-
-function processGCData(data)
-{
-    var people = []
-
-    for (var i in data)
-    {
-        var person = {}
-
-        var pdata = data[i]
-
-        var name = pdata.NAME
-        if (name)
-        {
-            person.fullname = name.value
-            if (typeof name.SURN === 'object')
-                person.surname = name.SURN.value
-
-            if (typeof name.GIVN === 'object')
-                person.givenname = name.GIVN.value
-        }
-
-        var gender = pdata.SEX
-        if (gender)
-        {
-            person.gender = gender.value
-        }
-
-        var birth = pdata.BIRT
-        if (birth)
-        {
-            if (typeof birth.DATE === 'object')
-                person.birthdate = birth.DATE.value
-
-            if (typeof birth.PLAC === 'object')
-                person.birthplace = birth.PLAC.value
-        }
-
-        var death = pdata.DEAT
-        if (death)
-        {
-            if (typeof death.DATE === 'object')
-                person.deathdate = death.DATE.value
-
-            if (typeof death.PLAC === 'object')
-                person.deathplace = death.PLAC.value
-        }
-
-        var burial = pdata.BURI
-        if (burial)
-        {
-            if (typeof burial.DATE === 'object')
-                person.burialdate = death.DATE.value
-
-            if (typeof burial.PLAC === 'object')
-                person.burialplace = death.PLAC.value
-        }
-
-        var afn = pdata.AFN
-        if (afn)
-        {
-            person.afn = afn.value
-        }
-
-        var bapl = pdata.BAPL
-        if (bapl)
-        {
-            if (typeof bapl.DATE === 'object')
-                person.lds_baptism_date = bapl.DATE.value
-            if (typeof bapl.TEMP === 'object')
-                person.lds_baptism_temple = bapl.TEMP.value
-        }
-
-        for (var j in pdata)
-        {
-            console.log(j)
-        }
-
-        people.push(person)
-
-        break
-    }
-
-    console.log(people)
-    return people
 }
 
 exports.User = User

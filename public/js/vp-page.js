@@ -149,12 +149,17 @@ function setUpUploader()
 		},
 		setProgress: function(val)
 		{
-			var width = Math.floor(100 * val) + '%'
-			$('#file-progressbar .progress-bar').css('width', width)
+			var width = Math.floor(100 * val)
+			if (width === 100 && $('#file-progressbar .progress-bar').attr('aria-valuenow') != width)
+			{
+				$('#file-progressbar div').html("<span class='glyphicon glyphicon-arrow-up'></span> <span>Uploaded</span>")
+			}
+			$('#file-progressbar .progress-bar').css('width', width + '%')
+			$('#file-progressbar .progress-bar').attr('aria-valuenow', width)
 		},
 		onFinishOne: function(event, response, name, number, total)
 		{
-			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ok'></span> <span>Done</span>")
+			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ok'></span> <span>Parsed</span>")
 		},
 		onError: function(event, name, error)
 		{
