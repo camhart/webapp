@@ -2,7 +2,7 @@
 var app = require('../app.js')
 var r = require('rethinkdb')
 
-var NULL_RESPONSE = { 'results' : 'null' }
+var NULL_RESPONSE = { 'results' : 'no user found' }
 
 function User(firstname, lastname, gender, email){
     this.firstname = firstname
@@ -29,6 +29,7 @@ function userDelete(req, res){
 }
 
 function userAdd(req, res){
+    console.log('user', req.body)
     r.db(app.db_name).table(app.tbl_user).insert(req.body).run(app.con, function(err, result){
         if (err) throw err
         if(result == null) result = NULL_RESPONSE

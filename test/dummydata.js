@@ -22,13 +22,13 @@ function getDummyUser(afns){
 
 function getDummyPerson(afn){
     d_person_id += 1
-    person = new person.Person(
+    p = new person.Person(
         afn,
         'firstname' + d_person_id, 
         'lastname' + d_person_id, 
         20 + d_person_id, 
         'email' + d_person_id)
-    return person
+    return p
 }
 
 

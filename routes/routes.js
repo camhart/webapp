@@ -4,7 +4,7 @@ var dummy = require('../test/dummydata')
 var db = require('./db')
 
 var HOMEPAGE = './public/vp.html'
-var PROTOCOLPAGE = './test/protocol.html'
+var PROTOCOLPAGE = './test/protocol/protocol.html'
 var ASSIGNMENTSPAGE = './public/overview.html'
 
 // static pages
@@ -43,13 +43,12 @@ function resetdb(req, res){
         console.log(results)
         var header = "<h1>Database Reset!</h1>"
         var output = "<p>" + JSON.stringify(results) + "<p>"
-        console.log(output)
         res.send('200', header + output)
     })
 }
 
 function populatedb(req, res){
-    db.reset(function(results){
+    db.populate(function(results){
         console.log(results)
         var header = "<h1>Database Populated!</h1>"
         var output = "<p>" + JSON.stringify(results) + "<p>"

@@ -1,6 +1,8 @@
 
 var r = require('rethinkdb')
 var app = require('../app')
+var dummy = require('../test/dummydata')
+var users = require('./user')
 
 function reset(callback){
     dropDatabase(function(result1){
@@ -44,7 +46,8 @@ function createPersonTable(callback){
 
 function populate(callback){
     user = dummy.getDummyUser([0, 1, 2, 3])
-    userAdd(user, function(result){
+    cosole.log(user)
+    users.userAdd(user, function(result){
         callback(result)
     })
 }

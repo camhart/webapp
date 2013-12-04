@@ -19,6 +19,8 @@ var path = require('path')
 var r = require('rethinkdb')
 var express = require('express')
 
+var ged = require('./gedcom')
+
 r.connect( {host: db_host, port: db_port, db: this.db_name}, function(err, connection) {
     if (err) {
         console.log(err)
