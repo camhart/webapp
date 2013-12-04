@@ -68,6 +68,7 @@ function showOverlay(e, divid)
 	{
 		$('#signup-form').hide()
 		$('#gedcom-form').show()
+		setUpUploader()
 	}
 
 	$('#signup-btn').click(function(e)
@@ -102,9 +103,6 @@ $(document).ready(function()
 	$overlay.remove()
 
 	$('#user-login, #user-signup, #upload-gedcom').click(showOverlay)
-	$('#gedcom-file').fileupload({
-		url: '/parse'
-	})
 })
 
 function signIn(clickEvent)
@@ -119,19 +117,60 @@ function signUp(clickEvent)
 	return false
 }
 
-function uploadFiles(e)
+function setUpUploader()
 {
-	// var file = $('#gedcom-file').files[0]
-	// console.log(file)
+	$('#upload-file-btn').click(function(e)
+	{
+		$('#file-upload').click()
+	})
 
-	// $.ajax({
-	// 	url: '/parse',
-	// 	type: 'post',
-	// 	success: function(response)
-	// 	{
-	// 		alert('received ' + response.length + ' bytes of data')
-	// 		// console.log(response)
-	// 	}
-	// })
-	return false
+	$('#file-upload').html5_upload({
+		url: '/parse',
+		autostart: true,
+		sendBoundary: window.FormData || $.browser.mozilla,
+		onStartOne: function(event, name, number, total)
+		{
+			$('#uploaded-file-container .delete-button').click()
+			$('#uploaded-file-container').html('')
+
+			var content = "<div class='uploaded-file' id='uploaded-file'>"
+				+ "<div class='delete-button btn btn-default' onclick='deleteUploadedFile()'>&times;</div>"
+				+ "<span>" + name + "</span>"
+				+ "<div id='file-progressbar' class='progress'>"
+				+ "<div class='progress-bar' role='progressbar' aria-valuenow='60' aria-valuemin='0' aria-valuemax='100'></div>"
+				+ "</div>"
+				+ "<input type=hidden id='file-details' name='UploadedFiles'/>"
+				+ "</div>"
+
+			$('#uploaded-file-container').html(content)
+			$('#upload-file-btn').hide()
+
+			return true
+		},
+		setProgress: function(val)
+		{
+			var width = Math.floor(100 * val) + '%'
+			$('#file-progressbar .progress-bar').css('width', width)
+		},
+		onFinishOne: function(event, response, name, number, total)
+		{
+			console.log(event, response, name, number, total)
+			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ok'></span> <span>Done</span>")
+		},
+		onError: function(event, name, error)
+		{
+			console.log(event, name, error)
+			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ban-circle'></span> <span>Error</span>")
+		},
+		onFinish: function(event, total)
+		{
+			console.log(event, total)
+		}
+	})
+}
+
+function deleteUploadedFile()
+{
+	$('#uploaded-file-container').html('')
+	$('#upload-file-btn').show()
 }

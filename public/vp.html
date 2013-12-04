@@ -8,7 +8,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src="js/jquery.blockUI.js"></script>
-	<script src="js/jquery.fileupload.js"></script>
+	<script src="js/jquery.html5_upload.js"></script>
 </head>
 <body>
 <noscript>
@@ -109,10 +109,11 @@
 		<div id='gedcom-form'>
 			<h1>Upload GEDCOM File</h1>
 
-			<form onsubmit='return uploadFiles()'>
-				<input id='gedcom-file' type='file'/>
-				<button class='btn btn-default submit'>Upload</button>
-			</form>
+			<div id='file-uploader' class='file-upload-container'>
+				<button id='upload-file-btn' class='btn btn-danger'>Select file</button>
+				<input type='file' id='file-upload'/>
+				<div id='uploaded-file-container'></div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -57,19 +57,33 @@ function usersAll(req, res){
 function parse(req, res)
 {
     console.log('Parsing GEDCOM file!')
-    console.log(req)
-    gedcom.parse('/Users/ryan/Documents/Family History/MaxEsplin1.ged', function(top)
-    {
-        var ret = JSON.stringify(top.INDI, function(index, value)
-        {
-            if (index === 'parent')
-                return -1
-            else
-                return value
-        })
+    var path = require('path')
 
-        res.send('200', ret)
-    })
+    var name = req.headers['x-file-name']
+    if (!name)
+    {
+        res.send(406, JSON.stringify({error: "No name specified."}))
+        return
+    }
+
+    var extension = path.extname(name).toLowerCase()
+    if (extension !== '.ged' && extension !== '.gedcom')
+    {
+        res.send(406, JSON.stringify({error:'Invalid file extension. Must be .ged or .gedcom'}))
+        return
+    }
+
+    var size = parseInt(req.headers['content-length'], 10);
+    if (!size || size < 0)
+    {
+        res.send(411, JSON.stringify({error: "No size specified."}))
+        return
+    }
+
+    console.log(name, extension, size)
+    console.log(req.headers)
+
+    res.send(JSON.stringify({success:true}))
 }
 
 exports.User = User
