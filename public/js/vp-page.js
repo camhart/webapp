@@ -93,6 +93,7 @@ function closeOverlay(e)
 	setTimeout(function()
 	{
 		$('#sign-in-container, #sign-up-container').hide()
+		deleteUploadedFile()
 		$overlay.remove()
 	}, 250)
 }
@@ -151,10 +152,8 @@ function setUpUploader()
 		setProgress: function(val)
 		{
 			var width = Math.floor(100 * val)
-			if (width === 100 && $('#file-progressbar .progress-bar').attr('aria-valuenow') != width)
+			if (width === 100 && $('#file-progressbar .progress-bar').attr('aria-valuenow') != width && !$('#upload-file-btn').is(':visible'))
 			{
-				// $('#uploaded-file .delete-button').remove()
-				// $('#uploaded-file').css('padding-left', '0')
 				$('#file-progressbar div').html("<span class='glyphicon glyphicon-arrow-up'></span> <span>Uploaded</span>")
 				$('#gedcom-results').append("<h1>Parsing...</h1>")
 			}
@@ -163,7 +162,10 @@ function setUpUploader()
 		},
 		onFinishOne: function(event, response, name, number, total)
 		{
-			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ok'></span> <span>Parsed</span>")
+			if ($('#upload-file-btn').is(':visible'))
+				return
+
+			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ok'></span> <span>Complete</span>")
 			response = JSON.parse(response)
 			console.log('Number of people:', response.people.length)
 			console.log('Number of families:', response.families.length)
