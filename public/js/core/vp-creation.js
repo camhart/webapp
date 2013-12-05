@@ -99,7 +99,7 @@ function getPerson(path)
 		return content.people[path]
 	else
 	{
-		g = path[path.length - 1] === '0' ? 'm' : 'f'
+		g = path[path.length - 1] === '0' ? 'M' : 'F'
 		return { empty: true, gender: g }
 	}
 }

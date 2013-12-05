@@ -3,6 +3,7 @@
 <head>
 	<link rel='stylesheet' type='text/css' href='css/vp-page.css'/>
 	<link rel='stylesheet' type='text/css' href='css/vp-core.css'/>
+	<link rel='stylesheet' type='text/css' href='css/vp-io.css'/>
 	<link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -60,7 +61,7 @@
 
 <div class='main'>
 	<div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
-		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}{{motionClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.id}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
+		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}{{motionClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.ahn}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
 			<div class='id'>{{g.ahn}}</div>
 			<span ng-if='!g.empty && !showedit[g.id]'>
 				<span class='name'>{{g.givenname}} {{g.surname}} <!--({{g.center.x}}, {{g.center.y}})<br>--></span>
@@ -104,7 +105,7 @@
 				<button class='btn btn-default submit'>Submit</button>
 			</form>
 		</div>
-		<div id='gedcom-form'>
+		<div id='gedcom-form' ng-controller='ParseResults' class='{{getControllerClass()}}'>
 			<h1>Upload GEDCOM File</h1>
 
 			<div id='file-uploader' class='file-upload-container'>
@@ -114,6 +115,44 @@
 			</div>
 
 			<div id='gedcom-results' class='gedcom-results-container'></div>
+
+			<div id='parse-results' class='parse-results'>
+				<h2 ng-if='!data'>Upload a file to view data</h2>
+				<table ng-if='data.people'>
+					<thead>
+						<tr><th colspan=2>Select Person as Root</th></tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type='search' ng-model='peopleFilter' placeholder='Filter'/></td>
+							<td>
+								Sort by:
+								<select ng-model='peopleOrder'>
+									<option ng-repeat='val in order_props' value='{{val.id}}'>{{val.name}}</option>
+								</select>
+								<label><input type='checkbox' ng-model='peopleOrderDesc'/> Desc</label>
+							</td>
+						</tr>
+						<tr>
+							<td colspan=2>
+								<div class='results-list'>
+									<div ng-repeat='person in orderabledata | filter:peopleFilter | orderBy:peopleOrder:peopleOrderDesc' class='results-person' ng-click='generatePaths(person.id)' id='result-{{person.id}}'>
+										<b>{{person.givenname}} {{person.surname}}</b> ({{person.birthdate}} - {{person.deathdate}})
+										<div>
+											<b>AFN:</b> {{person.afn}}
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr ng-if='dataReady'>
+							<td colspan=2>
+								<button ng-click='loadData()' class='btn btn-primary'>Confirm and Load</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

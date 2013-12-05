@@ -146,6 +146,8 @@ function setUpUploader()
 			$('#uploaded-file-container').html(content)
 			$('#upload-file-btn').hide()
 			$('#gedcom-results').html("<img src='img/495.gif'/>")
+			results.data = {}
+			results.$apply()
 
 			return true
 		},
@@ -167,8 +169,6 @@ function setUpUploader()
 
 			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ok'></span> <span>Complete</span>")
 			response = JSON.parse(response)
-			console.log('Number of people:', response.people.length)
-			console.log('Number of families:', response.families.length)
 			loadParsedFile(response)
 		},
 		onError: function(event, name, error)
@@ -182,4 +182,8 @@ function deleteUploadedFile()
 {
 	$('#uploaded-file-container, #gedcom-results').html('')
 	$('#upload-file-btn').show()
+	delete results.data
+	delete results.newpeople
+	results.dataReady = false
+	results.$apply()
 }

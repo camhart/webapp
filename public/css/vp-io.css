@@ -1,0 +1,186 @@
+#gedcom-form
+{
+	text-align:center;
+}
+
+#gedcom-form h1
+{
+	-webkit-transition: 0.25s;
+	transition: 0.25s;
+}
+
+#gedcom-form.compressed h1
+{
+	margin:30px 0;
+}
+
+.file-upload-container
+{
+	border-radius:5px;
+	border:1px solid #aaa;
+	min-height:65px;
+}
+
+.file-upload-container button
+{
+	margin:12px;
+}
+
+.uploaded-file
+{
+	height: 55px;
+	margin: 5px;
+	padding-left:10px;
+}
+
+.uploaded-file .delete-button
+{
+	font-size: 14pt;
+	font-weight: bold;
+	float: right;
+	width: 22px;
+	cursor: pointer;
+	border-radius: 4px;
+	text-align: center;
+	border: 1px solid #fff;
+	padding: 0px 1px 2px 1px;
+	line-height:normal;
+	background:#fff;
+}
+
+.uploaded-file .progress
+{
+	width: 90%;
+	display:inline-block;
+	margin:10px;
+	vertical-align:middle;
+}
+
+#gedcom-form table
+{
+	margin-top:25px;
+	width:100%;
+}
+
+#gedcom-form table thead th
+{
+	background: #aef;
+	border-radius: 4px;
+	padding: 6px;
+	font-size: 110%;
+}
+
+#gedcom-form table tbody
+{
+	text-align:start;
+}
+
+#gedcom-form table tr
+{
+	margin:0;
+}
+
+#gedcom-form table tr td
+{
+	margin:0;
+}
+
+.gedcom-results-container img
+{
+	margin-top:50px;
+}
+
+.gedcom-results-container h1
+{
+	margin-top:30px;
+}
+
+.parse-results
+{
+	overflow:hidden;
+}
+
+.parse-results h2
+{
+	margin-top:60px;
+}
+
+.parse-results > div
+{
+	margin-top:10px;
+}
+
+.parse-results tr:first-child td:last-child
+{
+	width:275px;
+}
+
+.parse-results table
+{
+	width:100%;
+}
+
+.parse-results input[type='text'],
+.parse-results input[type='search']
+{
+	padding:2px;
+	border-radius:10px;
+	width:93%;
+	font-size:90%;
+}
+
+.parse-results .results-list
+{
+	overflow-y:scroll;
+	height:315px;
+	border:1px solid #bbb;
+	border-radius:5px;
+	padding:5px;
+}
+
+#gedcom-form.ready .results-list
+{
+	height:250px;
+}
+
+#gedcom-form.ready .parse-results tr:last-child td
+{
+	text-align:center;
+}
+
+.results-person
+{
+	padding:2px 6px;
+	border-bottom:1px solid #aaa;
+}
+
+.results-person:nth-child(even)
+{
+	background:#eee;
+}
+
+.results-person.selected
+{
+	background:#fea !important;
+}
+
+.results-person:hover
+{
+	background:#aef;
+}
+
+.results-person div
+{
+	display:none;
+	margin-top:5px;
+}
+
+.results-person:hover div
+{
+	display:block;
+}
+
+.results-person:active
+{
+	background:#9de;
+}

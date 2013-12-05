@@ -7,43 +7,43 @@ app.controller('Content', function($scope)
 		'.': {
 			givenname: 'Jack',
 			surname: 'Doe',
-			gender: 'm',
+			gender: 'M',
 			empty: false
 		},
 		'.0': {
 			givenname: 'John',
 			surname: 'Doe',
-			gender: 'm',
+			gender: 'M',
 			empty: false
 		},
 		'.1': {
 			givenname: 'Jane',
 			surname: 'Johnson',
-			gender: 'f',
+			gender: 'F',
 			empty: false
 		},
 		'.00': {
 			givenname: 'Robert',
 			surname: 'Doe',
-			gender: 'm',
+			gender: 'M',
 			empty: false
 		},
 		'.01': {
 			givenname: 'Elizabeth',
 			surname: 'Smith',
-			gender: 'f',
+			gender: 'F',
 			empty: false
 		},
 		'.10': {
 			givenname: 'William',
 			surname: 'Johnson',
-			gender: 'm',
+			gender: 'M',
 			empty: false
 		},
 		'.11': {
 			givenname: 'Mary',
 			surname: 'Jones',
-			gender: 'f',
+			gender: 'F',
 			empty: false
 		}
 	}
@@ -133,14 +133,16 @@ app.controller('Content', function($scope)
 var top_of_view = null
 var canvas = $('#content')
 
-$(document).ready(function()
+$(document).ready(positionRootGraphic)
+
+function positionRootGraphic()
 {
-	var $root = $('#g-0')
+	var $root = $('#g-1')
 
 	var x = $root.parent().width() - GRAPHIC_HORIZ_OFFSET * 3.5
 	var y = $root.parent().height() / 2
 	content.graphics['.'].translate(x, y)
-});
+}
 
 function refresh()
 {

@@ -2,13 +2,10 @@
 function processGCData(data)
 {
     var people = buildPeopleList(data.INDI)
-    console.log(JSON.stringify(people, null, 4))
-
-    // TODO link families
     var families = buildFamiliyList(data.FAM)
-    console.log(JSON.stringify(families, null, 4))
 
     var result = linkFamilies(people, families)
+    // console.log(JSON.stringify(result, null, 4))
 
     return result
 }
@@ -45,7 +42,10 @@ function buildPeopleList(data)
         if (birth)
         {
             if (typeof birth.DATE === 'object')
+            {
                 person.birthdate = birth.DATE.value
+                person.bdate_ms = Date.parse(birth.DATE.value)
+            }
 
             if (typeof birth.PLAC === 'object')
                 person.birthplace = birth.PLAC.value
@@ -55,7 +55,10 @@ function buildPeopleList(data)
         if (death)
         {
             if (typeof death.DATE === 'object')
+            {
                 person.deathdate = death.DATE.value
+                person.ddate_ms = Date.parse(death.DATE.value)
+            }
 
             if (typeof death.PLAC === 'object')
                 person.deathplace = death.PLAC.value
@@ -125,7 +128,7 @@ function parseLDSOrdinance(ordinance, pdata)
         if (typeof ord.TEMP === 'object')
             result.temple = ord.TEMP.value
         if (typeof ord.FAMC === 'object')
-            result.family = ord.FAMC.id
+            result.family = parseID(ord.FAMC.id)
 
         return result
     }
@@ -198,7 +201,25 @@ function linkFamilies(people, families)
     {
         var family = families[i]
 
-        // TODO link
+        var husband = people[family.husband]
+        var wife = people[family.wife]
+
+        if (husband)
+        {
+            husband.children = family.children
+        }
+
+        if (wife)
+        {
+            wife.children = family.children
+        }
+
+        for (var i in family.children)
+        {
+            var child = people[family.children[i]]
+            child.father = family.husband
+            child.mother = family.wife
+        }
     }
 
     return {

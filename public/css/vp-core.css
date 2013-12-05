@@ -65,13 +65,13 @@
 	display:inline-block;
 }
 
-.empty[gender=m]
+.empty[gender='M']
 {
 	background: #aef;
 	box-shadow: 1px 1px 7px 2px #7ab inset;
 }
 
-.empty[gender=f]
+.empty[gender='F']
 {
 	background: #fae;
 	box-shadow: 1px 1px 7px 2px #b7a inset;
@@ -163,14 +163,14 @@
 	border-left:1px solid #000;
 }
 
-.graphic[gender='m']:before
+.graphic[gender='M']:before
 {
 	top:25px;
 	border-top-left-radius:10px;
 	border-top:1px solid #000;
 }
 
-.graphic[gender='f']:before
+.graphic[gender='F']:before
 {
 	bottom:50%;
 	border-bottom-left-radius:10px;

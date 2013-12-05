@@ -100,7 +100,7 @@ input:focus
 
 .user-data
 {
-	position: absolute;
+	position: fixed;
 	top: 6px;
 	right: 10px;
 	z-index:201;
@@ -171,12 +171,18 @@ input:focus
 	top:0;
 	left:0;
 	right:0;
-	bottom:0;
 	background:rgba(100, 100, 100, 0.3);
 	opacity:0;
 	z-index:900;
 	-webkit-transition:opacity 0.25s;
 	transition:opacity 0.25s;
+}
+
+@media(min-height:800px) {
+	.overlay
+	{
+		bottom:0;
+	}
 }
 
 .overlay.overlay-visible
@@ -223,7 +229,6 @@ input:focus
 	height: 700px;
 	background:#fff;
 	padding:10px 50px;
-	display:table;
 }
 
 .overlay-content h1
@@ -246,7 +251,7 @@ input:focus
 	margin:5px;
 }
 
-.overlay-content input
+#signup-form input
 {
 	border-radius:5px;
 	padding:4px 7px;
@@ -260,7 +265,8 @@ input:focus
 	display: none;
 }
 
-.overlay-content form button
+.overlay-content form button,
+.gedcom-results-container button
 {
 	margin-top:22px;
 }
@@ -270,97 +276,19 @@ input:focus
 	text-align:center;
 }
 
+#signup-form input
+{
+	border-radius:5px;
+	padding:4px 7px;
+	width:95%;
+	font-size:120%;
+	border:1px solid #aaa;
+}
+
 #sign-up-container,
 #sign-in-container
 {
 	width:60%;
 	margin:10px auto;
 	display:none;
-}
-
-#gedcom-form
-{
-	text-align:center;
-}
-
-.file-upload-container
-{
-	width:100%;
-	border-radius:5px;
-	border:1px solid #aaa;
-	min-height:65px;
-}
-
-.file-upload-container button
-{
-	margin:12px;
-}
-
-.uploaded-file
-{
-	height: 55px;
-	margin: 5px;
-	padding-left:10px;
-}
-
-.uploaded-file .delete-button
-{
-	font-size: 14pt;
-	font-weight: bold;
-	float: right;
-	width: 22px;
-	cursor: pointer;
-	border-radius: 4px;
-	text-align: center;
-	border: 1px solid #fff;
-	padding: 0px 1px 2px 1px;
-	line-height:normal;
-	background:#fff;
-}
-
-.uploaded-file .progress
-{
-	width: 90%;
-	display:inline-block;
-	margin:10px;
-	vertical-align:middle;
-}
-
-.gedcom-results-container table
-{
-	margin-top:25px;
-	width:100%;
-}
-
-.gedcom-results-container table thead th
-{
-	background: #aef;
-	border-radius: 4px;
-	padding: 6px;
-	font-size: 110%;
-}
-
-.gedcom-results-container table tbody
-{
-	text-align:start;
-}
-
-.gedcom-results-container table tr
-{
-	margin:0;
-}
-
-.gedcom-results-container table tr td
-{
-	margin:0;
-}
-
-.gedcom-results-container img
-{
-	margin-top:50px;
-}
-
-.gedcom-results-container h1
-{
-	margin-top:30px;
 }
