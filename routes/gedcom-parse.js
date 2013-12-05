@@ -18,11 +18,34 @@ function buildPeopleList(data)
     {
         var person = {}
 
+        data[i].simplify()
         var pdata = data[i]
 
         var personid = parseID(pdata.id)
         var name = pdata.NAME
-        if (name)
+        if (name instanceof Array)
+        {
+            person.fullname = name[0].value
+            if (typeof name[0].SURN === 'object')
+                person.surname = name[0].SURN.value
+            if (typeof name[0].GIVN === 'object')
+                person.givenname = name[0].GIVN.value
+
+            person.othernames = []
+
+            for (var i = 1; i < name.length; i++)
+            {
+                var othername = {}
+                othername.fullname = name[i].value
+                if (typeof name[0].SURN === 'object')
+                    othername.surname = name[0].SURN.value
+                if (typeof name[0].GIVN === 'object')
+                    othername.givenname = name[0].GIVN.value
+
+                person.othernames.push(othername)
+            }
+        }
+        else if (name instanceof Object)
         {
             person.fullname = name.value
             if (typeof name.SURN === 'object')
@@ -30,6 +53,19 @@ function buildPeopleList(data)
 
             if (typeof name.GIVN === 'object')
                 person.givenname = name.GIVN.value
+        }
+
+        if (!person.fullname && (person.surname || person.givenname))
+            person.fullname = person.surname + ' ' + person.givenname
+
+        if (!person.fullname || person.fullname.length === 0)
+        {
+            console.log('did not find name for individual!')
+
+            if (name)
+                console.log(name)
+            else
+                console.log('individual did not have NAME tag')
         }
 
         var gender = pdata.SEX

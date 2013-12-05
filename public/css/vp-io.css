@@ -159,14 +159,19 @@
 	background:#eee;
 }
 
-.results-person.selected
+.results-person.selected div
 {
-	background:#fea !important;
+	display:block;
 }
 
 .results-person:hover
 {
 	background:#aef;
+}
+
+.results-person.selected
+{
+	background:#fea;
 }
 
 .results-person div

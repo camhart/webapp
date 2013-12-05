@@ -36,7 +36,7 @@
 <div class='header'>
 	<div class='header-content'>
 		<div id='show-sidebar'>Tools</div>
-		<div id='upload-gedcom'>Upload GEDCOM</div>
+		<div id='upload-gedcom'>Load GEDCOM</div>
 		<div id='ui-block'>Block UI</div>
 	</div>
 </div>
@@ -64,7 +64,11 @@
 		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}{{motionClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.ahn}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
 			<div class='id'>{{g.ahn}}</div>
 			<span ng-if='!g.empty && !showedit[g.id]'>
-				<span class='name'>{{g.givenname}} {{g.surname}} <!--({{g.center.x}}, {{g.center.y}})<br>--></span>
+				<span class='name'>
+					{{g.givenname || g.surname ? g.givenname : g.fullname}}
+					{{g.givenname || g.surname ? g.surname : ''}}
+					<!--({{g.center.x}}, {{g.center.y}})<br>-->
+				</span>
 			</span>
 			<!--span ng-if='!showedit[g.id] && g.empty && g.ahn' class='name'>Ahn#: {{g.ahn}}<br></span>
 			<span ng-if='!showedit[g.id] && g.empty'>Path: {{g.path}}</span-->
@@ -106,7 +110,7 @@
 			</form>
 		</div>
 		<div id='gedcom-form' ng-controller='ParseResults' class='{{getControllerClass()}}'>
-			<h1>Upload GEDCOM File</h1>
+			<h1>Load GEDCOM File</h1>
 
 			<div id='file-uploader' class='file-upload-container'>
 				<button id='upload-file-btn' class='btn btn-danger'>Select file</button>
@@ -117,7 +121,6 @@
 			<div id='gedcom-results' class='gedcom-results-container'></div>
 
 			<div id='parse-results' class='parse-results'>
-				<h2 ng-if='!data'>Upload a file to view data</h2>
 				<table ng-if='data.people'>
 					<thead>
 						<tr><th colspan=2>Select Person as Root</th></tr>
