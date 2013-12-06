@@ -152,6 +152,7 @@
 {
 	padding:2px 6px;
 	border-bottom:1px solid #aaa;
+	cursor:default;
 }
 
 .results-person:nth-child(even)
