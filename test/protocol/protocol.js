@@ -31,7 +31,7 @@ $('#person-generate').click(function(){
     arr = []
     for(var c = 0; c < multiplier; c++) {
         json = {}
-        json.userid = $('.person-content input[name=userid]').val() + c
+        json.userid = $('.person-content input[name=userid]').val()
         json.afn = $('.person-content input[name=afn]').val() + c
         json.id = json.userid + '_' + json.afn
         json.surname = $('.person-content input[name=surname]').val()

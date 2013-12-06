@@ -45,6 +45,27 @@ function userUpdate(req, res){
     })
 }
 
+function userGetAllPersons(req, res){
+    console.log(req)
+    r.db(app.db_name).table(app.tbl_person).filter({userid:req.params.userid}).run(app.con, function(err, cursor){
+        if (err) throw err
+        cursor.toArray(function(err, results){
+            res.send('200', results);
+        })
+    })
+}
+
+
+function userGetPerson(req, res){
+    filt = req.params.userid + "_" + req.params.personid
+    r.db(app.db_name).table(app.tbl_person).filter({id:filt}).run(app.con, function(err, cursor){
+        if (err) throw err
+        cursor.toArray(function(err, results){
+            res.send('200', results);
+        })
+    })
+}
+
 function usersAll(req, res){
     r.db(app.db_name).table(app.tbl_user).run(app.con, function(err, cursor){
         if(err) throw err
@@ -133,6 +154,8 @@ function processFile(filepath, cb)
 exports.User = User
 exports.userAdd = userAdd
 exports.userGet = userGet
+exports.userGetAllPersons = userGetAllPersons
+exports.userGetPerson = userGetPerson
 exports.userUpdate = userUpdate
 exports.userDelete = userDelete
 exports.usersAll = usersAll

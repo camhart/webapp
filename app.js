@@ -69,6 +69,8 @@ app.get(   '/user/:id', user.userGet)
 app.delete('/user/:id', user.userDelete)
 app.put(   '/user', user.userAdd)
 app.post(  '/user', user.userUpdate)
+app.get('/user/:userid/persons', user.userGetAllPersons)
+app.get('/user/:userid/persons/:personid', user.userGetPerson)
 
 // person
 app.get('/person', person.personGet)
