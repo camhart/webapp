@@ -6,12 +6,12 @@ var db_port = 28015
 var db_host = 'localhost'
 var db_name = 'vp'
 var tbl_user = 'user'
-var tbl_person = 'person'
+var tbl_data = 'data'
 var con = null
 
 var routes = require('./routes/routes')
 var user = require('./routes/user')
-var person = require('./routes/person')
+var data = require('./routes/data')
 
 // module dependencies.
 var http = require('http')
@@ -59,7 +59,6 @@ app.get('/contact', routes.contact)
 app.get('/overview', routes.overview)
 app.get('/protocol', routes.protocol)
 app.get('/resetdb', routes.resetdb)
-app.get('/populate', routes.populatedb)
 
 app.post('/login', routes.login)
 app.post('/logout', routes.logout)
@@ -67,21 +66,14 @@ app.post('/logout', routes.logout)
 // user
 app.get(   '/user/:id', user.userGet)
 app.delete('/user/:id', user.userDelete)
-app.put(   '/user', user.userAdd)
-app.post(  '/user', user.userUpdate)
-app.get('/user/:userid/persons', user.userGetAllPersons)
-app.get('/user/:userid/persons/:personid', user.userGetPerson)
+app.post(  '/user/:id', user.userUpsert)
 
-// person
-app.get('/person', person.personGet)
-app.post(   '/personget', person.personGet)
-app.delete('/person', person.personDelete)
-app.put(   '/person', person.personAdd)
-app.post(  '/person', person.personUpdate)
-
-//debugging, returns table
-app.get('/usertable', user.usersAll)
-app.get('/persontable', person.personsAll)
+// data
+app.get(   '/data/:id/:data', data.dataGet)
+app.get(   '/data/:id', data.dataGetAll)
+app.delete('/data/:id', data.dataDelete)
+//?app.delete('/user/:id/:data', user.userDelete)
+app.post(  '/data/:id/:data', data.dataUpsert)
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
@@ -93,7 +85,7 @@ app.post('/parse', user.parse)
 
 exports.db_name = db_name
 exports.tbl_user = tbl_user
-exports.tbl_person = tbl_person
+exports.tbl_data = tbl_data
 // exports.con = con
 
 

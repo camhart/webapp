@@ -1,6 +1,5 @@
 
 
-var dummy = require('../test/dummydata')
 var db = require('./db')
 
 var HOMEPAGE = './public/vp.html'

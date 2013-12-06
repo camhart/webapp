@@ -1,7 +1,6 @@
 
 var r = require('rethinkdb')
 var app = require('../app')
-var dummy = require('../test/dummydata')
 var users = require('./user')
 
 function reset(callback){
@@ -45,13 +44,4 @@ function createPersonTable(callback){
         callback(result)
     })
 }
-
-function populate(callback){
-    user = dummy.getDummyUser([0, 1, 2, 3])
-    cosole.log(user)
-    users.userAdd(user, function(result){
-        callback(result)
-    })
-}
 exports.reset = reset
-exports.populate = populate
