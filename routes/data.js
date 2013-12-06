@@ -18,9 +18,20 @@ function dataGet(req, res){
 function dataGetAll(req, res){
     r.db(app.db_name).table(app.tbl_data).filter(function(data) {
      return data("id").match(req.params.id + "_")
-    }).run( conn, function(err, result) {
-        console.log(result);
-        // res.send('200', result)
+    }).run(app.con, function(err, cursor) {
+        cursor.toArray(function(err, results){
+            res.send('200', results);
+            var families = []
+            var persons = []
+
+            for(var i in results)
+                if(results[i].split('_')[1] == "I" ) {
+                    persons.push(results[i])
+                } else {
+                    families.push(results[i])
+                }
+            res.send('200', [families, persons])
+        })
     })
 }
 
