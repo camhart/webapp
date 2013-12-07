@@ -10,6 +10,7 @@ function User(firstname, lastname, gender, email){
     this.lastname = lastname
     this.gender = gender
     this.email = email
+    this.root = "";
 }
 
 // user functions (add, get, update, delete)
@@ -29,16 +30,8 @@ function userDelete(req, res){
     })
 }
 
-function userAdd(req, res){
-    r.db(app.db_name).table(app.tbl_user).insert(req.body).run(app.con, function(err, result){
-        if (err) throw err
-        if(result == null) result = NULL_RESPONSE
-        res.send('200', result)
-    })
-}
-
-function userUpdate(req, res){
-    r.db(app.db_name).table(app.tbl_user).get(req.body.id).replace(req.body).run(app.con, function(err, result){
+function userUpsert(req, res){
+    r.db(app.db_name).table(app.tbl_user).insert(req.body, {upsert: true}).run(app.con, function(err, result){
         if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
@@ -103,6 +96,9 @@ function parse(req, res)
 
         console.log('parse success!')
         removeFile(filepath)
+
+        for(key in data.families)
+            console.log(key, data.families[key])
         res.end(JSON.stringify(data))
     })
 }
@@ -131,9 +127,8 @@ function processFile(filepath, cb)
 }
 
 exports.User = User
-exports.userAdd = userAdd
+exports.userUpsert = userUpsert
 exports.userGet = userGet
-exports.userUpdate = userUpdate
 exports.userDelete = userDelete
 exports.usersAll = usersAll
 exports.parse = parse

@@ -6,12 +6,14 @@ var db_port = 28015
 var db_host = 'localhost'
 var db_name = 'vp'
 var tbl_user = 'user'
-var tbl_person = 'person'
+var tbl_data = 'data'
 var con = null
 
+
+// includes
 var routes = require('./routes/routes')
 var user = require('./routes/user')
-var person = require('./routes/person')
+var data = require('./routes/data')
 
 // module dependencies.
 var http = require('http')
@@ -48,50 +50,41 @@ app.use(app.router)
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'test')))
 
-
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler())
+    app.use(express.errorHandler())
+    app.get('/resetdb', routes.resetdb)
+    app.get('/protocol', routes.protocol)
+    app.get('/user', user.usersAll)
+    app.get('/data', data.dataAll)
 }
 
 app.get('/', routes.home)
 app.get('/contact', routes.contact)
 app.get('/overview', routes.overview)
-app.get('/protocol', routes.protocol)
-app.get('/resetdb', routes.resetdb)
-app.get('/populate', routes.populatedb)
-
 app.post('/login', routes.login)
 app.post('/logout', routes.logout)
+app.post('/parse', user.parse)
 
 // user
 app.get(   '/user/:id', user.userGet)
 app.delete('/user/:id', user.userDelete)
-app.put(   '/user', user.userAdd)
-app.post(  '/user', user.userUpdate)
+app.post(  '/user', user.userUpsert)
 
-// person
-app.get('/person', person.personGet)
-app.post(   '/personget', person.personGet)
-app.delete('/person', person.personDelete)
-app.put(   '/person', person.personAdd)
-app.post(  '/person', person.personUpdate)
-
-//debugging, returns table
-app.get('/usertable', user.usersAll)
-app.get('/persontable', person.personsAll)
+// data
+app.get(   '/data/:id/:data', data.dataGet)     // get specific data
+app.get(   '/data/:id', data.dataGetAll)        // get all data
+app.delete('/data/:id', data.dataDelete)        // delete [] data
+app.post(  '/data/:id', data.dataUpsert)       // upsert [] data
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
   console.log('(' + app.get('env') + ') Express Server listening on port ', app.get('port'))
 })
 
-// gedcom parse
-app.post('/parse', user.parse)
-
+// exports
 exports.db_name = db_name
 exports.tbl_user = tbl_user
-exports.tbl_person = tbl_person
-// exports.con = con
+exports.tbl_data = tbl_data
 
 

@@ -5,6 +5,8 @@ function processGCData(data)
     var families = buildFamiliyList(data.FAM)
 
     var result = linkFamilies(people, families)
+
+    // TODO import into database
     // console.log(JSON.stringify(result, null, 4))
 
     return result

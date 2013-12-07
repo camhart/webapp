@@ -6,52 +6,10 @@
 
 <body>
     <div class='header'>
-        <h1>Protocol Tester</h1>
+        <h1>Protocol Tester </h1>
+        <h3>[GET /user or GET /data to view all documents]</h3>
     </div>
     <div class='main-content'>
-        <div class='model-content'>
-            <div class='sub-content'>
-                <div class='user-content'>
-                    <h2>User</h2>
-                    <input type="text" name="id" placeholder=' Id'><br>
-                    <input type="text" name="firstname" placeholder=' First Name'><br>
-                    <input type="text" name="lastname" placeholder=' Last Name'><br>
-                    <input type="text" name="gender" placeholder=' Gender (m or f)'><br>
-                    <input type="text" name="email" placeholder=' Email'><br>
-                    <!--<input type="text" name="multiplyuser" placeholder=' Multiplier'><br>-->
-                    <br>
-                    <div id='user-button'>
-                        <button id='user-generate' type='button'>To JSON!</button>
-                    </div>
-                </div>
-                <div class='batch-content'>
-                    <h2>Batch</h2>
-                    <input type="text" name="list-string" placeholder=" Key list"><br>
-                    <br>
-                    <button id='batch-generate' type='button'>To JSON!</button>
-                </div>
-            </div>
-            <div class ='sub-content'>
-                <div class='person-content'>
-                    <h2>Person</h2>
-                    <input type="text" name="userid" placeholder=" User's Id"><br>
-                    <input type="text" name="afn" placeholder=' AFN'><br>
-                    <input type="text" name="surname" placeholder=' Surname'><br>
-                    <input type="text" name="lastname" placeholder=' Last Name'><br>
-                    <input type="text" name="gender" placeholder=' Gender'><br>
-                    <input type="text" name="multiplyperson" placeholder=' Multiplier'><br>
-                    <br>
-                    <button id='person-generate' type='button'>To JSON!</button>
-                </div>
-                <div class='database-content'>
-                    <h2>Database</hd>
-                    <div id='buttons'>
-                        <button type='button' value='usertable' >User table</button>
-                        <button type='button' value='persontable' >Person table</button>                    
-                    </div>
-                </div>
-          </div>
-        </div>
         <div class='input-content'>
             <input id='url' col=1 placeholder='URL'></textarea>
             <textarea id='headers' placeholder='Headers (JSON)'></textarea>
@@ -60,7 +18,8 @@
                 <button type='button' value='get'>GET!</button>
                 <button type='button' value='post'>POST!</button>
                 <button type='button' value='delete'>DEL!</button>
-                <button type='button' value='put'>PUT!</button>
+                <!-- <button type='button' value='put'>PUT!</button> -->
+                <!-- we dont actually use a put request (replaced by UPSERT) -->
             </div>
         </div>
         <div class='result-content'>

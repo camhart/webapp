@@ -1,8 +1,6 @@
 
 var r = require('rethinkdb')
 var app = require('../app')
-var dummy = require('../test/dummydata')
-var users = require('./user')
 
 function reset(callback){
     dropDatabase(function(result1){
@@ -22,6 +20,8 @@ function dropDatabase(callback){
         r.dbDrop(app.db_name).run(app.con, function(err, result){
             callback(result)
         })
+    } else {
+        callback({ skipped: 1})
     }
 }
 
@@ -40,18 +40,10 @@ function createUserTable(callback){
 }
 
 function createPersonTable(callback){
-    r.db(app.db_name).tableCreate(app.tbl_person, {primaryKey: 'id'}).run(app.con, function(err, result){
+    r.db(app.db_name).tableCreate(app.tbl_data).run(app.con, function(err, result){
         if (err) throw err
         callback(result)
     })
 }
 
-function populate(callback){
-    user = dummy.getDummyUser([0, 1, 2, 3])
-    cosole.log(user)
-    users.userAdd(user, function(result){
-        callback(result)
-    })
-}
 exports.reset = reset
-exports.populate = populate

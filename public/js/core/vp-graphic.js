@@ -1,9 +1,5 @@
-var __graphic_nextid__ = 0
-
 function Graphic(person, path)
 {
-	this.id = __graphic_nextid__
-	__graphic_nextid__ += 1
 	this.empty = person.empty
 	if (!this.empty)
 	{
