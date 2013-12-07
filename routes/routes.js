@@ -46,20 +46,6 @@ function resetdb(req, res){
     })
 }
 
-function populatedb(req, res){
-    db.reset(function(results){
-        console.log('req: ' + req)
-        var outputa = '';
-        for (property in req) {
-          outputa += property + ': ' + req[property]+'; ';
-        }
-        console.log(output)
-        var header = "<h1>Database Populated!</h1>"
-        var output = "<p>" + JSON.stringify(results) + "<p>"
-        res.send('200', header + output + '<br>' + req + '<br>' + outputa)
-    })
-}
-
 exports.home = home
 exports.contact = contact
 exports.overview = overview
@@ -67,4 +53,3 @@ exports.login = login
 exports.logout = logout
 exports.protocol = protocol
 exports.resetdb = resetdb
-exports.populatedb = populatedb

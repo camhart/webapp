@@ -37,77 +37,21 @@ pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; white-space: pre-wrap;}
     float: left;
 }
 
-.input-content #url {
-    width: 380px;
-    height: 30px;
-    margin: 10px;
-    border: 3px solid #2E2E1F;
-}
-
-.input-content #headers, #body {
+.input-content #headers, #body, #url, #buttons {
     width: 380px;
     height: 200px;
     margin: 10px;
     border: 3px solid #2E2E1F;
 }
 
+.input-content #url {
+    height: 30px;
+}
+
 .input-content #buttons{
-    width: 380px;
-    margin: 10px;
+    height: auto;
     text-align: center;
-}
-
-.model-content {
-    float: left;
-}
-
-.model-content .sub-content {
-    width: 220px;
-    margin: 10px;
-    padding: 10px;
-    display: inline;
-    position: relative;
-    float: left;
-}
-
-.model-content .database-content {
-    width: 200px;
-    margin: 10px;
-    padding: 10px;
-    border: 3px solid #2E2E1F;
-    display: inline-block;
-    position: relative;
-    float: bottom;
-}
-
-.model-content .batch-content {
-    width: 200px;
-    margin: 10px;
-    padding: 10px;
-    border: 3px solid #2E2E1F;
-    display: inline-block;
-    position: relative;
-    float: bottom;
-}
-
-.model-content .user-content{
-    width: 200px;
-    margin: 10px;
-    padding: 10px;
-    border: 3px solid #2E2E1F;
-    display: inline-block;
-    position: relative;
-    float: top;
-}
-
-.model-content .person-content{
-    width: 200px;
-    margin: 10px;
-    padding: 10px;
-    border: 3px solid #2E2E1F;
-    display: inline-block;
-    position: relative;
-    float: left;
+    border: none;
 }
 
 .result-content {
@@ -115,9 +59,8 @@ pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; white-space: pre-wrap;}
 }
 
 .result-content #results{ 
-    width: 300px;
+    width: 500px;
     min-height: 510px;
-    float: left;
     margin-top: 10px;
 }
 

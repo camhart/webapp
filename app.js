@@ -9,6 +9,8 @@ var tbl_user = 'user'
 var tbl_data = 'data'
 var con = null
 
+
+// includes
 var routes = require('./routes/routes')
 var user = require('./routes/user')
 var data = require('./routes/data')
@@ -48,44 +50,41 @@ app.use(app.router)
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'test')))
 
-
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler())
+    app.use(express.errorHandler())
+    app.get('/resetdb', routes.resetdb)
+    app.get('/protocol', routes.protocol)
+    app.get('/user', user.usersAll)
+    app.get('/data', data.dataAll)
 }
 
 app.get('/', routes.home)
 app.get('/contact', routes.contact)
 app.get('/overview', routes.overview)
-app.get('/protocol', routes.protocol)
-app.get('/resetdb', routes.resetdb)
-
 app.post('/login', routes.login)
 app.post('/logout', routes.logout)
+app.post('/parse', user.parse)
 
 // user
 app.get(   '/user/:id', user.userGet)
 app.delete('/user/:id', user.userDelete)
-app.post(  '/user/:id', user.userUpsert)
+app.post(  '/user', user.userUpsert)
 
 // data
-app.get(   '/data/:id/:data', data.dataGet)
-app.get(   '/data/:id', data.dataGetAll)
-app.delete('/data/:id', data.dataDelete)
-//?app.delete('/user/:id/:data', user.userDelete)
-app.post(  '/data/:id/:data', data.dataUpsert)
+app.get(   '/data/:id/:data', data.dataGet)     // get specific data
+app.get(   '/data/:id', data.dataGetAll)        // get all data
+app.delete('/data/:id', data.dataDelete)        // delete [] data
+app.post(  '/data/:id', data.dataUpsert)       // upsert [] data
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
   console.log('(' + app.get('env') + ') Express Server listening on port ', app.get('port'))
 })
 
-// gedcom parse
-app.post('/parse', user.parse)
-
+// exports
 exports.db_name = db_name
 exports.tbl_user = tbl_user
 exports.tbl_data = tbl_data
-// exports.con = con
 
 

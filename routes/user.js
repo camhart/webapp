@@ -31,7 +31,7 @@ function userDelete(req, res){
 }
 
 function userUpsert(req, res){
-    r.db(app.db_name).table(app.tbl_user).insert(req.body).run(app.con, function(err, result){
+    r.db(app.db_name).table(app.tbl_user).insert(req.body, {upsert: true}).run(app.con, function(err, result){
         if (err) throw err
         if(result == null) result = NULL_RESPONSE
         res.send('200', result)
@@ -96,6 +96,9 @@ function parse(req, res)
 
         console.log('parse success!')
         removeFile(filepath)
+
+        for(key in data.families)
+            console.log(key, data.families[key])
         res.end(JSON.stringify(data))
     })
 }
