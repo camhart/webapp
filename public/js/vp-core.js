@@ -49,10 +49,14 @@ app.controller('Content', function($scope)
 	}
 
 	$scope.mapPoints = new Array();
-
-	for(var i=0; i<$scope.people.length; i++)
+	$scope.maxAhn = Graphic.calculateAhn('.')
+	var i = 0;
+	for(var key in $scope.people)
 	{
-		mapPoints[i] = new MapPoint();
+		$scope.mapPoints[i++] = new MapPoint(key, $scope.people[key]);
+		var ahn = Graphic.calculateAhn(key)
+		if(ahn > $scope.maxAhn)
+			$scope.maxAhn = ahn
 	}
 
 	$scope.graphics = {

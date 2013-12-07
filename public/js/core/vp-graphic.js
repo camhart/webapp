@@ -73,7 +73,7 @@ Graphic.prototype.calculateAhn = function()
 
 Graphic.calculateAhn = function(path)
 {
-	return parseInt('1' + this.path.substring(1), 2)
+	return parseInt('1' + path.substring(1), 2)
 }
 
 Graphic.prototype.isNorthChild = function()

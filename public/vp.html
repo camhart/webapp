@@ -52,10 +52,10 @@
 	<div>This is some sidebar content</div>
 	<div>This is some sidebar content</div>
 	<div class='minimap' id='vp-minimap'>
-		<!-- <div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
-			<div ng-repeat='(path, p) in mapPoints' class='minimapPoint' id='g-{{p.id}}' style='left:{{p.topleft.x/10}}px;top:{{p.topleft.y/10}}px;'>
+		<div class='minimap-content{{demo ? " demo" : ""}}' id='minimap-content' ng-controller='Content'>
+			<div ng-repeat='(path, p) in mapPoints' class='minimapPoint' id='p-{{p.path}}' style='left:{{p.getX(maxAhn)}}px;top:{{p.getY(maxAhn)}}px;'>
 			</div>
-		</div>-->
+		</div>
 	</div>
 </div>
 
