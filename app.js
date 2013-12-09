@@ -1,7 +1,7 @@
 
 // global Settings
 var env = 'development'
-var server_port = 8000
+var server_port = 8001
 var db_port = 28015
 var db_host = 'localhost'
 var db_name = 'vp'
@@ -14,6 +14,7 @@ var con = null
 var routes = require('./routes/routes')
 var user = require('./routes/user')
 var data = require('./routes/data')
+var auth = require('./routes/auth')
 
 // module dependencies.
 var http = require('http')
@@ -77,6 +78,7 @@ app.get(   '/data/:id', data.dataGetAll)        // get all data
 app.delete('/data/:id', data.dataDelete)        // delete [] data
 app.post(  '/data/:id', data.dataUpsert)       // upsert [] data
 
+app.get('/authcallback', auth.googleAuth)
 // start server
 http.createServer(app).listen(app.get('port'), function(){
   console.log('(' + app.get('env') + ') Express Server listening on port ', app.get('port'))

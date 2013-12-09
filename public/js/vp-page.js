@@ -83,6 +83,47 @@ function showOverlay(e, divid)
 		$('#sign-up-container').hide('blind', { }, 250)
 	})
 
+	$('#signingoogle-btn').click(function(e)
+	{
+//credits http://www.gethugames.in/blog/2012/04/authentication-and-authorization-for-google-apis-in-javascript-popup-window-tutorial.html
+        var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
+        var SCOPE       =   'https://www.googleapis.com/auth/userinfo.email';
+        var CLIENTID    =   '85896237045-efjt9btuf0d2uahciptko5fk5n0m7ufe.apps.googleusercontent.com';
+        //var REDIRECT    =   'http://54.201.103.45:8000/authcallback'
+		var REDIRECT    =   'http://localhost:8001/authcallback'     
+        var TYPE        =   'token';
+        var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
+        window.location = _url;
+
+        // var win         =   window.open(_url, "VP - Google Auth", 'width=800, height=600'); 
+
+        // var pollTimer   =   window.setInterval(function() { 
+        //     try {
+        //         console.log(win.document.URL);
+        //         if (win.document.URL.indexOf(REDIRECT) != -1) {
+        //             window.clearInterval(pollTimer);
+        //             var url =   win.document.URL;
+        //             acToken =   gup(url, 'access_token');
+        //             tokenType = gup(url, 'token_type');
+        //             expiresIn = gup(url, 'expires_in');
+        //             win.close();
+
+        //             //validate token
+				    // var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';	
+				    // $.ajax({
+				    //     url: VALIDURL + acToken,
+				    //     data: null,
+				    //     success: function(responseText){  
+				    //         getUserInfo();
+				    //     },  
+				    //     dataType: "jsonp"  
+				    // });
+        //         }
+        //     } catch(e) {
+        //     }
+        // }, 100);
+	})
+
 	$('#sign-in-container button.submit').click(signIn)
 	$('#sign-up-container button.submit').click(signUp)
 }
