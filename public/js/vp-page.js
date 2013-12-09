@@ -90,7 +90,7 @@ function showOverlay(e, divid)
         var SCOPE       =   'https://www.googleapis.com/auth/userinfo.email';
         var CLIENTID    =   '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com';
         //var REDIRECT    =   'http://54.201.103.45:8000/authcallback'
-		var REDIRECT    =   'http://localhost:8001/authcallback'
+		var REDIRECT    =   'http://localhost:8000/authcallback'
         var TYPE        =   'code';
         var STATE 		= 	'getCode';
         var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE + '&state=' + STATE;

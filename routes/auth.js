@@ -4,7 +4,7 @@ var app = require('../app.js')
 var r = require('rethinkdb')
 
 //don't change this redirectURL no matter what, even if on webserver it should stay the same
-var redirectUrl = "http://localhost:8001/authcallback"//"http%3A%2F%2Flocalhost%3A8001%2Fauthcallback";
+var redirectUrl = "http://localhost:8000/authcallback"//"http%3A%2F%2Flocalhost%3A8001%2Fauthcallback";
 var googleSecret = "uxIocixkvihbjNzlnwBcAfWf"
 var googleClientId = "85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com"
 
