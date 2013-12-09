@@ -1,4 +1,6 @@
 var https = require("https");
+var http = require("http");
+var user = require('./user');
 //var http = require("http");
 var app = require('../app.js')
 var r = require('rethinkdb')
@@ -9,36 +11,15 @@ var googleSecret = "uxIocixkvihbjNzlnwBcAfWf"
 var googleClientId = "85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com"
 
 function googleAuth(req, res) {
-	// var win = window.self;
-    // var url =   window.self.document.URL;
-    // acToken =   gup(url, 'access_token');
-    // tokenType = gup(url, 'token_type');
-    // expiresIn = gup(url, 'expires_in');
-    // win.close();
-
-    //validate token
-    // https.get()
-
-    //console.log("err:= " + error)
     if(req.query.error) {
     	res.send('200', "You must grant permission to use app.")
     } else if(req.query.state == "getCode"){
   
-	    console.log("params: " + req.query.code);//req.protocol + "://" + req.get("host") + req.url)
-	    // var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';	
-	    var tokenUrl = "" ;//https://www.accounts.google.com/o/oauth2/token"
-	    tokenUrl += "code=" + req.query.code;
+	    var tokenUrl = "code=" + req.query.code;
 	    tokenUrl += "&client_id=" + googleClientId;
 	    tokenUrl += "&client_secret=" + googleSecret + "";
 	    tokenUrl += "&redirect_uri=" + redirectUrl;
 	    tokenUrl += "&grant_type=authorization_code";
-	    console.log("here")
-		// xmlhttp = new XMLHttpRequest();
-		// xmlhttp.open("GET", VALIDURL + params.acToken, false)
-		// xmlhttp.send(null)
-		// console.log(JSON.stringify(xmlhttp.responseText));
-		console.log("acToken: " + JSON.stringify(req.query))
-		console.log(tokenUrl);
 
 		var post_options = {
 			method: 'POST',
@@ -53,71 +34,51 @@ function googleAuth(req, res) {
 		var data = tokenUrl;
 
 		var post_req = https.request(post_options, function(res2) {
-			var dataBuffer = "";
+			//console.log(err)
+			//console.log(res2.body)
+			var body = '';
 			res2.on('data', function(chunk) {
+				body += chunk;
 				console.log("response: " + chunk)
 			})	
 			res2.on('end', function() {
 				//console.log('end!' + JSON.stringify(res2))
-				res.send('200', 'done')
+				// console.log('data:=' + body["access_token"])
+				// console.log('data:=' + body["\"access_token\""])
+				var jsonBody = JSON.parse(body)
+				console.log('data:=' + jsonBody.access_token)	
+				getGoogleUserInfo(jsonBody.access_token, res)
 			})
 		})
 
 		post_req.write(data);
 		post_req.end()
-
-		console.log(post_req.data)
-		console.log(post_req.body)
-
-		// https.post(tokenUrl, function(res1) {
-		// 	// console.log(res)
-		// 	//console.log("Got respsonse: " + res1.data)
-		// 	res.send('200', res1)
-		// }).on('error', function(e) {
-		// 	console.log("Got error" + e.message)
-		// 	// req.send('200', "Google Auth Error")
-		// })
 	} else {
 		res.send('200', '<html>state is ' + req.query.state + "</html");
 	}
-
-    // $.ajax({
-    //     url: VALIDURL + params.acToken,
-    //     data: null,
-    //     success: function(responseText){  
-    //     	console.log(responseText);
-    //         getGoogleUserInfo(params.acToken);
-    //     },  
-    //     dataType: "jsonp"  
-    // });
-	// res.send('200', "You are now authorized.");
 }
 
-//credits: http://www.netlobo.com/url_query_string_javascript.html
-function gup(url, name) {
-    name = name.replace(/[[]/,"\[").replace(/[]]/,"\]");
-    var regexS = "[\?&]"+name+"=([^&#]*)";
-    var regex = new RegExp( regexS );
-    var results = regex.exec( url );
-    if( results == null )
-        return "";
-    else
-        return results[1];
-}
+function getGoogleUserInfo(acToken, res) {
 
-function getGoogleUserInfo(acToken) {
-    $.ajax({
-        url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
-        data: null,
-        success: function(resp) {
-        	console.log('here!')
-            user    =   resp;
-            console.log(user);
-            // $('#uName').append(user.name);
-            // $('#imgHolder').attr('src', user.picture);
-        },
-        dataType: "jsonp"
-    });
+	https.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken, function(res1) {
+		console.log(res1)
+		var chunks = "";
+		var response;
+		res1.on('data', function(chunk) {
+			console.log("chunk: " + chunk)
+			chunks += chunk;
+		})
+		res1.on('end', function() {
+			// { id: '106105613198083240886',
+			//   email: 'camhart73@gmail.com',
+			//   verified_email: true }
+			response = {}
+			response.body = JSON.parse(chunks);
+			//user.addGoogleUser(response, res);
+			user.userUpsert(response, res);
+			console.log(response);
+		})
+	})
 }
 
 exports.googleAuth = googleAuth

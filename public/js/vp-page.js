@@ -95,34 +95,6 @@ function showOverlay(e, divid)
         var STATE 		= 	'getCode';
         var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE + '&state=' + STATE;
         window.location = _url;
-
-        // var win         =   window.open(_url, "VP - Google Auth", 'width=800, height=600'); 
-
-        // var pollTimer   =   window.setInterval(function() { 
-        //     try {
-        //         console.log(win.document.URL);
-        //         if (win.document.URL.indexOf(REDIRECT) != -1) {
-        //             window.clearInterval(pollTimer);
-        //             var url =   win.document.URL;
-        //             acToken =   gup(url, 'access_token');
-        //             tokenType = gup(url, 'token_type');
-        //             expiresIn = gup(url, 'expires_in');
-        //             win.close();
-
-        //             //validate token
-				    // var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';	
-				    // $.ajax({
-				    //     url: VALIDURL + acToken,
-				    //     data: null,
-				    //     success: function(responseText){  
-				    //         getUserInfo();
-				    //     },  
-				    //     dataType: "jsonp"  
-				    // });
-        //         }
-        //     } catch(e) {
-        //     }
-        // }, 100);
 	})
 
 	$('#sign-in-container button.submit').click(signIn)
