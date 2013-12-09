@@ -1,7 +1,7 @@
 
 // global Settings
 var env = 'development'
-var server_port = 8000
+var server_port = 8001
 var db_port = 28015
 var db_host = 'localhost'
 var db_name = 'vp'

@@ -88,11 +88,12 @@ function showOverlay(e, divid)
 //credits http://www.gethugames.in/blog/2012/04/authentication-and-authorization-for-google-apis-in-javascript-popup-window-tutorial.html
         var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
         var SCOPE       =   'https://www.googleapis.com/auth/userinfo.email';
-        var CLIENTID    =   '85896237045-efjt9btuf0d2uahciptko5fk5n0m7ufe.apps.googleusercontent.com';
+        var CLIENTID    =   '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com';
         //var REDIRECT    =   'http://54.201.103.45:8000/authcallback'
-		var REDIRECT    =   'http://localhost:8001/authcallback'     
-        var TYPE        =   'token';
-        var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
+		var REDIRECT    =   'http://localhost:8001/authcallback'
+        var TYPE        =   'code';
+        var STATE 		= 	'getCode';
+        var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE + '&state=' + STATE;
         window.location = _url;
 
         // var win         =   window.open(_url, "VP - Google Auth", 'width=800, height=600'); 
