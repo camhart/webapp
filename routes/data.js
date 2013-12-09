@@ -53,6 +53,8 @@ function dataDelete(req, res){
 }
 
 function dataUpsert(req, res){
+    for(key in req.body)
+        console.log(key, req.body[key])
     r.db(app.db_name).table(app.tbl_data).insert(req.body).run(app.con, function(err, result){
         if (err) throw err
         if(result == null) result = NULL_RESPONSE
@@ -60,7 +62,7 @@ function dataUpsert(req, res){
     })
 }
 
-function datasAll(req, res){
+function dataAll(req, res){
     r.db(app.db_name).table(app.tbl_data).run(app.con, function(err, cursor){
         if(err) throw err
         cursor.toArray(function(err, results){
@@ -150,3 +152,4 @@ exports.dataGet = dataGet
 exports.dataDelete = dataDelete
 exports.dataGetAll = dataGetAll
 exports.parse = parse
+exports.dataAll = dataAll

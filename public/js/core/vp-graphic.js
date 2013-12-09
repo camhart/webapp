@@ -1,9 +1,5 @@
-var __graphic_nextid__ = 0
-
 function Graphic(person, path)
 {
-	this.id = __graphic_nextid__
-	__graphic_nextid__ += 1
 	this.empty = person.empty
 	if (!this.empty)
 	{
@@ -73,7 +69,7 @@ Graphic.prototype.calculateAhn = function()
 
 Graphic.calculateAhn = function(path)
 {
-	return parseInt('1' + this.path.substring(1), 2)
+	return parseInt('1' + path.substring(1), 2)
 }
 
 Graphic.prototype.isNorthChild = function()

@@ -21,7 +21,6 @@ createGraphics = function()
 				var fc = VPOffsets.getCenterOfNorthChild(g)
 				fg.translate(fc)
 				content.graphics[fp] = fg
-				drawConnectionLines(g, fg)
 				content.dirty = true
 			}
 
@@ -33,7 +32,6 @@ createGraphics = function()
 				var mc = VPOffsets.getCenterOfSouthChild(g)
 				mg.translate(mc)
 				content.graphics[mp] = mg
-				drawConnectionLines(g, mg)
 				content.dirty = true
 			}
 
@@ -117,35 +115,7 @@ destroyGraphics = function()
 			|| g.center.y < -margin
 			|| g.center.y > canvas.height() + margin)
 		{
-			destroyConnectionLines_child(content.graphics[i])
-			destroyConnectionLine_parent(content.graphics[i])
 			delete content.graphics[i]
-		}
-	}
-}
-
-function drawConnectionLines(child, parent)
-{
-
-}
-
-function destroyConnectionLines_child(child)
-{
-	if (child)
-	{
-
-	}
-}
-
-function destroyConnectionLine_parent(parent)
-{
-	if (parent && parent.path && parent.path.length > 1)
-	{
-		var path = parent.path.substring(0, parent.path.length - 1)
-		var g = content.graphics[path]
-		if (g)
-		{
-
 		}
 	}
 }

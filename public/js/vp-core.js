@@ -49,10 +49,14 @@ app.controller('Content', function($scope)
 	}
 
 	$scope.mapPoints = new Array();
-
-	for(var i=0; i<$scope.people.length; i++)
+	$scope.maxAhn = Graphic.calculateAhn('.')
+	var i = 0;
+	for(var key in $scope.people)
 	{
-		mapPoints[i] = new MapPoint();
+		$scope.mapPoints[i++] = new MapPoint(key, $scope.people[key]);
+		var ahn = Graphic.calculateAhn(key)
+		if(ahn > $scope.maxAhn)
+			$scope.maxAhn = ahn
 	}
 
 	$scope.graphics = {
@@ -70,6 +74,7 @@ app.controller('Content', function($scope)
 
 	$scope.addPerson = function(id)
 	{
+		console.log(id)
 		var path = $('#path-' + id).val()
 		var givenname = $('#given-' + id).val()
 		var surname = $('#sur-' + id).val()
@@ -86,7 +91,6 @@ app.controller('Content', function($scope)
 			content.people[path] = person
 			if (content.graphics[path].empty)
 			{
-				destroyConnectionLine_parent(content.graphics[path])
 				delete content.graphics[path]
 				content.dirty = true
 			}
@@ -109,10 +113,6 @@ app.controller('Content', function($scope)
 		if (content.graphics[path + '0'].empty && content.graphics[path + '1'].empty && del)
 		{
 			delete content.people[path]
-
-			destroyConnectionLines_child(content.graphics[path])
-			destroyConnectionLine_parent(content.graphics[path])
-
 			delete content.graphics[path]
 			delete content.graphics[path + '0']
 			delete content.graphics[path + '1']

@@ -52,10 +52,10 @@
 	<div>This is some sidebar content</div>
 	<div>This is some sidebar content</div>
 	<div class='minimap' id='vp-minimap'>
-		<!-- <div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
-			<div ng-repeat='(path, p) in mapPoints' class='minimapPoint' id='g-{{p.id}}' style='left:{{p.topleft.x/10}}px;top:{{p.topleft.y/10}}px;'>
+		<div class='minimap-content{{demo ? " demo" : ""}}' id='minimap-content' ng-controller='Content'>
+			<div ng-repeat='(path, p) in mapPoints' class='minimapPoint' id='p-{{p.path}}' style='left:{{p.getX(maxAhn)}}px;top:{{p.getY(maxAhn)}}px;'>
 			</div>
-		</div>-->
+		</div>
 	</div>
 </div>
 
@@ -63,26 +63,26 @@
 	<div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
 		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}{{motionClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.ahn}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
 			<div class='id'>{{g.ahn}}</div>
-			<span ng-if='!g.empty && !showedit[g.id]'>
+			<span ng-if='!g.empty && !showedit[g.ahn]'>
 				<span class='name'>
 					{{g.givenname || g.surname ? g.givenname : g.fullname}}
 					{{g.givenname || g.surname ? g.surname : ''}}
 					<!--({{g.center.x}}, {{g.center.y}})<br>-->
 				</span>
 			</span>
-			<!--span ng-if='!showedit[g.id] && g.empty && g.ahn' class='name'>Ahn#: {{g.ahn}}<br></span>
-			<span ng-if='!showedit[g.id] && g.empty'>Path: {{g.path}}</span-->
-			<input type='checkbox' id='add-{{g.id}}-show' ng-model='showedit[g.id]' ng-init='showedit[g.id]=false'/>
-			<label ng-if='!showedit[g.id]' for='add-{{g.id}}-show'><span ng-if='g.empty'>click to add</span></label>
-			<form ng-submit='addPerson(g.id)' ng-if='showedit[g.id]' class='edit-info'>
-				<input type='hidden' id='path-{{g.id}}' value='{{path}}'/>
+			<!--span ng-if='!showedit[g.ahn] && g.empty && g.ahn' class='name'>Ahn#: {{g.ahn}}<br></span>
+			<span ng-if='!showedit[g.ahn] && g.empty'>Path: {{g.path}}</span-->
+			<input type='checkbox' id='add-{{g.ahn}}-show' ng-model='showedit[g.ahn]' ng-init='showedit[g.ahn]=false'/>
+			<label ng-if='!showedit[g.ahn]' for='add-{{g.ahn}}-show'><span ng-if='g.empty'>click to add</span></label>
+			<form ng-submit='addPerson(g.ahn)' ng-if='showedit[g.ahn]' class='edit-info'>
+				<input type='hidden' id='path-{{g.ahn}}' value='{{path}}'/>
 				<input type='submit'/>
-				<input id='given-{{g.id}}' placeholder='Given Name' ng-model='g.givenname'/><br>
-				<input id='sur-{{g.id}}' placeholder='Surname' ng-model='g.surname'/><br>
-				<label ng-if='g.empty' for='add-{{g.id}}-show' ng-click='addPerson(g.id)'>Save</label>
-				<label ng-if='g.empty' for='add-{{g.id}}-show'>Cancel</label>
-				<label ng-if='!g.empty && path.length > 1 && graphics[path + "0"].empty && graphics[path + "1"].empty' for='add-{{g.id}}-show' ng-click='removePerson(g.id)'>Remove</label>
-				<label ng-if='!g.empty' for='add-{{g.id}}-show'>Done</label>
+				<input id='given-{{g.ahn}}' placeholder='Given Name' ng-model='g.givenname'/><br>
+				<input id='sur-{{g.ahn}}' placeholder='Surname' ng-model='g.surname'/><br>
+				<label ng-if='g.empty' for='add-{{g.ahn}}-show' ng-click='addPerson(g.ahn)'>Save</label>
+				<label ng-if='g.empty' for='add-{{g.ahn}}-show'>Cancel</label>
+				<label ng-if='!g.empty && path.length > 1 && graphics[path + "0"].empty && graphics[path + "1"].empty' for='add-{{g.ahn}}-show' ng-click='removePerson(g.ahn)'>Remove</label>
+				<label ng-if='!g.empty' for='add-{{g.ahn}}-show'>Done</label>
 			</form>
 		</div>
 	</div>
