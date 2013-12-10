@@ -1,4 +1,5 @@
 var https = require("https");
+var user = require('./user');
 var app = require('../app.js')
 var r = require('rethinkdb')
 
@@ -6,6 +7,8 @@ var r = require('rethinkdb')
 var redirectUrl = "http://localhost:8000/auth/google"
 var googleSecret = "uxIocixkvihbjNzlnwBcAfWf"
 var googleClientId = "85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com"
+
+var GOOGLE_BASE_URL = 'https://www.googleapis.com/oauth2/v1/userinfo?access_token='
 
 function googleAuth(query, callback) {
     if(query.error) {
@@ -17,8 +20,6 @@ function googleAuth(query, callback) {
 	    tokenUrl += "&client_secret=" + googleSecret + "";
 	    tokenUrl += "&redirect_uri=" + redirectUrl;
 	    tokenUrl += "&grant_type=authorization_code";
-		// console.log("acToken: " + JSON.stringify(query))
-		// console.log(tokenUrl);
 
 		var post_options = {
 			method: 'POST',
@@ -33,14 +34,12 @@ function googleAuth(query, callback) {
 		var data = tokenUrl;
 
 		var post_req = https.request(post_options, function(res) {
-			var dataBuffer = "";
+			var body = '';
 			res.on('data', function(chunk) {
-                dataBuffer += chunk
+				body += chunk;
 			})	
-			res.on('end', function(res) {
-                var json = JSON.parse(dataBuffer)
-				console.log('access_token', json.access_token)
-                return callback(null, json)
+			res.on('end', function() {
+				getGoogleUserInfo(JSON.parse(body).access_token, callback)
 			})
 		})
 
@@ -49,37 +48,25 @@ function googleAuth(query, callback) {
 
 		console.log(post_req.data)
 		console.log(post_req.body)
-
 	} else {
 		return callback(query.state, null);
 	}
 }
 
-//credits: http://www.netlobo.com/url_query_string_javascript.html
-function gup(url, name) {
-    name = name.replace(/[[]/,"\[").replace(/[]]/,"\]");
-    var regexS = "[\?&]"+name+"=([^&#]*)";
-    var regex = new RegExp( regexS );
-    var results = regex.exec( url );
-    if( results == null )
-        return "";
-    else
-        return results[1];
-}
+function getGoogleUserInfo(acToken, callback) {
 
-function getGoogleUserInfo(acToken) {
-    $.ajax({
-        url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
-        data: null,
-        success: function(resp) {
-        	console.log('here!')
-            user    =   resp;
-            console.log(user);
-            // $('#uName').append(user.name);
-            // $('#imgHolder').attr('src', user.picture);
-        },
-        dataType: "jsonp"
-    });
+	https.get(GOOGLE_BASE_URL + acToken, function(res) {
+		var chunks = "";
+		res.on('data', function(chunk) {
+			chunks += chunk;
+		})
+		res.on('end', function() {
+			return callback(null, JSON.parse(chunks))
+		})
+        res.on('error', function(err){
+            return callback(err)
+        })
+	})
 }
 
 function facebookAuth(query, callback){

@@ -89,40 +89,12 @@ function showOverlay(e, divid)
         var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
         var SCOPE       =   'https://www.googleapis.com/auth/userinfo.email';
         var CLIENTID    =   '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com';
-        //var REDIRECT    =   'http://54.201.103.45:8000/authcallback'
-		var REDIRECT    =   'http://localhost:8001/authcallback'
+        //var REDIRECT    =   'http://54.201.103.45:8000/auth/google'
+		var REDIRECT    =   'http://localhost:8000/auth/google'
         var TYPE        =   'code';
         var STATE 		= 	'getCode';
         var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE + '&state=' + STATE;
         window.location = _url;
-
-        // var win         =   window.open(_url, "VP - Google Auth", 'width=800, height=600'); 
-
-        // var pollTimer   =   window.setInterval(function() { 
-        //     try {
-        //         console.log(win.document.URL);
-        //         if (win.document.URL.indexOf(REDIRECT) != -1) {
-        //             window.clearInterval(pollTimer);
-        //             var url =   win.document.URL;
-        //             acToken =   gup(url, 'access_token');
-        //             tokenType = gup(url, 'token_type');
-        //             expiresIn = gup(url, 'expires_in');
-        //             win.close();
-
-        //             //validate token
-				    // var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';	
-				    // $.ajax({
-				    //     url: VALIDURL + acToken,
-				    //     data: null,
-				    //     success: function(responseText){  
-				    //         getUserInfo();
-				    //     },  
-				    //     dataType: "jsonp"  
-				    // });
-        //         }
-        //     } catch(e) {
-        //     }
-        // }, 100);
 	})
 
 	$('#sign-in-container button.submit').click(signIn)
