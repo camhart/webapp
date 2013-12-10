@@ -90,7 +90,7 @@ app.get('/login', function(req, res){
     res.redirect('/')
 })
 app.post('/logout', function(req, res){
-    req.sessino.authorized = false
+    req.session.authorized = false
     res.redirect('/')
 })
 app.post('/parse', user.parse)
