@@ -14,7 +14,7 @@ function home(req, res){
 
 function contact(req, res){
     console.log("Contact Page!")
-    res.sendfile(HOMEPAGE)
+    res.redirect('/')
 }
 
 function overview(req, res){
@@ -25,12 +25,12 @@ function overview(req, res){
 // login/logout requests
 function login(req, res){
     console.log("Loggining In!")
-    res.sendfile(HOMEPAGE)
+    res.redirect('/')
 }
 
 function logout(req, res){
     console.log("Loggining Out!")
-    res.sendfile(HOMEPAGE)
+    res.redirect('/')
 }
 
 function protocol(req, res){

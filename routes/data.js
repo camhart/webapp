@@ -6,12 +6,8 @@ var gedcom = require('../gedcom')
 var NULL_RESPONSE = { 'results' : 'no data found' }
 
 // data functions (add, get, update, delete)
-function dataGet(req, res){
-    r.db(app.db_name).table(app.tbl_data).get(req.params.id + "_" + req.params.data).run(app.con, function(err, result){
-        if (err) throw err
-        if(result == null) result = NULL_RESPONSE
-        res.send('200', result)
-    })
+function dataGet(id, callback){
+    r.db(app.db_name).table(app.tbl_data).get(id).run(app.con, callback)
 }
 
 // data functions (add, get, update, delete)
@@ -30,7 +26,7 @@ function dataGetAll(req, res){
                 } else {
                     families.push(results[i])
                 }
-            res.send('200', [families, persons])
+            callback(err, [families, persons])
         })
     })
 }
@@ -53,6 +49,11 @@ function dataDelete(req, res){
 }
 
 function dataUpsert(req, res){
+    // var individuals = req.body.individuals
+    // for(var i in individuals)
+    //     individuals[i].id = req.params.id + "_" + 
+    // var families = req.body.families
+
     for(key in req.body)
         console.log(key, req.body[key])
     r.db(app.db_name).table(app.tbl_data).insert(req.body).run(app.con, function(err, result){

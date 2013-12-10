@@ -1,44 +1,24 @@
 var https = require("https");
-//var http = require("http");
 var app = require('../app.js')
 var r = require('rethinkdb')
 
 //don't change this redirectURL no matter what, even if on webserver it should stay the same
-var redirectUrl = "http://localhost:8001/authcallback"//"http%3A%2F%2Flocalhost%3A8001%2Fauthcallback";
+var redirectUrl = "http://localhost:8000/auth/google"
 var googleSecret = "uxIocixkvihbjNzlnwBcAfWf"
 var googleClientId = "85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com"
 
-function googleAuth(req, res) {
-	// var win = window.self;
-    // var url =   window.self.document.URL;
-    // acToken =   gup(url, 'access_token');
-    // tokenType = gup(url, 'token_type');
-    // expiresIn = gup(url, 'expires_in');
-    // win.close();
-
-    //validate token
-    // https.get()
-
-    //console.log("err:= " + error)
-    if(req.query.error) {
-    	res.send('200', "You must grant permission to use app.")
-    } else if(req.query.state == "getCode"){
-  
-	    console.log("params: " + req.query.code);//req.protocol + "://" + req.get("host") + req.url)
-	    // var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';	
-	    var tokenUrl = "" ;//https://www.accounts.google.com/o/oauth2/token"
-	    tokenUrl += "code=" + req.query.code;
+function googleAuth(query, callback) {
+    if(query.error) {
+    	return callback(query.error, "You must grant permission to use app.")
+    } else if(query.state == "getCode"){
+	    var tokenUrl = "" ; //https://www.accounts.google.com/o/oauth2/token"
+	    tokenUrl += "code=" + query.code;
 	    tokenUrl += "&client_id=" + googleClientId;
 	    tokenUrl += "&client_secret=" + googleSecret + "";
 	    tokenUrl += "&redirect_uri=" + redirectUrl;
 	    tokenUrl += "&grant_type=authorization_code";
-	    console.log("here")
-		// xmlhttp = new XMLHttpRequest();
-		// xmlhttp.open("GET", VALIDURL + params.acToken, false)
-		// xmlhttp.send(null)
-		// console.log(JSON.stringify(xmlhttp.responseText));
-		console.log("acToken: " + JSON.stringify(req.query))
-		console.log(tokenUrl);
+		// console.log("acToken: " + JSON.stringify(query))
+		// console.log(tokenUrl);
 
 		var post_options = {
 			method: 'POST',
@@ -52,14 +32,15 @@ function googleAuth(req, res) {
 
 		var data = tokenUrl;
 
-		var post_req = https.request(post_options, function(res2) {
+		var post_req = https.request(post_options, function(res) {
 			var dataBuffer = "";
-			res2.on('data', function(chunk) {
-				console.log("response: " + chunk)
+			res.on('data', function(chunk) {
+                dataBuffer += chunk
 			})	
-			res2.on('end', function() {
-				//console.log('end!' + JSON.stringify(res2))
-				res.send('200', 'done')
+			res.on('end', function(res) {
+                var json = JSON.parse(dataBuffer)
+				console.log('access_token', json.access_token)
+                return callback(null, json)
 			})
 		})
 
@@ -69,28 +50,9 @@ function googleAuth(req, res) {
 		console.log(post_req.data)
 		console.log(post_req.body)
 
-		// https.post(tokenUrl, function(res1) {
-		// 	// console.log(res)
-		// 	//console.log("Got respsonse: " + res1.data)
-		// 	res.send('200', res1)
-		// }).on('error', function(e) {
-		// 	console.log("Got error" + e.message)
-		// 	// req.send('200', "Google Auth Error")
-		// })
 	} else {
-		res.send('200', '<html>state is ' + req.query.state + "</html");
+		return callback(query.state, null);
 	}
-
-    // $.ajax({
-    //     url: VALIDURL + params.acToken,
-    //     data: null,
-    //     success: function(responseText){  
-    //     	console.log(responseText);
-    //         getGoogleUserInfo(params.acToken);
-    //     },  
-    //     dataType: "jsonp"  
-    // });
-	// res.send('200', "You are now authorized.");
 }
 
 //credits: http://www.netlobo.com/url_query_string_javascript.html
@@ -120,4 +82,10 @@ function getGoogleUserInfo(acToken) {
     });
 }
 
+function facebookAuth(query, callback){
+    console.log('Facebook Login!')
+    callback(null, query)
+}
+
+exports.facebookAuth = facebookAuth
 exports.googleAuth = googleAuth
