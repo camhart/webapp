@@ -47,9 +47,7 @@ app.use(express.urlencoded())
 app.use(express.methodOverride())
 app.use(express.bodyParser({ keepExtensions: false, uploadDir: "uploads" }))
 app.use(express.cookieParser())
-app.use(express.session({
-secret: 'some string used for calculating hash'
-}))
+app.use(express.session({secret: 'some string used for calculating hash'}))
 app.use(app.router)
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'test')))
@@ -74,16 +72,6 @@ if ('development' == app.get('env')) {
     })
 }
 
-app.get('/', routes.home)
-app.get('/contact', routes.contact)
-app.get('/overview', routes.overview)
-app.get('/login', function(req, res){
-    req.session.authorized = true
-    routes.login(req, res)
-})
-app.post('/logout', routes.logout)
-app.post('/parse', user.parse)
-
 app.all('/api/*', function(req, res, next){
     console.log('session', req.session)
     if(req.session && req.session.authorized){
@@ -92,6 +80,20 @@ app.all('/api/*', function(req, res, next){
         res.send(401, 'Unauthorized')
     }
 })
+
+app.get('/', routes.home)
+app.get('/contact', routes.contact)
+app.get('/overview', routes.overview)
+
+app.get('/login', function(req, res){
+    req.session.authorized = true
+    res.redirect('/')
+})
+app.post('/logout', function(req, res){
+    req.sessino.authorized = false
+    res.redirect('/')
+})
+app.post('/parse', user.parse)
 
 app.get('/api/user/:id', function(req, res){
     user.userGet(req.params.id, function(err, result){
@@ -147,7 +149,7 @@ app.get('/auth/:type', function(req, res){
         auth.googleAuth(req.query, function(err, result){
             if(err) console.log(err)
             else req.session.authorized = true
-            console.log(result) // here is access_token
+            console.log(result) // here is email address and stuff
             // res.send('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>')
             res.redirect('/')
         })
