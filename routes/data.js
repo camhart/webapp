@@ -1,7 +1,6 @@
 
 var app = require('../app.js')
 var r = require('rethinkdb')
-var gedcom = require('../gedcom')
 
 var NULL_RESPONSE = { 'results' : 'no data found' }
 
@@ -11,146 +10,77 @@ function dataGet(id, callback){
 }
 
 // data functions (add, get, update, delete)
-function dataGetAll(req, res){
+function dataGetAll(userid, callback){
     r.db(app.db_name).table(app.tbl_data).filter(function(data) {
-     return data("id").match(req.params.id + "_")
+     return data('id').match(req.params.id + '_')
     }).run(app.con, function(err, cursor) {
+        if(err) return callback(err)
         cursor.toArray(function(err, results){
-            res.send('200', results);
-            var families = []
-            var persons = []
-
-            for(var i in results)
-                if(results[i].split('_')[1] == "I" ) {
-                    persons.push(results[i])
-                } else {
-                    families.push(results[i])
-                }
-            callback(err, [families, persons])
+            var families = {}
+            var persons = {}
+            callback(err, {families: families, persons: person})
         })
     })
 }
 
-function dataDelete(req, res){
-    // var resultsList = []
-    r.expr(req.body).forEach(function(id) {
-        return r.db(app.db_name).table(app.tbl_data).get(id).delete().run(app.con, function(err, result) {
-            if(err) throw err
-            // resultsList.push(result);
-        })
-    })
-    res.send('200', 'OK')
-    // r.db(app.db_name).table(app.tbl_data).get(req.params.id).filter(function(data) {
-    // }).run(app.con, function(err, result){
-    //     if (err) throw err
-    //     if(result == null) result = NULL_RESPONSE
-    //     res.send('200', result)
-    // })
+function dataDelete(ids, callback){
+    var resultsList = []
+    r.expr(ids).forEach(function(id) {
+        return r.db(app.db_name).table(app.tbl_data).get(id).delete()
+    }).run(app.con, callback)
 }
 
-function dataUpsert(req, res){
-    // var individuals = req.body.individuals
-    // for(var i in individuals)
-    //     individuals[i].id = req.params.id + "_" + 
-    // var families = req.body.families
-
-    for(key in req.body)
-        console.log(key, req.body[key])
-    r.db(app.db_name).table(app.tbl_data).insert(req.body).run(app.con, function(err, result){
-        if (err) throw err
-        if(result == null) result = NULL_RESPONSE
-        res.send('200', result)
+function dataUpsert(data, callback){
+    dataToList(data, function(err, list){
+        r.db(app.db_name).table(app.tbl_data).insert(list).run(app.con, callback)
     })
 }
 
-function dataAll(req, res){
+function dataAll(callback){
     r.db(app.db_name).table(app.tbl_data).run(app.con, function(err, cursor){
-        if(err) throw err
+        if(err) return callback(err)
         cursor.toArray(function(err, results){
-            res.send('200', results);
+            listToData(results, callback)
         })
     })
 }
 
-function parse(req, res)
-{
-    console.log('Parsing GEDCOM file!')
-    var path = require('path')
-
-    var filepath = req.files.data_file[0].path
-
-    if (typeof req.files !== 'object' || typeof req.files.data_file !== 'object')
-    {
-        res.send(400, JSON.stringify({ error: 'You must upload a file' }))
-        removeFile(filepath)
-        return
+function dataToList(data, callback){
+    var list = []
+    var individuals = data.individuals
+    var families = data.families
+    for(var key in families){
+        if(families[key].id == undefined)
+            families[key].id = key
+        list.push(families[key])
+    }
+    for(var key in individuals){
+        if(individuals[key].id == undefined)
+            individuals[key].id = key
+        list.push(individuals[key])
     }
 
-    if (req.files.data_file.length !== 1)
-    {
-        res.send(400, JSON.stringify({ error: 'You can only upload one file (you tried uploading ' + req.files.data_file.length + ')' }))
-        removeFile(filepath)
-        return
-    }
+    callback(null, list)
+}
 
-    var name = req.headers['x-file-name']
-    if (name !== req.files.data_file[0].name)
-    {
-        res.send(400, JSON.stringify({ error: 'Name in header does not match file name' }))
-        removeFile(filepath)
-        return
-    }
-
-    var extension = path.extname(name).toLowerCase()
-    var size = parseInt(req.headers['content-length'], 10)
-
-    if (extension !== '.ged' && extension !== '.gedcom')
-    {
-        res.send(406, JSON.stringify({ error: 'Invalid file extension (' + extension + '). Must be .ged or .gedcom' }))
-        removeFile(filepath)
-        return
-    }
-
-    processFile(filepath, function(err, data)
-    {
-        if (err)
-        {
-            console.log(err)
-            throw err
+function listToData(list, callback){
+    var individuals = {}
+    var families = {}
+    for(var i in list){
+        if(list[i].id.split('_')[1].charAt(0) == "I" ) {
+            individuals[list[i].id] = list[i]
+        } else if(list[i].id.split('_')[1].charAt(0) == "F" ) {
+            families[list[i].id] = list[i]
+        } else {
+            console.log('Invalid Id!', list[i].id)
+            throw new Error(list[i].id + 'is not valid')
         }
-
-        console.log('parse success!')
-        removeFile(filepath)
-        res.end(JSON.stringify(data))
-    })
-}
-
-function removeFile(filepath)
-{
-    var fs = require('fs')
-    fs.unlink(filepath, function(err)
-    {
-        if (err)
-            throw err
-
-        console.log('successfully removed', filepath)
-    })
-}
-
-function processFile(filepath, cb)
-{
-    gedcom.parse(filepath, function(top)
-    {
-        var parser = require('./gedcom-parse')
-        var data = parser.parse(top)
-
-        cb(false, data)
-    })
+    }
+    callback(null, { individuals: individuals, families: families})
 }
 
 exports.dataUpsert = dataUpsert
 exports.dataGet = dataGet
 exports.dataDelete = dataDelete
 exports.dataGetAll = dataGetAll
-exports.parse = parse
 exports.dataAll = dataAll

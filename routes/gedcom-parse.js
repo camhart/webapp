@@ -1,15 +1,74 @@
 
-function processGCData(data)
+var gedcom = require('./gedcom')
+var path = require('path')
+var fs = require('fs')
+
+function parse(files, headers, userid, callback){
+    console.log('Parsing GEDCOM file!')
+
+    var filepath = files.user_file[0].path
+    
+    function removeFile(){
+        fs.unlink(filepath, function(err){
+            if (err)
+                throw err
+
+            console.log('successfully removed', filepath)
+        })
+    }
+
+    function error(code, message){
+        removeFile()
+        callback({
+            code : code, 
+            message : message
+        })
+    }
+
+
+    if (typeof files !== 'object' || typeof files.user_file !== 'object'){
+        return error(400, 'You must upload a file', callback)
+    }
+
+    if (files.user_file.length !== 1){
+        return error(406, 'You can only upload one file (you tried uploading ' + files.user_file.length + ')')
+    }
+
+    var name = headers['x-file-name']
+    if (name !== files.user_file[0].name){
+        return error(400, 'Name in header does not match file name')
+    }
+
+    var extension = path.extname(name).toLowerCase()
+    var size = parseInt(headers['content-length'], 10)
+
+    if (extension !== '.ged' && extension !== '.gedcom'){
+        return error(406, 'Invalid file extension (' + extension + '). Must be .ged or .gedcom')
+    }
+
+    gedcom.parse(filepath, function(top){
+        processGCData(top, userid, function(err, data){
+            if(err) throw err
+            removeFile()
+            console.log('parse success!')
+            callback(null, data)
+        })
+    })
+}
+
+var userid = null
+function processGCData(data, _userid, callback)
 {
+    userid = _userid
     var people = buildPeopleList(data.INDI)
     var families = buildFamiliyList(data.FAM)
-
-    var result = linkFamilies(people, families)
-
+    linkFamilies(people, families, function(result){
     // TODO import into database
     // console.log(JSON.stringify(result, null, 4))
+        userid = null
+        callback(false, result)
+    })
 
-    return result
 }
 
 function buildPeopleList(data)
@@ -233,7 +292,7 @@ function buildFamiliyList(data)
     return families
 }
 
-function linkFamilies(people, families)
+function linkFamilies(people, families, callback)
 {
     for (var i in families)
     {
@@ -260,15 +319,15 @@ function linkFamilies(people, families)
         }
     }
 
-    return {
-        people: people,
+    callback( {
+        individuals: people,
         families: families
-    }
+    })
 }
 
 function parseID(id)
 {
-    return id.substring(1, id.length - 1)
+    return userid + '_' + id.substring(1, id.length - 1)
 }
 
 Object.size = function(obj)
@@ -292,4 +351,4 @@ Object.isEmpty = function(obj)
     return true
 }
 
-exports.parse = processGCData
+exports.parse = parse

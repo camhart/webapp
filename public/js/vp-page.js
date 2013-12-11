@@ -139,8 +139,9 @@ function setUpUploader()
 		$('#file-upload').click()
 	})
 
+	var userid = '1' // get userid 
 	$('#file-upload').html5_upload({
-		url: '/parse',
+		url: 'api/user/' + userid + '/parse',
 		autostart: true,
 		sendBoundary: window.FormData || $.browser.mozilla,
 		onStartOne: function(event, name, number, total)

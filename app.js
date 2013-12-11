@@ -7,6 +7,7 @@ var db_host = 'localhost'
 var db_name = 'vp'
 var tbl_user = 'user'
 var tbl_data = 'data'
+var authorized = false
 var con = null
 
 // includes
@@ -14,15 +15,13 @@ var routes = require('./routes/routes')
 var user = require('./routes/user')
 var data = require('./routes/data')
 var auth = require('./routes/auth')
+var util = require('./routes/gedcom-parse')
 
 // module dependencies.
 var http = require('http')
 var path = require('path')
 var r = require('rethinkdb')
 var express = require('express')
-var gedcom = require('./gedcom')
-
-var ged = require('./gedcom')
 
 r.connect( {host: db_host, port: db_port, db: this.db_name}, function(err, connection) {
     if (err) {
@@ -58,13 +57,13 @@ if ('development' == app.get('env')) {
     app.get('/resetdb', routes.resetdb)
     app.get('/protocol', routes.protocol)
 
-    app.get('/user', function(req, res){
+    app.get('/api/user', function(req, res){
         user.usersAll(function(err, result){
             if(err) console.log(err)
             res.send(result)
         })
     })
-    app.get('/data', function(req, res){
+    app.get('/api/data', function(req, res){
         data.dataAll(function(err, result){
             if(err) console.log(err)
             res.send(result)
@@ -74,7 +73,7 @@ if ('development' == app.get('env')) {
 
 app.all('/api/*', function(req, res, next){
     console.log('session', req.session)
-    if(req.session && req.session.authorized){
+    if(req.session && req.session.authorized || authorized){
         next()
     } else {
         res.send(401, 'Unauthorized')
@@ -85,16 +84,16 @@ app.get('/', routes.home)
 app.get('/contact', routes.contact)
 app.get('/overview', routes.overview)
 
-app.get('/login', function(req, res){
+app.post('/login', function(req, res){
     req.session.authorized = true
-    res.redirect('/')
+    res.send('200', 'Success:login')
 })
 app.post('/logout', function(req, res){
     req.session.authorized = false
-    res.redirect('/')
+    res.send('200', 'Success:logout')
 })
-app.post('/parse', user.parse)
 
+// get user by id
 app.get('/api/user/:id', function(req, res){
     user.userGet(req.params.id, function(err, result){
         if(err) console.log(err)
@@ -102,6 +101,8 @@ app.get('/api/user/:id', function(req, res){
     })
 })
 
+
+// delete user by id
 app.delete('/api/user/:id', function(req, res){
     user.userDelete(req.body, function(err, result){
         if(err) console.log(err)        
@@ -109,6 +110,8 @@ app.delete('/api/user/:id', function(req, res){
     })
 })
 
+
+// upsert user
 app.post('/api/user', function(req, res){
     user.userUpsert(req.body, function(err, result){
         if(err) console.log(err)
@@ -116,22 +119,42 @@ app.post('/api/user', function(req, res){
     })
 })
 
-app.get('/api/data/:id/:data', function(req, res){
-    data.dataGet(req.params.id + '_' + req.params.data, function(err, result){
-        if(err) console.log(err)
-        res.send(result)
+
+// upload/gedcom for user (also saves to database)
+app.post('/api/user/:id/parse', function(req, res){
+    util.parse(req.files, req.headers, req.params.id, function(err, result){
+        if(err) {
+            console.log(err)
+            res.send(err.code, err.message)
+        } else {
+            console.log(JSON.stringify(result, undefined, 2))
+            data.dataUpsert(result, function(err, result){
+                console.log('added data for user:' + req.params.id)
+            })
+            res.send('200', result)
+        }
     })
 })
 
+// get data by id (where id = userid_id)
 app.get('/api/data/:id', function(req, res){
-    data.dataGetAll(function(err, result){
+    data.dataGet(req.params.id, function(err, result){
         if(err) console.log(err)
         res.send(result)
     })
 })
 
-app.delete('/api/data/:id', function(req, res){
-    data.dataDelete(req.params.id, function(err, result){
+// get all data for user by id
+app.get('/api/user/:id/data', function(req, res){
+    data.dataGetAll(req.params.id, function(err, result){
+        if(err) console.log(err)
+        res.send(result)
+    })
+})
+
+// delete data by id (list in body)
+app.delete('/api/data', function(req, res){
+    data.dataDelete(req.body, function(err, result){
         if(err) console.log(err)
         res.send(result)
     })
