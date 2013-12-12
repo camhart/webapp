@@ -67,7 +67,7 @@ app.controller('Content', function($scope)
 
 	$scope.showedit = {}
 	content.dirty = true
-	content.demo = false
+	content.demo = !isLoggedIn()
 
 	setTimeout(refresh, 100)
 	setTimeout(update, 100)
@@ -169,3 +169,8 @@ function update()
 
 var createGraphics = function() {}
 var destroyGraphics = function() {}
+
+function isLoggedIn()
+{
+	return 'vpauth' in $.cookie()
+}

@@ -9,6 +9,15 @@ var OVERVIEWPAGE = './public/overview.html'
 // static pages
 function home(req, res){
     console.log("Main Page!")
+    if (req.session.authorized)
+    {
+        console.log('Authorized home request')
+        var auth = req.cookies.vpauth.split('/')
+        var email = auth[0]
+        var token = auth[1]
+    }
+
+
     res.sendfile(HOMEPAGE)
 }
 

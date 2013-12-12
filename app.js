@@ -69,6 +69,11 @@ if ('development' == app.get('env')) {
             res.send(result)
         })
     })
+    app.get('/cookietest', function(req, res)
+    {
+        res.cookie('rememberme', 'yes', { maxAge: 900000, httpOnly: false})
+        res.sendfile('./public/test.html')
+    })
 }
 
 app.all('/api/*', function(req, res, next){
@@ -105,7 +110,7 @@ app.get('/api/user/:id', function(req, res){
 // delete user by id
 app.delete('/api/user/:id', function(req, res){
     user.userDelete(req.body, function(err, result){
-        if(err) console.log(err)        
+        if(err) console.log(err)
         res.send(result)
     })
 })
@@ -165,7 +170,7 @@ app.post('/api/data/:id', function(req, res){
         if(err) console.log(err)
         res.send(result)
     })
-}) 
+})
 
 app.get('/auth/:type', function(req, res){
     if(req.params.type == 'google'){
@@ -174,6 +179,7 @@ app.get('/auth/:type', function(req, res){
             else req.session.authorized = true
             console.log(result) // here is email address and stuff
             // res.send('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>')
+            res.cookie('vpauth', result.email + '/' + result.id)
             res.redirect('/')
         })
     } else if(req.params.type == 'facebook'){
