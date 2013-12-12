@@ -56,13 +56,13 @@ function showOverlay(e, divid)
 	{
 		$('#gedcom-form').hide()
 		$('#signup-form').show()
-		$('#sign-up-container').show('blind', { }, 250)
+		// $('#sign-up-container').show('blind', { }, 250)
 	}
 	else if (this.id === 'user-login')
 	{
 		$('#gedcom-form').hide()
 		$('#signup-form').show()
-		$('#sign-in-container').show('blind', { }, 250)
+		// $('#sign-in-container').show('blind', { }, 250)
 	}
 	else if (this.id === 'upload-gedcom')
 	{
@@ -71,17 +71,17 @@ function showOverlay(e, divid)
 		setUpUploader()
 	}
 
-	$('#signup-btn').click(function(e)
-	{
-		$('#sign-in-container').hide('blind', { }, 250)
-		$('#sign-up-container').show('blind', { }, 250)
-	})
+	// $('#signup-btn').click(function(e)
+	// {
+	// 	$('#sign-in-container').hide('blind', { }, 250)
+	// 	$('#sign-up-container').show('blind', { }, 250)
+	// })
 
-	$('#signin-btn').click(function(e)
-	{
-		$('#sign-in-container').show('blind', { }, 250)
-		$('#sign-up-container').hide('blind', { }, 250)
-	})
+	// $('#signin-btn').click(function(e)
+	// {
+	// 	$('#sign-in-container').show('blind', { }, 250)
+	// 	$('#sign-up-container').hide('blind', { }, 250)
+	// })
 
 	$('#signingoogle-btn').click(function(e)
 	{
@@ -139,7 +139,7 @@ function setUpUploader()
 		$('#file-upload').click()
 	})
 
-	var userid = '1' // get userid 
+	var userid = '1' // get userid
 	$('#file-upload').html5_upload({
 		url: 'api/user/' + userid + '/parse',
 		autostart: true,
