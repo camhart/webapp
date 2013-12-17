@@ -23,13 +23,17 @@ passport.use(
         clientID: '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com',
         clientSecret: 'uxIocixkvihbjNzlnwBcAfWf',
         callbackURL: 'http://localhost:8000/auth/google/callback',
-        scope: 'https://www.googleapis.com/auth/userinfo.email'
+        scope: ['https://www.googleapis.com/auth/userinfo.email', 
+        'https://www.googleapis.com/auth/userinfo.profile']
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('google-here', profile)
         var googleUser = {
             email: profile._json.email,
-            googleid: profile._json.id
+            googleid: profile._json.id, 
+            name: profile._json.name,
+            picture: profile._json.picture,
+            gender: profile._json.gender
         }
         
         user.userGetOrCreate(googleUser, 'googleid', done)
@@ -38,29 +42,35 @@ passport.use(
 
 passport.use(
     new GitHubStrategy({
-        clientID: '84612e8c6f5b487eb5c',
+        clientID: '84612e8c6f5b487eb5c3',
         clientSecret: '667c3dfb25fdd23d0429f373e37ab5451142c570',
-        callbackURL: 'http://localhost:8000/auth/github/callback'
+        callbackURL: 'http://localhost:8000/auth/github/callback',
+        scope: 'user:email'
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('github-here', profile)
-        // TODO
-        // user.userGetOrCreate(githubUser, 'githubid', done)
-        return done(null, profile);
+        var githubUser = {
+            githubid: profile._json.id,
+            email: profile._json.email,
+            name: profile._json.name
+        }
+        user.userGetOrCreate(githubUser, 'githubid', done)
     })
 )
 
 passport.use(
     new FacebookStrategy({clientID: '472051912916435',
         clientSecret: '19c9230012764c821a5f2fddbdb2e7a0',
-        callbackURL: "http://localhost:8000/auth/facebook/callback"
+        callbackURL: "http://localhost:8000/auth/facebook/callback",
+        scope: ['email']
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('facebook-here', profile)
         var facebookUser = {
             facebookid: profile._json.id,
             gender: profile._json.gender,
-            name: profile._json.name
+            name: profile._json.name,
+            email: profile._json.email
         }
         console.log(facebookUser)
         user.userGetOrCreate(facebookUser, 'facebookid', done)
@@ -75,9 +85,16 @@ passport.use(
     function(accessToken, refreshToken, profile, done) {
         console.log('familysearch-here', profile)
 
+        var familysearchUser = {
+            familysearchid: profile._json.users[0].id,
+            email: profile._json.users[0].email,
+            name: profile._json.users[0].displayName,
+            gender: profile._json.users[0].gender.toLowerCase(),
+        }
         // TODO
-        // user.userGetOrCreate(googleUser, 'googleid', done)
-        return done(null, profile);
+        user.userGetOrCreate(familysearchUser, 'familysearchid', done)
+        // console.log(JSON.stringify(profile._json.users, undefined, 4))
+        // return done(null, profile);
     })
 )
 
@@ -88,8 +105,13 @@ passport.use(
         callbackURL: 'http://localhost:8000/auth/twitter/callback'
     },
     function(accessToken, refreshToken, profile, done) {
+        var twitterUser = {
+            twitterid: profile._json.id,
+            name: profile._json.name,
+            picture: profile._json.profile_image_url_https
+        }
         console.log('twitter-here', profile)
-        return done(null, profile);
+        user.userGetOrCreate(twitterUser, 'twitterid', done)
     })
 )
 

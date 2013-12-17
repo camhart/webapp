@@ -2,7 +2,7 @@
 var r = require('rethinkdb')
 var app = require('../app')
 
-var SECONDARY_INDEXES = ['googleid', 'facebookid', 'twitterid', 'familysearchid', 'githubid']
+var SECONDARY_INDEXES = ['email', 'googleid', 'facebookid', 'twitterid', 'familysearchid', 'githubid']
 
 
 function reset(callback){

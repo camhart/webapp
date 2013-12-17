@@ -95,10 +95,10 @@ function showOverlay(e, divid)
         window.location = '/auth/facebook'
 	})
 	$('#signin-github-btn').click(function(e){
-		alert('Not implemented')
-        // window.location = '/auth/github'
+        window.location = '/auth/github'
 	})
 	$('#signin-familysearch-btn').click(function(e){
+		// alert('Only Authorized on "localhost"')
         window.location = '/auth/familysearch'
 	})
 	$('#signin-twitter-btn').click(function(e){

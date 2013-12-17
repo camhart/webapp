@@ -25,7 +25,7 @@ module.exports = {
     userGet : function(req, res){
         user.userGet(req.params.id, function(err, result){
             if(err) console.log(err)
-            res.send([err, result])
+            res.send(result)
         })
     },
 
