@@ -85,16 +85,7 @@ function showOverlay(e, divid)
 
 	$('#signingoogle-btn').click(function(e)
 	{
-//credits http://www.gethugames.in/blog/2012/04/authentication-and-authorization-for-google-apis-in-javascript-popup-window-tutorial.html
-        var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
-        var SCOPE       =   'https://www.googleapis.com/auth/userinfo.email';
-        var CLIENTID    =   '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com';
-        //var REDIRECT    =   'http://54.201.103.45:8000/auth/google'
-		var REDIRECT    =   'http://localhost:8000/auth/google'
-        var TYPE        =   'code';
-        var STATE 		= 	'getCode';
-        var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE + '&state=' + STATE;
-        window.location = _url;
+        window.location = '/auth/google'
 	})
 
 	$('#sign-in-container button.submit').click(signIn)
