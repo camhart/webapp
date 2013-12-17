@@ -7,8 +7,8 @@ var data = require('./data')
 module.exports = {
 
     isAuthorized : function(req, res, next){
-        console.log('session', req.session)
-        if(req.session && req.session.authorized || app.authorized){
+        if (req.user && req.user.id){
+            console.log('Authorized API request')
             next()
         } else {
             res.send(401, 'Unauthorized')

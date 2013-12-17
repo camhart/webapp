@@ -7,13 +7,10 @@ var db_host = 'localhost'
 var db_name = 'vp'
 var tbl_user = 'user'
 var tbl_data = 'data'
-var authorized = false
-var con = null
 
 // includes
 var routes = require('./routes/routes')
 var data = require('./routes/data')
-var oauth = require('./routes/oauth')
 var api = require('./routes/api')
 var passport = require('./routes/oauth').passport
 
@@ -29,8 +26,7 @@ r.connect( {host: db_host, port: db_port, db: this.db_name}, function(err, conne
         console.log('ERROR: Running Without Rethinkdb!')
         return
     }
-    con = connection
-    exports.con = con
+    exports.con = connection
 })
 
 // express
@@ -67,6 +63,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.home)
 app.get('/contact', routes.contact)
 app.get('/overview', routes.overview)
+app.get('/logout', routes.logout)
 
 //api
 app.all('/api/*', api.isAuthorized)
@@ -80,12 +77,7 @@ app.delete('/api/data', api.dataDelete)
 app.post('/api/data/:id', api.dataUpsert)
 
 //auth
-
-var REDIRECT_OPTIONS = {
-    successRedirect: '/',
-    failureRedirect: '/overview'
-}
-
+var REDIRECT_OPTIONS = { successRedirect: '/', failureRedirect: '/overview' }
 app.get('/auth/google', passport.authenticate('google'))
 app.get('/auth/google/callback', passport.authenticate('google', REDIRECT_OPTIONS))
 app.get('/auth/facebook', passport.authenticate('facebook'))
@@ -106,6 +98,5 @@ http.createServer(app).listen(app.get('port'), function(){
 exports.db_name = db_name
 exports.tbl_user = tbl_user
 exports.tbl_data = tbl_data
-exports.authorized = authorized
 
 

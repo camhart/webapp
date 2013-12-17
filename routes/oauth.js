@@ -11,11 +11,11 @@ var TwitterStrategy = require('passport-twitter').Strategy
 
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+    user.userGet(obj, done)
 });
 
 passport.use(
@@ -27,7 +27,12 @@ passport.use(
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('google-here', profile)
-        return done(null, profile);
+        var googleUser = {
+            email: profile._json.email,
+            googleid: profile._json.id
+        }
+        
+        user.userGetOrCreate(googleUser, 'googleid', done)
     })
 )
 
@@ -39,6 +44,8 @@ passport.use(
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('github-here', profile)
+        // TODO
+        // user.userGetOrCreate(githubUser, 'githubid', done)
         return done(null, profile);
     })
 )
@@ -47,11 +54,16 @@ passport.use(
     new FacebookStrategy({clientID: '472051912916435',
         clientSecret: '19c9230012764c821a5f2fddbdb2e7a0',
         callbackURL: "http://localhost:8000/auth/facebook/callback"
-        // scope: 'user:email'
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('facebook-here', profile)
-        return done(null, profile);
+        var facebookUser = {
+            facebookid: profile._json.id,
+            gender: profile._json.gender,
+            name: profile._json.name
+        }
+        console.log(facebookUser)
+        user.userGetOrCreate(facebookUser, 'facebookid', done)
     })
 )
 
@@ -62,6 +74,9 @@ passport.use(
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('familysearch-here', profile)
+
+        // TODO
+        // user.userGetOrCreate(googleUser, 'googleid', done)
         return done(null, profile);
     })
 )

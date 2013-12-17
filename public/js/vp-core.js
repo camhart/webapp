@@ -171,5 +171,6 @@ var destroyGraphics = function() {}
 
 function isSignedIn()
 {
+	console.log('Cookie: ', $.cookie())
 	return 'vpauth' in $.cookie()
 }

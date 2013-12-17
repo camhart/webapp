@@ -105,8 +105,8 @@ function showOverlay(e, divid)
         window.location = '/auth/twitter'
 	})
 
-	$('#sign-in-container button.submit').click(signIn)
-	$('#sign-up-container button.submit').click(signUp)
+	// $('#sign-in-container button.submit').click(signIn)
+	// $('#sign-up-container button.submit').click(signUp)
 }
 
 function closeOverlay(e)
@@ -126,6 +126,7 @@ $(document).ready(function()
 	$overlay.remove()
 
 	$('#user-signin, #upload-gedcom').click(showOverlay)
+	$('#user-signout').click(logout)
 
 	performSigninRoutine()
 })
@@ -141,4 +142,16 @@ function performSigninRoutine()
 	{
 		$('#user-signout').hide()
 	}
+}
+
+function logout()
+{
+	// reload whole page
+	window.location = '/logout'
+
+	// or logout on server and update diplay elements
+	// $.ajax({
+ //        type : 'GET',
+ //        url : '/logout'
+ //    })
 }
