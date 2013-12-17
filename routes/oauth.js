@@ -46,7 +46,7 @@ passport.use(
     new FacebookStrategy({clientID: '472051912916435',
         clientSecret: '19c9230012764c821a5f2fddbdb2e7a0',
         callbackURL: "http://localhost:8000/auth/facebook/callback",
-        scope: 'user:email'
+        // scope: 'user:email'
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('facebook-here', profile)
