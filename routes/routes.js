@@ -31,17 +31,6 @@ function overview(req, res){
     res.sendfile(OVERVIEWPAGE)
 }
 
-// login/logout requests
-function login(req, res){
-    console.log("Loggining In!")
-    res.redirect('/')
-}
-
-function logout(req, res){
-    console.log("Loggining Out!")
-    res.redirect('/')
-}
-
 function protocol(req, res){
     res.sendfile(PROTOCOLPAGE)
 }
@@ -58,7 +47,5 @@ function resetdb(req, res){
 exports.home = home
 exports.contact = contact
 exports.overview = overview
-exports.login = login
-exports.logout = logout
 exports.protocol = protocol
 exports.resetdb = resetdb

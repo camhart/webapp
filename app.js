@@ -13,7 +13,6 @@ var con = null
 // includes
 var routes = require('./routes/routes')
 var data = require('./routes/data')
-var auth = require('./routes/auth')
 var oauth = require('./routes/oauth')
 var api = require('./routes/api')
 var passport = require('./routes/oauth').passport
@@ -23,8 +22,6 @@ var http = require('http')
 var path = require('path')
 var r = require('rethinkdb')
 var express = require('express')
-
-var user = require('./routes/user')
 
 r.connect( {host: db_host, port: db_port, db: this.db_name}, function(err, connection) {
     if (err) {
@@ -103,15 +100,6 @@ app.get('/auth/github', passport.authenticate('github'))
 app.get('/auth/github/callback', passport.authenticate('github', REDIRECT_OPTIONS))
 app.get('/auth/familysearch', passport.authenticate('familysearch'))
 app.get('/auth/login/return', passport.authenticate('familysearch', REDIRECT_OPTIONS))
-
-app.post('/login', function(req, res){
-    req.session.authorized = true
-    res.send('200', 'Success:login')
-})
-app.post('/logout', function(req, res){
-    req.session.authorized = false
-    res.send('200', 'Success:logout')
-})
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
