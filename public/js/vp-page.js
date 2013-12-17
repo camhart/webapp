@@ -83,9 +83,20 @@ function showOverlay(e, divid)
 	// 	$('#sign-up-container').hide('blind', { }, 250)
 	// })
 
-	$('#signingoogle-btn').click(function(e)
+	// $('#signingoogle-btn').click(function(e)
+	// {
+ //        window.location = '/auth/google'
+	// })
+
+	$('#signin-google-btn').click(function(e)
 	{
         window.location = '/auth/google'
+	})
+	$('#signin-facebook-btn').click(function(e){
+        window.location = '/auth/facebook'
+	})
+	$('#signin-github-btn').click(function(e){
+        window.location = '/auth/github'
 	})
 
 	$('#sign-in-container button.submit').click(signIn)
