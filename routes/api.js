@@ -2,6 +2,7 @@
 var user = require('./user')
 var app = require('../app')
 var util = require('./gedcom-parse')
+var data = require('./data')
 
 module.exports = {
 

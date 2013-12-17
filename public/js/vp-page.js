@@ -58,7 +58,7 @@ function showOverlay(e, divid)
 		$('#signup-form').show()
 		// $('#sign-up-container').show('blind', { }, 250)
 	}
-	else if (this.id === 'user-login')
+	else if (this.id === 'user-signin')
 	{
 		$('#gedcom-form').hide()
 		$('#signup-form').show()
@@ -125,17 +125,20 @@ $(document).ready(function()
 	$overlay = $('#overlay')
 	$overlay.remove()
 
-	$('#user-login, #user-signup, #upload-gedcom').click(showOverlay)
+	$('#user-signin, #upload-gedcom').click(showOverlay)
+
+	performSigninRoutine()
 })
 
-function signIn(clickEvent)
+function performSigninRoutine()
 {
-	alert('Sign-in functionality has not yet been implemented!')
-	return false
-}
-
-function signUp(clickEvent)
-{
-	alert('Sign-up functionality has not yet been implemented!')
-	return false
+	if (isSignedIn())
+	{
+		$('#user-signin').hide()
+		$('#user-signout').show()
+	}
+	else
+	{
+		$('#user-signout').hide()
+	}
 }

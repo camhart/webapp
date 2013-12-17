@@ -9,14 +9,41 @@ var OVERVIEWPAGE = './public/overview.html'
 // static pages
 function home(req, res){
     console.log("Main Page!")
-    if (req.session.authorized)
+    console.log(JSON.stringify(req.session, null, 4))
+    if (req.session.passport.user)
     {
         console.log('Authorized home request')
-        var auth = req.cookies.vpauth.split('/')
-        var email = auth[0]
-        var token = auth[1]
-    }
+        var cookie = ''
+        if (req.session.passport.user.provider === 'google')
+        {
+            cookie = 'Google/' + req.session.passport.user._json.email/* + '/'
+                + req.session.passport.user.id*/
+        }
+        else if (req.session.passport.user.provider === 'familysearch')
+        {
+            cookie = 'FamilySearch/' + req.session.passport.user.email/* + '/'
+                + req.session.passport.user.id*/
+        }
+        else if (req.session.passport.user.provider === '')
+        {
+            cookie = 'Twitter/'
+        }
+        else if (req.session.passport.user.provider === '')
+        {
+            cookie = 'Facebook'
+        }
+        else if (req.session.passport.user.provider === '')
+        {
+            cookie = 'Github'
+        }
 
+        if (cookie !== '')
+            res.cookie('vpauth', cookie)
+        else
+            res.clearCookie('vpauth')
+    }
+    else
+        res.clearCookie('vpauth')
 
     res.sendfile(HOMEPAGE)
 }

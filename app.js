@@ -43,14 +43,14 @@ app.configure(function(){
     app.use(express.logger('dev'))
     app.use(express.json())
     app.use(express.urlencoded())
-    
+
     app.use(express.cookieParser())
     app.use(express.bodyParser({ keepExtensions: false, uploadDir: "uploads" }))
     app.use(express.session({secret: 'some string used for calculating hash'}))
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(app.router)
-    
+
     app.use(express.methodOverride())
     app.use(express.static(path.join(__dirname, 'public')))
     app.use(express.static(path.join(__dirname, 'test')))
@@ -62,12 +62,6 @@ if ('development' == app.get('env')) {
     app.get('/protocol', routes.protocol)
     app.get('/api/user', api.usersAll)
     app.get('/api/data', api.dataAll)
-
-    app.get('/cookietest', function(req, res)
-    {
-        res.cookie('rememberme', 'yes', { maxAge: 900000, httpOnly: false})
-        res.sendfile('./public/test.html')
-    })
 }
 
 app.get('/', routes.home)
@@ -87,9 +81,9 @@ app.post('/api/data/:id', api.dataUpsert)
 
 //auth
 
-var REDIRECT_OPTIONS = { 
+var REDIRECT_OPTIONS = {
     successRedirect: '/',
-    failureRedirect: '/overview' 
+    failureRedirect: '/overview'
 }
 
 app.get('/auth/google', passport.authenticate('google'))

@@ -67,14 +67,13 @@ app.controller('Content', function($scope)
 
 	$scope.showedit = {}
 	content.dirty = true
-	content.demo = !isLoggedIn()
+	content.demo = !isSignedIn()
 
 	setTimeout(refresh, 100)
 	setTimeout(update, 100)
 
 	$scope.addPerson = function(id)
 	{
-		console.log(id)
 		var path = $('#path-' + id).val()
 		var givenname = $('#given-' + id).val()
 		var surname = $('#sur-' + id).val()
@@ -170,7 +169,7 @@ function update()
 var createGraphics = function() {}
 var destroyGraphics = function() {}
 
-function isLoggedIn()
+function isSignedIn()
 {
 	return 'vpauth' in $.cookie()
 }
