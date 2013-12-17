@@ -241,6 +241,13 @@ input:focus
 	margin-bottom:50px;
 }
 
+.overlay-content h1 + p
+{
+	margin-top:-40px;
+	margin-bottom:50px;
+	text-align:center;
+}
+
 .overlay-content p
 {
 	color:#333;
