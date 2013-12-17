@@ -27,7 +27,7 @@ passport.use(
         'https://www.googleapis.com/auth/userinfo.profile']
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('google-here', profile)
+        console.log('google-here', profile._json)
         var googleUser = {
             email: profile._json.email,
             googleid: profile._json.id, 
@@ -48,7 +48,7 @@ passport.use(
         scope: 'user:email'
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('github-here', profile)
+        console.log('github-here', profile._json)
         var githubUser = {
             githubid: profile._json.id,
             email: profile._json.email,
@@ -65,7 +65,7 @@ passport.use(
         scope: ['email']
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('facebook-here', profile)
+        console.log('facebook-here', profile._json)
         var facebookUser = {
             facebookid: profile._json.id,
             gender: profile._json.gender,
@@ -83,18 +83,14 @@ passport.use(
         callbackURL: "http://localhost:8000/auth/login/return/",
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('familysearch-here', profile)
-
+        console.log('familysearch-here', profile._json.users)
         var familysearchUser = {
             familysearchid: profile._json.users[0].id,
             email: profile._json.users[0].email,
             name: profile._json.users[0].displayName,
             gender: profile._json.users[0].gender.toLowerCase(),
         }
-        // TODO
         user.userGetOrCreate(familysearchUser, 'familysearchid', done)
-        // console.log(JSON.stringify(profile._json.users, undefined, 4))
-        // return done(null, profile);
     })
 )
 
@@ -105,12 +101,12 @@ passport.use(
         callbackURL: 'http://localhost:8000/auth/twitter/callback'
     },
     function(accessToken, refreshToken, profile, done) {
+        console.log('twitter-here', profile._json)
         var twitterUser = {
             twitterid: profile._json.id,
             name: profile._json.name,
             picture: profile._json.profile_image_url_https
         }
-        console.log('twitter-here', profile)
         user.userGetOrCreate(twitterUser, 'twitterid', done)
     })
 )
