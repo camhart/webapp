@@ -6,6 +6,8 @@ var passport = require('passport')
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 var GitHubStrategy = require('passport-github').Strategy
 var FacebookStrategy = require('passport-facebook').Strategy
+var FamilySearchStrategy = require('passport-familysearch').Strategy
+
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -41,8 +43,7 @@ passport.use(
 )
 
 passport.use(
-    new FacebookStrategy({
-        clientID: '472051912916435',
+    new FacebookStrategy({clientID: '472051912916435',
         clientSecret: '19c9230012764c821a5f2fddbdb2e7a0',
         callbackURL: "http://localhost:8000/auth/facebook/callback",
         scope: 'user:email'
@@ -53,8 +54,16 @@ passport.use(
     })
 )
 
+passport.use(
+    new FamilySearchStrategy({
+        devKey: 'NQ3Q-PBD8-LL9N-RCLZ-MZCZ-X7P8-7SMX-RD6N',
+        callbackURL: "http://localhost:8000/auth/login/return/",
+    },
+    function(accessToken, refreshToken, profile, done) {
+        console.log('familysearch-here', profile)
+        return done(null, profile);
+    })
+)
+
+
 exports.passport = passport
-
-// https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fgithub%2Fcallback&client_id=84612e8c6f5b487eb5c&type=web_server
-
-

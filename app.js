@@ -101,6 +101,8 @@ app.get('/auth/facebook', passport.authenticate('facebook'))
 app.get('/auth/facebook/callback', passport.authenticate('facebook', REDIRECT_OPTIONS))
 app.get('/auth/github', passport.authenticate('github'))
 app.get('/auth/github/callback', passport.authenticate('github', REDIRECT_OPTIONS))
+app.get('/auth/familysearch', passport.authenticate('familysearch'))
+app.get('/auth/login/return', passport.authenticate('familysearch', REDIRECT_OPTIONS))
 
 app.post('/login', function(req, res){
     req.session.authorized = true

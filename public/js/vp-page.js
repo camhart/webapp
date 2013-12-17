@@ -98,6 +98,9 @@ function showOverlay(e, divid)
 	$('#signin-github-btn').click(function(e){
         window.location = '/auth/github'
 	})
+	$('#signin-familysearch-btn').click(function(e){
+        window.location = '/auth/familysearch'
+	})
 
 	$('#sign-in-container button.submit').click(signIn)
 	$('#sign-up-container button.submit').click(signUp)
