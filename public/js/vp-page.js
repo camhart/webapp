@@ -96,7 +96,8 @@ function showOverlay(e, divid)
         window.location = '/auth/facebook'
 	})
 	$('#signin-github-btn').click(function(e){
-        window.location = '/auth/github'
+		alert('Not implemented')
+        // window.location = '/auth/github'
 	})
 	$('#signin-familysearch-btn').click(function(e){
         window.location = '/auth/familysearch'
