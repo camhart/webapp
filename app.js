@@ -100,6 +100,8 @@ app.get('/auth/github', passport.authenticate('github'))
 app.get('/auth/github/callback', passport.authenticate('github', REDIRECT_OPTIONS))
 app.get('/auth/familysearch', passport.authenticate('familysearch'))
 app.get('/auth/login/return', passport.authenticate('familysearch', REDIRECT_OPTIONS))
+app.get('/auth/twitter', passport.authenticate('twitter'))
+app.get('/auth/twitter/callback', passport.authenticate('twitter', REDIRECT_OPTIONS))
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){

@@ -88,8 +88,7 @@ function showOverlay(e, divid)
  //        window.location = '/auth/google'
 	// })
 
-	$('#signin-google-btn').click(function(e)
-	{
+	$('#signin-google-btn').click(function(e){
         window.location = '/auth/google'
 	})
 	$('#signin-facebook-btn').click(function(e){
@@ -101,6 +100,9 @@ function showOverlay(e, divid)
 	})
 	$('#signin-familysearch-btn').click(function(e){
         window.location = '/auth/familysearch'
+	})
+	$('#signin-twitter-btn').click(function(e){
+        window.location = '/auth/twitter'
 	})
 
 	$('#sign-in-container button.submit').click(signIn)
