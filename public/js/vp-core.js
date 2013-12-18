@@ -3,71 +3,82 @@ var content
 app.controller('Content', function($scope)
 {
 	content = $scope
-	$scope.people = {
-		'.': {
-			givenname: 'Jack',
-			surname: 'Doe',
-			gender: 'M',
-			empty: false
-		},
-		'.0': {
-			givenname: 'John',
-			surname: 'Doe',
-			gender: 'M',
-			empty: false
-		},
-		'.1': {
-			givenname: 'Jane',
-			surname: 'Johnson',
-			gender: 'F',
-			empty: false
-		},
-		'.00': {
-			givenname: 'Robert',
-			surname: 'Doe',
-			gender: 'M',
-			empty: false
-		},
-		'.01': {
-			givenname: 'Elizabeth',
-			surname: 'Smith',
-			gender: 'F',
-			empty: false
-		},
-		'.10': {
-			givenname: 'William',
-			surname: 'Johnson',
-			gender: 'M',
-			empty: false
-		},
-		'.11': {
-			givenname: 'Mary',
-			surname: 'Jones',
-			gender: 'F',
-			empty: false
-		}
-	}
 
-	$scope.mapPoints = new Array();
-	$scope.maxAhn = Graphic.calculateAhn('.')
-	var i = 0;
-	for(var key in $scope.people)
+	$scope.initialize = function(reposition)
 	{
-		$scope.mapPoints[i++] = new MapPoint(key, $scope.people[key]);
-		var ahn = Graphic.calculateAhn(key)
-		if(ahn > $scope.maxAhn)
-			$scope.maxAhn = ahn
+		$scope.people = {
+			'.': {
+				givenname: 'Jack',
+				surname: 'Doe',
+				gender: 'M',
+				empty: false
+			},
+			'.0': {
+				givenname: 'John',
+				surname: 'Doe',
+				gender: 'M',
+				empty: false
+			},
+			'.1': {
+				givenname: 'Jane',
+				surname: 'Johnson',
+				gender: 'F',
+				empty: false
+			},
+			'.00': {
+				givenname: 'Robert',
+				surname: 'Doe',
+				gender: 'M',
+				empty: false
+			},
+			'.01': {
+				givenname: 'Elizabeth',
+				surname: 'Smith',
+				gender: 'F',
+				empty: false
+			},
+			'.10': {
+				givenname: 'William',
+				surname: 'Johnson',
+				gender: 'M',
+				empty: false
+			},
+			'.11': {
+				givenname: 'Mary',
+				surname: 'Jones',
+				gender: 'F',
+				empty: false
+			}
+		}
+
+		$scope.mapPoints = new Array();
+		$scope.maxAhn = Graphic.calculateAhn('.')
+		var i = 0;
+		for(var key in $scope.people)
+		{
+			$scope.mapPoints[i++] = new MapPoint(key, $scope.people[key]);
+			var ahn = Graphic.calculateAhn(key)
+			if(ahn > $scope.maxAhn)
+				$scope.maxAhn = ahn
+		}
+
+		$scope.graphics = {
+			'.': new Graphic($scope.people['.'], '.')
+		}
+
+		$scope.graphics['.'].createdby = 'root'
+
+		$scope.showedit = {}
+		content.dirty = true
+		content.demo = !isSignedIn()
+
+		console.log('initializing')
+
+		if (reposition)
+			setTimeout(positionRootGraphic, 50)
 	}
 
-	$scope.graphics = {
-		'.': new Graphic($scope.people['.'], '.')
-	}
-
-	$scope.graphics['.'].createdby = 'root'
-
-	$scope.showedit = {}
-	content.dirty = true
-	content.demo = !isSignedIn()
+	$scope.initialize(false)
 
 	setTimeout(refresh, 100)
 	setTimeout(update, 100)
@@ -171,6 +182,5 @@ var destroyGraphics = function() {}
 
 function isSignedIn()
 {
-	console.log('Cookie: ', $.cookie())
 	return 'vpauth' in $.cookie()
 }

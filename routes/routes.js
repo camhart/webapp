@@ -10,7 +10,7 @@ var OVERVIEWPAGE = './public/overview.html'
 function home(req, res){
     console.log("Main Page!")
     console.log(JSON.stringify(req.session, null, 4))
-   
+
     if (req.user && req.user.id){
         console.log('Authorized home request')
         res.cookie('vpauth', req.user.id)
@@ -18,7 +18,7 @@ function home(req, res){
     else {
         res.clearCookie('vpauth')
     }
-    res.sendfile(HOMEPAGE)            
+    res.sendfile(HOMEPAGE)
 }
 
         // if (req.session.passport.user.provider === 'google')
@@ -47,7 +47,8 @@ function home(req, res){
 
 function logout(req, res){
     req.logout()
-    res.redirect('/')
+    res.clearCookie('vpauth')
+    res.send({'success':true})
 }
 
 function contact(req, res){

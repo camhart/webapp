@@ -137,21 +137,29 @@ function performSigninRoutine()
 	{
 		$('#user-signin').hide()
 		$('#user-signout').show()
+		$('#upload-gedcom').show()
 	}
 	else
 	{
-		$('#user-signout').hide()
+		$('#user-signin').show(400)
+		$('#user-signout').hide(400)
+		$('#upload-gedcom').hide(400)
 	}
 }
 
 function logout()
 {
-	// reload whole page
-	window.location = '/logout'
-
-	// or logout on server and update diplay elements
-	// $.ajax({
- //        type : 'GET',
- //        url : '/logout'
- //    })
+	$.ajax({
+        type : 'GET',
+        url : '/logout',
+        success: function()
+        {
+        	content.initialize(true)
+        	performSigninRoutine()
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+        	console.log('error', jqXHR, textStatus, errorThrown)
+        }
+    })
 }
