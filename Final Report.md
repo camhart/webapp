@@ -13,12 +13,14 @@ User Table
 {
 "email": camhart73@gmail.com, »
 "gender":  "male" ,
-"googleid":  "106105613198083240886" ,
-"id":  "5f4f7ea8-6b19-4b00-89d1-dc9db74e05c5" ,
-"name":  "Cameron Hartmann"
+"googleid":  "############" ,
+"id":  "#########################" ,
+"name":  "Cam Hart"
 },...
 ]
 ```
+The email and the id are the unique identifiers for this document.  Each time someone logs in with a new oauth it will search based on the email and link any existing accounts.  Name represents the name of the user.  Each oauth id (googleid, twitterid, facebookid, etc) represents the id to their account.
+
 Data Table
 ```
 [
@@ -35,6 +37,7 @@ Data Table
 "wife":  "1_19M7-48"
 } ,...
 ```
+This table consist of data for an individual person.  It links their children and spouse(s) to them as well.
 
 Contributions
 -------------
