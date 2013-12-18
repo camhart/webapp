@@ -149,26 +149,17 @@ function performSigninRoutine()
 
 function logout()
 {
-	// reload whole page
-	// window.location = '/logout'
-
-	// or logout on server and update diplay elements
 	$.ajax({
         type : 'GET',
         url : '/logout',
-        success: function(response, textStatus, jqXHR)
+        success: function()
         {
-        	console.log('success', response, textStatus, jqXHR)
         	content.initialize(true)
         	performSigninRoutine()
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
         	console.log('error', jqXHR, textStatus, errorThrown)
-        },
-        complete: function(jqXHR, textStatus)
-        {
-        	console.log('complete', jqXHR, textStatus)
         }
     })
 }
