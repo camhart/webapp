@@ -3,7 +3,7 @@ Final Report
 
 Description
 -----------
-Virtual Pedigree allows users to quickly view and edit geneological data, without having to switch contexts.  They can import a gedcom file to import existing data into our system.  They can search across all user data, and this search.
+Virtual Pedigree allows users to quickly view and edit geneological data, without having to switch contexts.  They can import a gedcom file to import existing data into our system.
 
 Database Schema
 ---------------
@@ -41,7 +41,7 @@ This table consist of data for an individual person.  It links their children an
 
 Contributions
 -------------
-Ryan - I built the core Virtual Pedigree algorithm in JavaScript and AngularJS, as well as built most of the front end of the web page. Pretty much everything that is sent to the client was written by me, with the exception of public/js/core/vp-mapPoint.js and other mapPoint or miniMap code, which was written by Adam.
+Ryan - I built the core Virtual Pedigree algorithm in JavaScript and AngularJS, as well as built most of the front end of the web page. Pretty much everything that is sent to the client was written by me, with the exception of public/js/core/vp-mapPoint.js and other mapPoint or miniMap code, which was written by Adam. I also wrote most of the GEDCOM parser.
 
 Jason -
 
