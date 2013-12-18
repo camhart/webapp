@@ -139,16 +139,36 @@ function performSigninRoutine()
 		$('#user-signout').show()
 		$('#upload-gedcom').show()
 	}
+	else
+	{
+		$('#user-signin').show(400)
+		$('#user-signout').hide(400)
+		$('#upload-gedcom').hide(400)
+	}
 }
 
 function logout()
 {
 	// reload whole page
-	window.location = '/logout'
+	// window.location = '/logout'
 
 	// or logout on server and update diplay elements
-	// $.ajax({
- //        type : 'GET',
- //        url : '/logout'
- //    })
+	$.ajax({
+        type : 'GET',
+        url : '/logout',
+        success: function(response, textStatus, jqXHR)
+        {
+        	console.log('success', response, textStatus, jqXHR)
+        	content.initialize(true)
+        	performSigninRoutine()
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+        	console.log('error', jqXHR, textStatus, errorThrown)
+        },
+        complete: function(jqXHR, textStatus)
+        {
+        	console.log('complete', jqXHR, textStatus)
+        }
+    })
 }
