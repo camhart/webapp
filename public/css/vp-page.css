@@ -110,10 +110,8 @@ input:focus
 
 .user-data
 {
-	position: fixed;
-	top: 6px;
-	right: 10px;
-	z-index:201;
+	float:right;
+	margin:8px;
 }
 
 .user-data .user-login
