@@ -137,10 +137,7 @@ function performSigninRoutine()
 	{
 		$('#user-signin').hide()
 		$('#user-signout').show()
-	}
-	else
-	{
-		$('#user-signout').hide()
+		$('#upload-gedcom').show()
 	}
 }
 
