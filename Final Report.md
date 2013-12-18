@@ -8,7 +8,8 @@ Virtual Pedigree allows users to quickly view and edit geneological data, withou
 Database Schema
 ---------------
 User Table
-'''[
+'''
+[
 {
 "email": camhart73@gmail.com, »
 "gender":  "male" ,
@@ -16,10 +17,13 @@ User Table
 "id":  "5f4f7ea8-6b19-4b00-89d1-dc9db74e05c5" ,
 "name":  "Cameron Hartmann"
 }
-]'''
+]
+'''
 <br>
 Data Table
-''''''
+'''
+put stuff here
+'''
 
 Contributions
 -------------
