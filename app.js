@@ -1,12 +1,20 @@
 
 // global Settings
 var env = 'development'
-var server_port = 8000
 var db_port = 28015
 var db_host = 'localhost'
+var server_port = 8000
 var db_name = 'vp'
 var tbl_user = 'user'
 var tbl_data = 'data'
+
+var amazon_server = true
+
+if(amazon_server){
+    exports.domain = 'virtualpedigree.no-ip.org'
+} else {
+    exports.domain = server_host + ':' + server_port    
+}
 
 // includes
 var routes = require('./routes/routes')
@@ -98,5 +106,4 @@ http.createServer(app).listen(app.get('port'), function(){
 exports.db_name = db_name
 exports.tbl_user = tbl_user
 exports.tbl_data = tbl_data
-
 
