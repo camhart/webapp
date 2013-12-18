@@ -41,7 +41,7 @@ This table consist of data for an individual person.  It links their children an
 
 Contributions
 -------------
-Ryan -
+Ryan - I built the core Virtual Pedigree algorithm in JavaScript and AngularJS, as well as built most of the front end of the web page. Pretty much everything that is sent to the client was written by me, with the exception of public/js/core/vp-mapPoint.js and other mapPoint or miniMap code, which was written by Adam.
 
 Jason -
 
