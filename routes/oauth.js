@@ -1,6 +1,7 @@
 
-
 var user = require('./user')
+var app = require('../app')
+
 
 var passport = require('passport')
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
@@ -20,9 +21,11 @@ passport.deserializeUser(function(obj, done) {
 
 passport.use(
     new GoogleStrategy({
-        clientID: '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com',
-        clientSecret: 'uxIocixkvihbjNzlnwBcAfWf',
-        callbackURL: 'http://localhost:8000/auth/google/callback',
+        // clientID: '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com',
+        // clientSecret: 'uxIocixkvihbjNzlnwBcAfWf',
+        clientID: '85896237045-hk7el7flpp0qm3b55dn8edovpn1f76ab.apps.googleusercontent.com',
+        clientSecret: '8kN8HgVyifkN9l9DZUrr_6Qz',
+        callbackURL: 'http://' + app.domain + '/auth/google/callback',
         scope: ['https://www.googleapis.com/auth/userinfo.email', 
         'https://www.googleapis.com/auth/userinfo.profile']
     },
@@ -44,7 +47,7 @@ passport.use(
     new GitHubStrategy({
         clientID: '84612e8c6f5b487eb5c3',
         clientSecret: '667c3dfb25fdd23d0429f373e37ab5451142c570',
-        callbackURL: 'http://localhost:8000/auth/github/callback',
+        callbackURL: 'http://' + app.domain + '/auth/github/callback',
         scope: 'user:email'
     },
     function(accessToken, refreshToken, profile, done) {
@@ -61,7 +64,7 @@ passport.use(
 passport.use(
     new FacebookStrategy({clientID: '472051912916435',
         clientSecret: '19c9230012764c821a5f2fddbdb2e7a0',
-        callbackURL: "http://localhost:8000/auth/facebook/callback",
+        callbackURL: 'http://' + app.domain + '/auth/facebook/callback',
         scope: ['email']
     },
     function(accessToken, refreshToken, profile, done) {
@@ -80,7 +83,7 @@ passport.use(
 passport.use(
     new FamilySearchStrategy({
         devKey: 'NQ3Q-PBD8-LL9N-RCLZ-MZCZ-X7P8-7SMX-RD6N',
-        callbackURL: "http://localhost:8000/auth/login/return/",
+        callbackURL: 'http://' + app.domain + '/auth/login/return/',
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('familysearch-here', profile._json.users)
@@ -98,7 +101,7 @@ passport.use(
     new TwitterStrategy({
         consumerKey: 'wmKLl2voXmjhSyz5qT9jbg',
         consumerSecret: 'jCpZHgJSk2lG15nXiqicRSbGaPqu7oYmsrveIROo',
-        callbackURL: 'http://localhost:8000/auth/twitter/callback'
+        callbackURL: 'http://' + app.domain + '/auth/twitter/callback'
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('twitter-here', profile._json)
@@ -110,7 +113,5 @@ passport.use(
         user.userGetOrCreate(twitterUser, 'twitterid', done)
     })
 )
-
-
 
 exports.passport = passport

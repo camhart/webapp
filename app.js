@@ -3,18 +3,22 @@
 var env = 'development'
 var db_port = 28015
 var db_host = 'localhost'
-var server_port = 8000
 var db_name = 'vp'
 var tbl_user = 'user'
 var tbl_data = 'data'
 
+var server_host = '127.0.0.1'
+var server_port = 8000
+var domain = server_host + ':' + server_port    
+
 var amazon_server = true
 
 if(amazon_server){
-    exports.domain = 'virtualpedigree.no-ip.org'
-} else {
-    exports.domain = server_host + ':' + server_port    
-}
+    domain = 'virtualpedigree.no-ip.org'
+    server_port = 80
+} 
+
+exports.domain = domain
 
 // includes
 var routes = require('./routes/routes')
