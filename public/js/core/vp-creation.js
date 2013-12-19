@@ -9,6 +9,14 @@ createGraphics = function()
 			&& g.center.y > 0
 			&& g.center.y < canvas.height())
 		{
+			var $root = $('#g-'+Graphic.calculateAhn(g.path))
+			var selectedX = $root.parent().width() - GRAPHIC_HORIZ_OFFSET * 3.5
+			var selectedY = $root.parent().height() / 2
+			if(g.center.x-selectedX < 200 && g.center.y-selectedY < 200 && content.mapCursors[0].path != g.path && !g.empty)
+			{
+				console.log("Selecting "+g.path)
+				content.setPersonInMinimap(g.path)
+			}
 			// get parents
 			var fp = g.path + '0'
 			var mp = g.path + '1'
