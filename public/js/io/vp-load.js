@@ -11,7 +11,7 @@ app.controller('ParseResults', function($scope)
 		people['.'] = $scope.data.people[rootid]
 		$scope.rootid = rootid
 
-		buildPeopleList(people, people['.'], '.')
+		buildPeopleList(people, people['.'], '.', $scope.data.people)
 
 		$scope.newpeople = people
 		$scope.dataReady = true
@@ -138,22 +138,22 @@ function loadParsedFile(data)
 	$('#gedcom-results').html(content)
 }
 
-function buildPeopleList(people, person, path)
+function buildPeopleList(people, person, path, target)
 {
 	if (person.father)
 	{
 		var fp = path + '0'
-		var f = results.data.people[person.father]
+		var f = target[person.father]
 		people[fp] = f
-		buildPeopleList(people, f, fp)
+		buildPeopleList(people, f, fp, target)
 	}
 
 	if (person.mother)
 	{
 		var mp = path + '1'
-		var m = results.data.people[person.mother]
+		var m = target[person.mother]
 		people[mp] = m
-		buildPeopleList(people, m, mp)
+		buildPeopleList(people, m, mp, target)
 	}
 }
 
