@@ -320,7 +320,7 @@ function linkFamilies(people, families, callback)
     }
 
     callback( {
-        individuals: people,
+        people: people,
         families: families
     })
 }
