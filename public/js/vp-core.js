@@ -89,8 +89,6 @@ app.controller('Content', function($scope)
 		content.dirty = true
 		content.demo = !isSignedIn()
 
-		console.log('initializing')
-
 		if (reposition)
 			setTimeout(positionRootGraphic, 50)
 	}

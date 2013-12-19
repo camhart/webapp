@@ -9,6 +9,7 @@ app.controller('ParseResults', function($scope)
 		// calculate paths
 		var people = {}
 		people['.'] = $scope.data.people[rootid]
+		$scope.rootid = rootid
 
 		buildPeopleList(people, people['.'], '.')
 
@@ -44,6 +45,21 @@ app.controller('ParseResults', function($scope)
 		content.dirty = true
 		setTimeout(positionRootGraphic, 50)
 		closeOverlay()
+
+		// store root id in server
+		$.ajax({
+			url: '/api/user',
+			method: 'post',
+			data: {id: getUserID(), root: $scope.rootid},
+			success: function(response)
+			{
+				console.log(response)
+			},
+			error: function(response)
+			{
+				console.log('error!:', response.status)
+			}
+		})
 	}
 
 	$scope.getControllerClass = function()
@@ -159,7 +175,7 @@ function setUpUploader()
 		$('#file-upload').click()
 	})
 
-	var userid = '1' // get userid
+	var userid = getUserID()
 	$('#file-upload').html5_upload({
 		url: 'api/user/' + userid + '/parse',
 		autostart: true,

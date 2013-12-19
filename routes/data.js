@@ -16,9 +16,7 @@ function dataGetAll(userid, callback){
     }).run(app.con, function(err, cursor) {
         if(err) return callback(err)
         cursor.toArray(function(err, results){
-            var families = {}
-            var persons = {}
-            callback(err, {families: families, persons: person})
+            listToData(results, callback)
         })
     })
 }
