@@ -9,8 +9,9 @@ app.controller('ParseResults', function($scope)
 		// calculate paths
 		var people = {}
 		people['.'] = $scope.data.people[rootid]
+		$scope.rootid = rootid
 
-		buildPeopleList(people, people['.'], '.')
+		buildPeopleList(people, people['.'], '.', $scope.data.people)
 
 		$scope.newpeople = people
 		$scope.dataReady = true
@@ -26,9 +27,39 @@ app.controller('ParseResults', function($scope)
 		content.graphics = {
 			'.': new Graphic($scope.newpeople['.'], '.')
 		}
+
+		content.mapPoints = {}
+		content.maxAhn = Graphic.calculateAhn('.')
+
+		for(var key in content.people)
+		{
+			content.mapPoints[key] = new MapPoint(key, content.people[key]);
+			var ahn = Graphic.calculateAhn(key)
+			if(ahn > content.maxAhn)
+				content.maxAhn = ahn
+		}
+
+		content.mapCursors = new Array();
+		content.mapCursors[0] = content.mapPoints['.']
+
 		content.dirty = true
 		setTimeout(positionRootGraphic, 50)
 		closeOverlay()
+
+		// store root id in server
+		$.ajax({
+			url: '/api/user',
+			method: 'post',
+			data: {id: getUserID(), root: $scope.rootid},
+			success: function(response)
+			{
+				console.log(response)
+			},
+			error: function(response)
+			{
+				console.log('error!:', response.status)
+			}
+		})
 	}
 
 	$scope.getControllerClass = function()
@@ -107,22 +138,22 @@ function loadParsedFile(data)
 	$('#gedcom-results').html(content)
 }
 
-function buildPeopleList(people, person, path)
+function buildPeopleList(people, person, path, target)
 {
 	if (person.father)
 	{
 		var fp = path + '0'
-		var f = results.data.people[person.father]
+		var f = target[person.father]
 		people[fp] = f
-		buildPeopleList(people, f, fp)
+		buildPeopleList(people, f, fp, target)
 	}
 
 	if (person.mother)
 	{
 		var mp = path + '1'
-		var m = results.data.people[person.mother]
+		var m = target[person.mother]
 		people[mp] = m
-		buildPeopleList(people, m, mp)
+		buildPeopleList(people, m, mp, target)
 	}
 }
 
@@ -144,7 +175,7 @@ function setUpUploader()
 		$('#file-upload').click()
 	})
 
-	var userid = '1' // get userid
+	var userid = getUserID()
 	$('#file-upload').html5_upload({
 		url: 'api/user/' + userid + '/parse',
 		autostart: true,

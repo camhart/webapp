@@ -11,7 +11,7 @@ var server_host = '127.0.0.1'
 var server_port = 8000
 var domain = server_host + ':' + server_port
 
-var amazon_server = false
+var amazon_server = true
 
 if(amazon_server){
     domain = 'virtualpedigree.no-ip.org'
@@ -19,6 +19,7 @@ if(amazon_server){
 }
 
 exports.domain = domain
+exports.amazon_server = amazon_server
 
 // includes
 var routes = require('./routes/routes')

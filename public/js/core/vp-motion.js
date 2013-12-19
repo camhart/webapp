@@ -34,6 +34,8 @@ function translate_graphics(dx, dy, y)
 {
 	var exp = -dx / GRAPHIC_HORIZ_OFFSET
 	var dyscale = Math.pow(2, exp) - 1
+	var selectedX = canvas.width() / 2
+	var selectedY = canvas.height() / 2
 
 	for (i in content.graphics)
 	{
@@ -43,6 +45,9 @@ function translate_graphics(dx, dy, y)
         vec.y += (g.center.y - y) * dyscale
 
 		g.translate(vec)
+
+		if(g.center.x-selectedX < 200 && g.center.y-selectedY < 200 && content.mapCursors[0].path != g.path && !g.empty)
+			content.setPersonInMinimap(g.path)
 	}
 
 	content.dirty = true

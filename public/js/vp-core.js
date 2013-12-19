@@ -6,6 +6,34 @@ app.controller('Content', function($scope)
 
 	$scope.initialize = function(reposition)
 	{
+		if (isSignedIn())
+		{
+			$.ajax({
+				url:'/api/user/' + getUserID() + '/data',
+				type: 'get',
+				success: function(response)
+				{
+					console.log(response)
+					// calculate paths
+					var people = {}
+
+					if (response.root)
+						people['.'] = response.people[response.root]
+					else
+						people['.'] = response.people['.']
+
+					$scope.people = {}
+					buildPeopleList(response.people, people['.'], '.', $scope.people)
+
+					console.log(people)
+				},
+				error: function(jqXHR, textStatus, errorThrown)
+				{
+					console.log('error!', jqXHR, textStatus, errorThrown)
+				}
+			})
+		}
+
 		$scope.people = {
 			'.': {
 				givenname: 'Jack',
@@ -73,8 +101,6 @@ app.controller('Content', function($scope)
 		content.dirty = true
 		content.demo = !isSignedIn()
 
-		console.log('initializing')
-
 		if (reposition)
 			setTimeout(positionRootGraphic, 50)
 	}
@@ -87,8 +113,8 @@ app.controller('Content', function($scope)
 	$scope.selectPerson = function(id)
 	{
 		content.setPersonInMinimap(id)
-		$scope.graphics = {}
-		$scope.graphics[id] = new Graphic($scope.people[id], id)
+		content.graphics = {}
+		content.graphics[id] = new Graphic(content.people[id], id)
 		positionRootGraphic(id)
 		console.log("cursor is now on path "+content.mapCursors[0].path)
 		content.dirty = true
@@ -232,4 +258,9 @@ function logMapPoints()
 function isSignedIn()
 {
 	return 'vpauth' in $.cookie()
+}
+
+function getUserID()
+{
+	return $.cookie().vpauth
 }
