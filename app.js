@@ -54,10 +54,7 @@ app.configure(function(){
 
     app.use(express.cookieParser())
     app.use(express.bodyParser({ keepExtensions: false, uploadDir: "uploads" }))
-    app.use(express.session({
-        secret: 'some string used for calculating hash',
-        cookie: { maxAge : (3600000 * 16) } // 16 hours
-    }))
+    app.use(express.session({secret: 'some string used for calculating hash'}))
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(app.router)
