@@ -47,7 +47,7 @@ Jason - I spent most my time working on the backend. We decided to use NodeJS (w
 
 Cameron - Almost all of my work occured on the back end of the server.  Our first goal was to get our protocol working so we could add, update, and detele User and Person data from the database.  User data represented someone logging into the webapp.  Person data represented the geneological data for an individual person.  Jason implemented the individual actions here, and then I got the batch actions working (so we could delete/add/update multliple users/person data objects with just a single request).  I also modified our protocol.js test page to allow us to test some of those batch actions.  After some time we realised our protocol wasn't sufficient for what we needed.  We needed to be able to represent families and all of the data associated with them.  Once we realised this, Jason and I worked together simultaneously to make the appropriate changes.  Jason then tested and debuged those changes on his own, while I started working on OAuth using Google.  I implemented google's OAuth into our application by hardcoding it (was later changed to using passportjs).  I also created each of the reports for submission.
 
-Adam -
+Adam - I set up the Amazon server through Amazon Web Services and configured it to run our app. I wrote the minimap code, allowing fast navigation and overall view of where the user is in the tree. My code is in public/js/core/vp-mapPoint.js and portions of public/js/vp-core.js, public/js/core/vp-creation.js, public/vp.html, and my minimap related css is in vp-core.css and vp-page.css.
 
 
 Future Work
