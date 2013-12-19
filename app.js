@@ -110,4 +110,3 @@ http.createServer(app).listen(app.get('port'), function(){
 exports.db_name = db_name
 exports.tbl_user = tbl_user
 exports.tbl_data = tbl_data
-
