@@ -58,7 +58,7 @@ app.controller('Content', function($scope)
 		if(ahn > $scope.maxAhn)
 			$scope.maxAhn = ahn
 	}
-
+	logMapPoints();
 	$scope.graphics = {
 		'.': new Graphic($scope.people['.'], '.')
 	}
@@ -78,6 +78,7 @@ app.controller('Content', function($scope)
 		var path = $('#path-' + id).val()
 		var givenname = $('#given-' + id).val()
 		var surname = $('#sur-' + id).val()
+		var idx = $scope.mapPoints.length
 
 		if (givenname.length > 0 || surname.length > 0)
 		{
@@ -89,6 +90,8 @@ app.controller('Content', function($scope)
 			}
 
 			content.people[path] = person
+			content.mapPoints[content.mapPoints.length] = new MapPoint(path, person)
+			content.dirty = true;
 			if (content.graphics[path].empty)
 			{
 				delete content.graphics[path]
@@ -103,6 +106,7 @@ app.controller('Content', function($scope)
 		{
 			alert('Cannot add person - You did not supply enough information!')
 		}
+		logMapPoints();
 	}
 
 	$scope.removePerson = function(id)
@@ -116,6 +120,8 @@ app.controller('Content', function($scope)
 			delete content.graphics[path]
 			delete content.graphics[path + '0']
 			delete content.graphics[path + '1']
+			delete content.mapPoints[content.mapPoints.length-1]
+			logMapPoints()
 			content.dirty = true
 		}
 	}
@@ -169,3 +175,12 @@ function update()
 
 var createGraphics = function() {}
 var destroyGraphics = function() {}
+
+function logMapPoints()
+{
+	for(var i=0; i<content.mapPoints.length; i++)
+	{
+		var point = content.mapPoints[i]
+		console.log(point.path+": "+point)
+	}
+}
