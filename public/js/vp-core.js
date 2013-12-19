@@ -6,6 +6,22 @@ app.controller('Content', function($scope)
 
 	$scope.initialize = function(reposition)
 	{
+		if (isSignedIn())
+		{
+			$.ajax({
+				url:'/api/user/' + getUserID() + '/data',
+				type: 'get',
+				success: function(response)
+				{
+					console.log(response)
+				},
+				error: function(jqXHR, textStatus, errorThrown)
+				{
+					console.log('error!', jqXHR, textStatus, errorThrown)
+				}
+			})
+		}
+
 		$scope.people = {
 			'.': {
 				givenname: 'Jack',
@@ -232,4 +248,9 @@ function logMapPoints()
 function isSignedIn()
 {
 	return 'vpauth' in $.cookie()
+}
+
+function getUserID()
+{
+	return $.cookie().vpauth
 }

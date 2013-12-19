@@ -12,7 +12,7 @@ function dataGet(id, callback){
 // data functions (add, get, update, delete)
 function dataGetAll(userid, callback){
     r.db(app.db_name).table(app.tbl_data).filter(function(data) {
-     return data('id').match(req.params.id + '_')
+     return data('id').match(userid + '_')
     }).run(app.con, function(err, cursor) {
         if(err) return callback(err)
         cursor.toArray(function(err, results){
