@@ -47,28 +47,28 @@ function dataAll(callback){
 
 function dataToList(data, callback){
     var list = []
-    var individuals = data.individuals
+    var people = data.people
     var families = data.families
     for(var key in families){
         if(families[key].id == undefined)
             families[key].id = key
         list.push(families[key])
     }
-    for(var key in individuals){
-        if(individuals[key].id == undefined)
-            individuals[key].id = key
-        list.push(individuals[key])
+    for(var key in people){
+        if(people[key].id == undefined)
+            people[key].id = key
+        list.push(people[key])
     }
 
     callback(null, list)
 }
 
 function listToData(list, callback){
-    var individuals = {}
+    var people = {}
     var families = {}
     for(var i in list){
         if(list[i].id.split('_')[1].charAt(0) == "I" ) {
-            individuals[list[i].id] = list[i]
+            people[list[i].id] = list[i]
         } else if(list[i].id.split('_')[1].charAt(0) == "F" ) {
             families[list[i].id] = list[i]
         } else {
@@ -76,7 +76,7 @@ function listToData(list, callback){
             throw new Error(list[i].id + 'is not valid')
         }
     }
-    callback(null, { individuals: individuals, families: families})
+    callback(null, { people: people, families: families})
 }
 
 exports.dataUpsert = dataUpsert
