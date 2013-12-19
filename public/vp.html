@@ -10,6 +10,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src="js/jquery.blockUI.js"></script>
 	<script src="js/jquery.html5_upload.js"></script>
+	<script src="js/jquery.cookie.js"></script>
 </head>
 <body>
 <noscript>
@@ -21,83 +22,91 @@
 			your browser&apos;s settings and enable JavaScript.</p>
 	</div>
 </noscript>
-<div class='user-data'>
-	<div class='search'>
-		<input type='text' placeholder='Search'/>
-	</div>
-	<div class='user-signup btn btn-primary' id='user-signup'>
-		Sign up
-	</div>
-	<div class='user-login btn btn-danger' id='user-login'>
-		Sign in
-	</div>
-</div>
-
 <div class='header'>
+	<div class='user-data'>
+		<div class='user-signin-details' id='signin-details'></div>
+		<div class='user-signin btn btn-danger' id='user-signin'>
+			Sign in
+		</div>
+		<div class='user-signout btn btn-danger' id='user-signout' style='display:none'>
+			Sign out
+		</div>
+	</div>
+
 	<div class='header-content'>
-		<div id='show-sidebar'>Tools</div>
-		<div id='upload-gedcom'>Load GEDCOM</div>
-		<div id='ui-block'>Block UI</div>
+		<!--div id='show-sidebar'>Tools</div-->
+		<div id='upload-gedcom' style='display:none'>Load GEDCOM</div>
+		<!--div id='ui-block'>Block UI</div-->
+		<!--div class='search'>
+			<input type='text' placeholder='Search'/>
+		</div-->
 	</div>
 </div>
 
 </div>
+<div ng-controller='Content'>
+	<div class='sidebar' id='vp-sidebar'>
+		<div>This is some sidebar content</div>
+		<div>This is some sidebar content</div>
+		<div>This is some sidebar content</div>
+		<div>This is some sidebar content</div>
+		<div>This is some sidebar content</div>
+		<div>This is some sidebar content</div>
+		<div>This is some sidebar content</div>
+		<div class='minimap' id='vp-minimap'>
+			<div class='minimap-content{{demo ? " demo" : ""}}' id='minimap-content'>
+				<div ng-repeat='(path, p) in mapPoints' class='minimapPoint' id='p-{{p.path}}' style='left:{{p.getX(maxAhn)}}px;top:{{p.getY(maxAhn)}}px;' ng-click='selectPerson(p.path)'>
+				</div>
+				<div ng-repeat='(path, c) in mapCursors' class='minimapCursor' id='c-{{path}}' style='left:{{c.getX(maxAhn)-2}}px;top:{{c.getY(maxAhn)-2}}px;' ng-click='selectPerson(c.path)'>
 
-<div class='sidebar' id='vp-sidebar'>
-	<div>This is some sidebar content</div>
-	<div>This is some sidebar content</div>
-	<div>This is some sidebar content</div>
-	<div>This is some sidebar content</div>
-	<div>This is some sidebar content</div>
-	<div>This is some sidebar content</div>
-	<div>This is some sidebar content</div>
-	<div class='minimap' id='vp-minimap'>
-		<div class='minimap-content{{demo ? " demo" : ""}}' id='minimap-content' ng-controller='Content'>
-			<div ng-repeat='(path, p) in mapPoints' class='minimapPoint' id='p-{{p.path}}' style='left:{{p.getX(maxAhn)}}px;top:{{p.getY(maxAhn)}}px;'>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class='main'>
+		<div class='content{{demo ? " demo" : ""}}' id='content'>
+			<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}{{motionClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.ahn}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
+				<div class='id'>{{g.ahn}}</div>
+				<span ng-if='!g.empty && !showedit[g.ahn]'>
+					<span class='name'>
+						{{g.givenname || g.surname ? g.givenname : g.fullname}}
+						{{g.givenname || g.surname ? g.surname : ''}}
+						<!--({{g.center.x}}, {{g.center.y}})<br>-->
+					</span>
+				</span>
+				<!--span ng-if='!showedit[g.ahn] && g.empty && g.ahn' class='name'>Ahn#: {{g.ahn}}<br></span>
+				<span ng-if='!showedit[g.ahn] && g.empty'>Path: {{g.path}}</span-->
+				<input type='checkbox' id='add-{{g.ahn}}-show' ng-model='showedit[g.ahn]' ng-init='showedit[g.ahn]=false'/>
+				<label ng-if='!showedit[g.ahn]' for='add-{{g.ahn}}-show'><span ng-if='g.empty'>click to add</span></label>
+				<form ng-submit='addPerson(g.ahn)' ng-if='showedit[g.ahn]' class='edit-info'>
+					<input type='hidden' id='path-{{g.ahn}}' value='{{path}}'/>
+					<input type='submit'/>
+					<input id='given-{{g.ahn}}' placeholder='Given Name' ng-model='g.givenname'/><br>
+					<input id='sur-{{g.ahn}}' placeholder='Surname' ng-model='g.surname'/><br>
+					<label ng-if='g.empty' for='add-{{g.ahn}}-show' ng-click='addPerson(g.ahn)'>Save</label>
+					<label ng-if='g.empty' for='add-{{g.ahn}}-show'>Cancel</label>
+					<label ng-if='!g.empty && path.length > 1 && graphics[path + "0"].empty && graphics[path + "1"].empty' for='add-{{g.ahn}}-show' ng-click='removePerson(g.ahn)'>Remove</label>
+					<label ng-if='!g.empty' for='add-{{g.ahn}}-show'>Done</label>
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
-
-<div class='main'>
-	<div class='content{{demo ? " demo" : ""}}' id='content' ng-controller='Content'>
-		<div ng-repeat='(path, g) in graphics' class='graphic{{g.empty ? " empty" : ""}}{{g.getGenClass()}}{{motionClass()}}' graphic ahn='{{g.line}}' gender='{{g.gender}}' id='g-{{g.ahn}}' style='left:{{g.topleft.x}}px;top:{{g.topleft.y}}px;'>
-			<div class='id'>{{g.ahn}}</div>
-			<span ng-if='!g.empty && !showedit[g.ahn]'>
-				<span class='name'>
-					{{g.givenname || g.surname ? g.givenname : g.fullname}}
-					{{g.givenname || g.surname ? g.surname : ''}}
-					<!--({{g.center.x}}, {{g.center.y}})<br>-->
-				</span>
-			</span>
-			<!--span ng-if='!showedit[g.ahn] && g.empty && g.ahn' class='name'>Ahn#: {{g.ahn}}<br></span>
-			<span ng-if='!showedit[g.ahn] && g.empty'>Path: {{g.path}}</span-->
-			<input type='checkbox' id='add-{{g.ahn}}-show' ng-model='showedit[g.ahn]' ng-init='showedit[g.ahn]=false'/>
-			<label ng-if='!showedit[g.ahn]' for='add-{{g.ahn}}-show'><span ng-if='g.empty'>click to add</span></label>
-			<form ng-submit='addPerson(g.ahn)' ng-if='showedit[g.ahn]' class='edit-info'>
-				<input type='hidden' id='path-{{g.ahn}}' value='{{path}}'/>
-				<input type='submit'/>
-				<input id='given-{{g.ahn}}' placeholder='Given Name' ng-model='g.givenname'/><br>
-				<input id='sur-{{g.ahn}}' placeholder='Surname' ng-model='g.surname'/><br>
-				<label ng-if='g.empty' for='add-{{g.ahn}}-show' ng-click='addPerson(g.ahn)'>Save</label>
-				<label ng-if='g.empty' for='add-{{g.ahn}}-show'>Cancel</label>
-				<label ng-if='!g.empty && path.length > 1 && graphics[path + "0"].empty && graphics[path + "1"].empty' for='add-{{g.ahn}}-show' ng-click='removePerson(g.ahn)'>Remove</label>
-				<label ng-if='!g.empty' for='add-{{g.ahn}}-show'>Done</label>
-			</form>
-		</div>
-	</div>
-</div>
-
 <div class='overlay' id='overlay'>
 	<div class='overlay-content'>
 		<div id='overlay-close' class='btn btn-default'>&times;</div>
 		<div id='signup-form'>
-			<h1>Sign up or Sign in</h1>
-			<button class='btn btn-default submit' id='signingoogle-btn'>Sign in with Google™</button><br>
-<!-- 			<form id='sign-in-google-container' onsubmit='return signInGoogle()'>
-				<p>Sign in useing your Google™ Account</p>
-			</form> -->
-			<button class='btn btn-danger' id='signup-btn'>Sign up</button><br>
+			<h1>Sign in</h1>
+			<p>Signing up is easy! Just sign in with your favorite app.</p>
+
+			<button class='btn btn-danger submit' id='signin-familysearch-btn'>Sign in with FamilySearch</button><br>
+			<button class='btn btn-danger submit' id='signin-google-btn'>Sign in with Google</button><br>
+			<button class='btn btn-danger submit' id='signin-facebook-btn'>Sign in with Facebook</button><br>
+			<button class='btn btn-danger submit' id='signin-twitter-btn'>Sign in with Twitter</button><br>
+			<button class='btn btn-danger submit' id='signin-github-btn'>Sign in with Github</button><br>
+
+			<!--button class='btn btn-danger' id='signup-btn'>Sign up</button><br>
 			<form id='sign-up-container' onsubmit='return signUp()'>
 				<p>Signing up is easy! Just enter your name and email address
 					and we&apos;ll take care of the rest.</p>
@@ -110,7 +119,7 @@
 			<form id='sign-in-container' onsubmit='return signIn()'>
 				<input placeholder='Email'/>
 				<button class='btn btn-default submit'>Submit</button>
-			</form>
+			</form-->
 		</div>
 		<div id='gedcom-form' ng-controller='ParseResults' class='{{getControllerClass()}}'>
 			<h1>Load GEDCOM File</h1>

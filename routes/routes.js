@@ -9,7 +9,46 @@ var OVERVIEWPAGE = './public/overview.html'
 // static pages
 function home(req, res){
     console.log("Main Page!")
+    console.log(JSON.stringify(req.session, null, 4))
+
+    if (req.user && req.user.id){
+        console.log('Authorized home request')
+        res.cookie('vpauth', req.user.id)
+    }
+    else {
+        res.clearCookie('vpauth')
+    }
     res.sendfile(HOMEPAGE)
+}
+
+        // if (req.session.passport.user.provider === 'google')
+        // {
+        //     cookie = 'Google/' + req.session.passport.user._json.email/* + '/'
+        //         + req.session.passport.user.id*/
+        // }
+        // else if (req.session.passport.user.provider === 'familysearch')
+        // {
+        //     cookie = 'FamilySearch/' + req.session.passport.user.email + '/'
+        //         + req.session.passport.user.id
+        // }
+        // else if (req.session.passport.user.provider === '')
+        // {
+        //     cookie = 'Twitter/'
+        // }
+        // else if (req.session.passport.user.provider === '')
+        // {
+        //     cookie = 'Facebook'
+        // }
+        // else if (req.session.passport.user.provider === '')
+        // {
+        //     cookie = 'Github'
+        // }
+
+
+function logout(req, res){
+    req.logout()
+    res.clearCookie('vpauth')
+    res.send({'success':true})
 }
 
 function contact(req, res){
@@ -20,17 +59,6 @@ function contact(req, res){
 function overview(req, res){
     console.log('Assignment Page!')
     res.sendfile(OVERVIEWPAGE)
-}
-
-// login/logout requests
-function login(req, res){
-    console.log("Loggining In!")
-    res.redirect('/')
-}
-
-function logout(req, res){
-    console.log("Loggining Out!")
-    res.redirect('/')
 }
 
 function protocol(req, res){
@@ -47,9 +75,8 @@ function resetdb(req, res){
 }
 
 exports.home = home
+exports.logout = logout
 exports.contact = contact
 exports.overview = overview
-exports.login = login
-exports.logout = logout
 exports.protocol = protocol
 exports.resetdb = resetdb

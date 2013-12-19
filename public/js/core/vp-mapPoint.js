@@ -6,7 +6,7 @@ function MapPoint(path, person)
 	this.topLeft = new Vector2D()
 }
 
-var DEBUG = true;
+var DEBUG = false;
 
 MapPoint.prototype.getX = function(maxAhn)
 {

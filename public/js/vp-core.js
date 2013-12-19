@@ -3,82 +3,103 @@ var content
 app.controller('Content', function($scope)
 {
 	content = $scope
-	$scope.people = {
-		'.': {
-			givenname: 'Jack',
-			surname: 'Doe',
-			gender: 'M',
-			empty: false
-		},
-		'.0': {
-			givenname: 'John',
-			surname: 'Doe',
-			gender: 'M',
-			empty: false
-		},
-		'.1': {
-			givenname: 'Jane',
-			surname: 'Johnson',
-			gender: 'F',
-			empty: false
-		},
-		'.00': {
-			givenname: 'Robert',
-			surname: 'Doe',
-			gender: 'M',
-			empty: false
-		},
-		'.01': {
-			givenname: 'Elizabeth',
-			surname: 'Smith',
-			gender: 'F',
-			empty: false
-		},
-		'.10': {
-			givenname: 'William',
-			surname: 'Johnson',
-			gender: 'M',
-			empty: false
-		},
-		'.11': {
-			givenname: 'Mary',
-			surname: 'Jones',
-			gender: 'F',
-			empty: false
-		}
-	}
 
-	$scope.mapPoints = new Array();
-	$scope.maxAhn = Graphic.calculateAhn('.')
-	var i = 0;
-	for(var key in $scope.people)
+	$scope.initialize = function(reposition)
 	{
-		$scope.mapPoints[i++] = new MapPoint(key, $scope.people[key]);
-		var ahn = Graphic.calculateAhn(key)
-		if(ahn > $scope.maxAhn)
-			$scope.maxAhn = ahn
-	}
-	logMapPoints();
-	$scope.graphics = {
-		'.': new Graphic($scope.people['.'], '.')
+		$scope.people = {
+			'.': {
+				givenname: 'Jack',
+				surname: 'Doe',
+				gender: 'M',
+				empty: false
+			},
+			'.0': {
+				givenname: 'John',
+				surname: 'Doe',
+				gender: 'M',
+				empty: false
+			},
+			'.1': {
+				givenname: 'Jane',
+				surname: 'Johnson',
+				gender: 'F',
+				empty: false
+			},
+			'.00': {
+				givenname: 'Robert',
+				surname: 'Doe',
+				gender: 'M',
+				empty: false
+			},
+			'.01': {
+				givenname: 'Elizabeth',
+				surname: 'Smith',
+				gender: 'F',
+				empty: false
+			},
+			'.10': {
+				givenname: 'William',
+				surname: 'Johnson',
+				gender: 'M',
+				empty: false
+			},
+			'.11': {
+				givenname: 'Mary',
+				surname: 'Jones',
+				gender: 'F',
+				empty: false
+			}
+		}
+
+		$scope.mapPoints = {}
+		$scope.maxAhn = Graphic.calculateAhn('.')
+
+		for(var key in content.people)
+		{
+			content.mapPoints[key] = new MapPoint(key, content.people[key]);
+			var ahn = Graphic.calculateAhn(key)
+			if(ahn > content.maxAhn)
+				content.maxAhn = ahn
+		}
+
+		$scope.graphics = {
+			'.': new Graphic($scope.people['.'], '.')
+		}
+
+		$scope.graphics['.'].createdby = 'root'
+		$scope.mapCursors = new Array();
+		$scope.mapCursors[0] = $scope.mapPoints['.']
+		$scope.showedit = {}
+		content.dirty = true
+		content.demo = !isSignedIn()
+
+		console.log('initializing')
+
+		if (reposition)
+			setTimeout(positionRootGraphic, 50)
 	}
 
-	$scope.graphics['.'].createdby = 'root'
-
-	$scope.showedit = {}
-	content.dirty = true
-	content.demo = false
+	$scope.initialize(false)
 
 	setTimeout(refresh, 100)
 	setTimeout(update, 100)
 
+	$scope.selectPerson = function(id)
+	{
+		content.mapCursors = new Array()
+		content.mapCursors[0] = content.mapPoints[id]
+		$scope.graphics = {}
+		$scope.graphics[id] = new Graphic($scope.people[id], id)
+		positionRootGraphic(id)
+		console.log("cursor is now on path "+content.mapCursors[0].path)
+		content.dirty = true
+	}
+
 	$scope.addPerson = function(id)
 	{
-		console.log(id)
 		var path = $('#path-' + id).val()
 		var givenname = $('#given-' + id).val()
 		var surname = $('#sur-' + id).val()
-		var idx = $scope.mapPoints.length
 
 		if (givenname.length > 0 || surname.length > 0)
 		{
@@ -90,7 +111,8 @@ app.controller('Content', function($scope)
 			}
 
 			content.people[path] = person
-			content.mapPoints[content.mapPoints.length] = new MapPoint(path, person)
+			content.mapPoints[path] = new MapPoint(path, person)
+			content.maxAhn = Graphic.calculateAhn(path)
 			content.dirty = true;
 			if (content.graphics[path].empty)
 			{
@@ -106,7 +128,6 @@ app.controller('Content', function($scope)
 		{
 			alert('Cannot add person - You did not supply enough information!')
 		}
-		logMapPoints();
 	}
 
 	$scope.removePerson = function(id)
@@ -120,8 +141,8 @@ app.controller('Content', function($scope)
 			delete content.graphics[path]
 			delete content.graphics[path + '0']
 			delete content.graphics[path + '1']
-			delete content.mapPoints[content.mapPoints.length-1]
-			logMapPoints()
+			delete content.mapPoints[path]
+			calculateMaxAhn()
 			content.dirty = true
 		}
 	}
@@ -136,18 +157,35 @@ app.controller('Content', function($scope)
 	}
 })
 
+function calculateMaxAhn()
+{
+	content.maxAhn = Graphic.calculateAhn('.')
+	var ahn = content.maxAhn
+	for(var key in content.mapPoints)
+	{
+		ahn = Graphic.calculateAhn(key)
+		if(ahn > content.maxAhn)
+			content.maxAhn = ahn
+	}
+}
+
 var top_of_view = null
 var canvas = $('#content')
 
 $(document).ready(positionRootGraphic)
 
-function positionRootGraphic()
+function positionRootGraphic(path)
 {
-	var $root = $('#g-1')
+	var idNum = '1'
+	if(typeof path === 'string')
+		idNum = Graphic.calculateAhn(path)
+	else
+		path = '.'
+	var $root = $('#g-'+idNum)
 
 	var x = $root.parent().width() - GRAPHIC_HORIZ_OFFSET * 3.5
 	var y = $root.parent().height() / 2
-	content.graphics['.'].translate(x, y)
+	content.graphics[path].translate(x, y)
 }
 
 function refresh()
@@ -178,9 +216,14 @@ var destroyGraphics = function() {}
 
 function logMapPoints()
 {
-	for(var i=0; i<content.mapPoints.length; i++)
+	for(var i in content.mapPoints)
 	{
 		var point = content.mapPoints[i]
 		console.log(point.path+": "+point)
 	}
+}
+
+function isSignedIn()
+{
+	return 'vpauth' in $.cookie()
 }

@@ -69,10 +69,4 @@ function getGoogleUserInfo(acToken, callback) {
 	})
 }
 
-function facebookAuth(query, callback){
-    console.log('Facebook Login!')
-    callback(null, query)
-}
-
-exports.facebookAuth = facebookAuth
 exports.googleAuth = googleAuth

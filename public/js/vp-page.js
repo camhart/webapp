@@ -56,13 +56,13 @@ function showOverlay(e, divid)
 	{
 		$('#gedcom-form').hide()
 		$('#signup-form').show()
-		$('#sign-up-container').show('blind', { }, 250)
+		// $('#sign-up-container').show('blind', { }, 250)
 	}
-	else if (this.id === 'user-login')
+	else if (this.id === 'user-signin')
 	{
 		$('#gedcom-form').hide()
 		$('#signup-form').show()
-		$('#sign-in-container').show('blind', { }, 250)
+		// $('#sign-in-container').show('blind', { }, 250)
 	}
 	else if (this.id === 'upload-gedcom')
 	{
@@ -71,34 +71,42 @@ function showOverlay(e, divid)
 		setUpUploader()
 	}
 
-	$('#signup-btn').click(function(e)
-	{
-		$('#sign-in-container').hide('blind', { }, 250)
-		$('#sign-up-container').show('blind', { }, 250)
+	// $('#signup-btn').click(function(e)
+	// {
+	// 	$('#sign-in-container').hide('blind', { }, 250)
+	// 	$('#sign-up-container').show('blind', { }, 250)
+	// })
+
+	// $('#signin-btn').click(function(e)
+	// {
+	// 	$('#sign-in-container').show('blind', { }, 250)
+	// 	$('#sign-up-container').hide('blind', { }, 250)
+	// })
+
+	// $('#signingoogle-btn').click(function(e)
+	// {
+ //        window.location = '/auth/google'
+	// })
+
+	$('#signin-google-btn').click(function(e){
+        window.location = '/auth/google'
+	})
+	$('#signin-facebook-btn').click(function(e){
+        window.location = '/auth/facebook'
+	})
+	$('#signin-github-btn').click(function(e){
+        window.location = '/auth/github'
+	})
+	$('#signin-familysearch-btn').click(function(e){
+		// alert('Only Authorized on "localhost"')
+        window.location = '/auth/familysearch'
+	})
+	$('#signin-twitter-btn').click(function(e){
+        window.location = '/auth/twitter'
 	})
 
-	$('#signin-btn').click(function(e)
-	{
-		$('#sign-in-container').show('blind', { }, 250)
-		$('#sign-up-container').hide('blind', { }, 250)
-	})
-
-	$('#signingoogle-btn').click(function(e)
-	{
-//credits http://www.gethugames.in/blog/2012/04/authentication-and-authorization-for-google-apis-in-javascript-popup-window-tutorial.html
-        var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
-        var SCOPE       =   'https://www.googleapis.com/auth/userinfo.email';
-        var CLIENTID    =   '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com';
-        //var REDIRECT    =   'http://54.201.103.45:8000/auth/google'
-		var REDIRECT    =   'http://localhost:8000/auth/google'
-        var TYPE        =   'code';
-        var STATE 		= 	'getCode';
-        var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE + '&state=' + STATE;
-        window.location = _url;
-	})
-
-	$('#sign-in-container button.submit').click(signIn)
-	$('#sign-up-container button.submit').click(signUp)
+	// $('#sign-in-container button.submit').click(signIn)
+	// $('#sign-up-container button.submit').click(signUp)
 }
 
 function closeOverlay(e)
@@ -117,88 +125,41 @@ $(document).ready(function()
 	$overlay = $('#overlay')
 	$overlay.remove()
 
-	$('#user-login, #user-signup, #upload-gedcom').click(showOverlay)
+	$('#user-signin, #upload-gedcom').click(showOverlay)
+	$('#user-signout').click(logout)
+
+	performSigninRoutine()
 })
 
-function signIn(clickEvent)
+function performSigninRoutine()
 {
-	alert('Sign-in functionality has not yet been implemented!')
-	return false
-}
-
-function signUp(clickEvent)
-{
-	alert('Sign-up functionality has not yet been implemented!')
-	return false
-}
-
-function setUpUploader()
-{
-	$('#upload-file-btn').click(function(e)
+	if (isSignedIn())
 	{
-		$('#file-upload').click()
-	})
-
-	var userid = '1' // get userid 
-	$('#file-upload').html5_upload({
-		url: 'api/user/' + userid + '/parse',
-		autostart: true,
-		sendBoundary: window.FormData || $.browser.mozilla,
-		onStartOne: function(event, name, number, total)
-		{
-			$('#uploaded-file-container .delete-button').click()
-			$('#uploaded-file-container').html('')
-
-			var content = "<div class='uploaded-file' id='uploaded-file'>"
-				+ "<div class='delete-button btn btn-default' onclick='deleteUploadedFile()'>&times;</div>"
-				+ "<span>" + name + "</span>"
-				+ "<div id='file-progressbar' class='progress'>"
-				+ "<div class='progress-bar' role='progressbar' aria-valuenow='60' aria-valuemin='0' aria-valuemax='100'></div>"
-				+ "</div>"
-				+ "<input type=hidden id='file-details' name='UploadedFiles'/>"
-				+ "</div>"
-
-			$('#uploaded-file-container').html(content)
-			$('#upload-file-btn').hide()
-			$('#gedcom-results').html("<img src='img/495.gif'/>")
-			results.data = {}
-			results.$apply()
-
-			return true
-		},
-		setProgress: function(val)
-		{
-			var width = Math.floor(100 * val)
-			if (width === 100 && $('#file-progressbar .progress-bar').attr('aria-valuenow') != width && !$('#upload-file-btn').is(':visible'))
-			{
-				$('#file-progressbar div').html("<span class='glyphicon glyphicon-arrow-up'></span> <span>Uploaded</span>")
-				$('#gedcom-results').append("<h1>Parsing...</h1>")
-			}
-			$('#file-progressbar .progress-bar').css('width', width + '%')
-			$('#file-progressbar .progress-bar').attr('aria-valuenow', width)
-		},
-		onFinishOne: function(event, response, name, number, total)
-		{
-			if ($('#upload-file-btn').is(':visible'))
-				return
-
-			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ok'></span> <span>Complete</span>")
-			response = JSON.parse(response)
-			loadParsedFile(response)
-		},
-		onError: function(event, name, error)
-		{
-			$('#file-progressbar div').html("<span class='glyphicon glyphicon-ban-circle'></span> <span>Error</span>")
-		}
-	})
+		$('#user-signin').hide()
+		$('#user-signout').show()
+		$('#upload-gedcom').show()
+	}
+	else
+	{
+		$('#user-signin').show(400)
+		$('#user-signout').hide(400)
+		$('#upload-gedcom').hide(400)
+	}
 }
 
-function deleteUploadedFile()
+function logout()
 {
-	$('#uploaded-file-container, #gedcom-results').html('')
-	$('#upload-file-btn').show()
-	delete results.data
-	delete results.newpeople
-	results.dataReady = false
-	results.$apply()
+	$.ajax({
+        type : 'GET',
+        url : '/logout',
+        success: function()
+        {
+        	content.initialize(true)
+        	performSigninRoutine()
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+        	console.log('error', jqXHR, textStatus, errorThrown)
+        }
+    })
 }

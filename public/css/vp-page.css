@@ -67,9 +67,19 @@ noscript div
 	color:#111;
 }
 
+.header-content > div.search
+{
+	border-right:none;
+}
+
 .header-content > div:active
 {
 	background: #539EF7;
+}
+
+.header-content > div.search:active
+{
+	background:#fff;
 }
 
 input
@@ -100,17 +110,22 @@ input:focus
 
 .user-data
 {
-	position: fixed;
-	top: 6px;
-	right: 10px;
-	z-index:201;
+	float:right;
+	margin:8px;
 }
 
-.user-data > div
+.user-data .user-login
 {
 	padding: 6px 16px;
 	cursor: pointer;
 	display: inline-block;
+}
+
+.user-data .user-logout
+{
+	padding:6px 16px;
+	cursor:pointer;
+	display:none;
 }
 
 .main
@@ -127,12 +142,12 @@ input:focus
 {
 	top:51px;
 	bottom:0;
-	width: 350px;
+	width: 400px;
 	border-right: 1px solid #ccc;
 	box-shadow: 0px 8px 6px -6px #ccc inset;
 	padding: 10px;
 	position: fixed;
-	left: -371px;
+	left: -421px;
 	background: #fff;
 	z-index: 200;
 }
@@ -145,7 +160,7 @@ input:focus
 	border: 1px solid #ccc;
 	padding: 10px;
 	position: absolute;
-	left: 380px;
+	left: 430px;
 	background: #fff;
 	z-index: 300;
 }
@@ -156,7 +171,18 @@ input:focus
 	position: absolute;
 	width:10px;
 	height:10px;
+	cursor: pointer;
 	background: black;
+}
+
+.minimapCursor
+{
+	background: rgba(0,0,0,.1);
+	outline: blue solid thick;
+	position: absolute;
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
 }
 
 .content
@@ -239,6 +265,13 @@ input:focus
 	color:#026BE8;
 	margin-top:100px;
 	margin-bottom:50px;
+}
+
+.overlay-content h1 + p
+{
+	margin-top:-40px;
+	margin-bottom:50px;
+	text-align:center;
 }
 
 .overlay-content p
