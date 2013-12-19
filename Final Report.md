@@ -36,6 +36,7 @@ Data Table
     } ,
     "wife":  "1_19M7-48"
   } ,...
+]
 ```
 This table consist of genealogical data for an individual person.  It links their children and spouse(s) to them as well.
 
