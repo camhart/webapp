@@ -14,6 +14,18 @@ app.controller('Content', function($scope)
 				success: function(response)
 				{
 					console.log(response)
+					// calculate paths
+					var people = {}
+
+					if (response.root)
+						people['.'] = response.people[response.root]
+					else
+						people['.'] = response.people['.']
+
+					$scope.people = {}
+					buildPeopleList(response.people, people['.'], '.', $scope.people)
+
+					console.log(people)
 				},
 				error: function(jqXHR, textStatus, errorThrown)
 				{
@@ -88,8 +100,6 @@ app.controller('Content', function($scope)
 		$scope.showedit = {}
 		content.dirty = true
 		content.demo = !isSignedIn()
-
-		console.log('initializing')
 
 		if (reposition)
 			setTimeout(positionRootGraphic, 50)

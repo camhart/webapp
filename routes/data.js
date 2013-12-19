@@ -16,9 +16,17 @@ function dataGetAll(userid, callback){
     }).run(app.con, function(err, cursor) {
         if(err) return callback(err)
         cursor.toArray(function(err, results){
-            var families = {}
-            var persons = {}
-            callback(err, {families: families, persons: person})
+            listToData(results, function(people, families)
+            {
+                r.db(app.db_name).table(app.tbl_user).get(userid).run(app.con, function(err, user)
+                {
+                    if (err) return callback(err)
+                    if (user)
+                        callback(null, {people:people, families:families, root:user.root})
+                    else
+                        callback(null, {people:people, families:families})
+                })
+            })
         })
     })
 }
@@ -76,7 +84,7 @@ function listToData(list, callback){
             throw new Error(list[i].id + 'is not valid')
         }
     }
-    callback(null, { people: people, families: families})
+    callback(people, families)
 }
 
 exports.dataUpsert = dataUpsert

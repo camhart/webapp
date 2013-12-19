@@ -19,7 +19,7 @@ passport.deserializeUser(function(obj, done) {
     user.userGet(obj, done)
 });
 
-if (app.domain === '127.0.0.1:8000')
+if (!app.amazon_server)
     app.domain = 'localhost:8000'
 
 passport.use(
@@ -43,26 +43,6 @@ passport.use(
         }
 
         user.userGetOrCreate(googleUser, 'googleid', done)
-    })
-)
-
-app.domain = '127.0.0.1:8000'
-
-passport.use(
-    new GitHubStrategy({
-        clientID: '84612e8c6f5b487eb5c3',
-        clientSecret: '667c3dfb25fdd23d0429f373e37ab5451142c570',
-        callbackURL: 'http://' + app.domain + '/auth/github/callback',
-        scope: 'user:email'
-    },
-    function(accessToken, refreshToken, profile, done) {
-        console.log('github-here', profile._json)
-        var githubUser = {
-            githubid: profile._json.id,
-            email: profile._json.email,
-            name: profile._json.name
-        }
-        user.userGetOrCreate(githubUser, 'githubid', done)
     })
 )
 
@@ -102,6 +82,26 @@ passport.use(
     })
 )
 
+if (!app.amazon_server)
+    app.domain = '127.0.0.1:8000'
+
+passport.use(
+    new GitHubStrategy({
+        clientID: '84612e8c6f5b487eb5c3',
+        clientSecret: '667c3dfb25fdd23d0429f373e37ab5451142c570',
+        callbackURL: 'http://' + app.domain + '/auth/github/callback',
+        scope: 'user:email'
+    },
+    function(accessToken, refreshToken, profile, done) {
+        console.log('github-here', profile._json)
+        var githubUser = {
+            githubid: profile._json.id,
+            email: profile._json.email,
+            name: profile._json.name
+        }
+        user.userGetOrCreate(githubUser, 'githubid', done)
+    })
+)
 passport.use(
     new TwitterStrategy({
         consumerKey: 'wmKLl2voXmjhSyz5qT9jbg',

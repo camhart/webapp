@@ -19,6 +19,7 @@ if(amazon_server){
 }
 
 exports.domain = domain
+exports.amazon_server = amazon_server
 
 // includes
 var routes = require('./routes/routes')

@@ -36,6 +36,7 @@ Data Table
     } ,
     "wife":  "1_19M7-48"
   } ,...
+]
 ```
 This table consist of genealogical data for an individual person.  It links their children and spouse(s) to them as well.
 
@@ -56,8 +57,11 @@ Future Work
 - [ ] real time updates across users
 
 Link to site
-virtualpedigree.no-ip.org
-virtualpedigree.byu.edu
+<br>
+http://virtualpedigree.no-ip.org/
+<br>
+http://virtualpedigree.byu.edu/
+<br>
 (both point to same server)
 
 Link to github
