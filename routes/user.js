@@ -23,7 +23,10 @@ function userGetBySecondary(keys, index, callback){
 }
 
 function userUpsert(user, callback){
-    r.db(app.db_name).table(app.tbl_user).insert(user, {upsert: true}).run(app.con, callback)
+    if (user.id && r.db(app.db_name).table(app.tbl_user).get(user.id))
+        r.db(app.db_name).table(app.tbl_user).update(user).run(app.con, callback)
+    else
+        r.db(app.db_name).table(app.tbl_user).insert(user, {upsert: true}).run(app.con, callback)
 }
 
 function userDelete(id, callback){
@@ -31,13 +34,13 @@ function userDelete(id, callback){
 }
 
 function userGetOrCreate(user, secondaryIndex, callback){
-    
+
     function update(oldUser, newUser, callback){
         for (var attrname in newUser)
-            oldUser[attrname] = newUser[attrname]; 
+            oldUser[attrname] = newUser[attrname];
         userUpsert(oldUser, function(err, result){
             callback(err, oldUser)
-        }) 
+        })
     }
 
     function updateSecondary(){

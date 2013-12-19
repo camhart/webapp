@@ -7,11 +7,11 @@ var db_name = 'vp'
 var tbl_user = 'user'
 var tbl_data = 'data'
 
-var server_host = 'localhost'
+var server_host = '127.0.0.1'
 var server_port = 8000
 var domain = server_host + ':' + server_port
 
-var amazon_server = false
+var amazon_server = true
 
 if(amazon_server){
     domain = 'virtualpedigree.no-ip.org'
@@ -55,10 +55,7 @@ app.configure(function(){
 
     app.use(express.cookieParser())
     app.use(express.bodyParser({ keepExtensions: false, uploadDir: "uploads" }))
-    app.use(express.session({
-        secret: 'some string used for calculating hash', 
-        cookie: { maxAge : (3600000 * 16) } // 16 hours
-    }))
+    app.use(express.session({secret: 'some string used for calculating hash'}))
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(app.router)
