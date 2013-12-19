@@ -87,8 +87,8 @@ app.controller('Content', function($scope)
 	$scope.selectPerson = function(id)
 	{
 		content.setPersonInMinimap(id)
-		$scope.graphics = {}
-		$scope.graphics[id] = new Graphic($scope.people[id], id)
+		content.graphics = {}
+		content.graphics[id] = new Graphic(content.people[id], id)
 		positionRootGraphic(id)
 		console.log("cursor is now on path "+content.mapCursors[0].path)
 		content.dirty = true

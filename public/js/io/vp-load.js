@@ -26,6 +26,21 @@ app.controller('ParseResults', function($scope)
 		content.graphics = {
 			'.': new Graphic($scope.newpeople['.'], '.')
 		}
+
+		content.mapPoints = {}
+		content.maxAhn = Graphic.calculateAhn('.')
+
+		for(var key in content.people)
+		{
+			content.mapPoints[key] = new MapPoint(key, content.people[key]);
+			var ahn = Graphic.calculateAhn(key)
+			if(ahn > content.maxAhn)
+				content.maxAhn = ahn
+		}
+
+		content.mapCursors = new Array();
+		content.mapCursors[0] = content.mapPoints['.']
+
 		content.dirty = true
 		setTimeout(positionRootGraphic, 50)
 		closeOverlay()
