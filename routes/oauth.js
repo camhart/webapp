@@ -19,6 +19,9 @@ passport.deserializeUser(function(obj, done) {
     user.userGet(obj, done)
 });
 
+if (app.domain === '127.0.0.1:8000')
+    app.domain = 'localhost:8000'
+
 passport.use(
     new GoogleStrategy({
         // clientID: '85896237045-v3a9g9hinkeipt8idqnjimb97cu7anj2.apps.googleusercontent.com',
@@ -26,22 +29,24 @@ passport.use(
         clientID: '85896237045-hk7el7flpp0qm3b55dn8edovpn1f76ab.apps.googleusercontent.com',
         clientSecret: '8kN8HgVyifkN9l9DZUrr_6Qz',
         callbackURL: 'http://' + app.domain + '/auth/google/callback',
-        scope: ['https://www.googleapis.com/auth/userinfo.email', 
+        scope: ['https://www.googleapis.com/auth/userinfo.email',
         'https://www.googleapis.com/auth/userinfo.profile']
     },
     function(accessToken, refreshToken, profile, done) {
         console.log('google-here', profile._json)
         var googleUser = {
             email: profile._json.email,
-            googleid: profile._json.id, 
+            googleid: profile._json.id,
             name: profile._json.name,
             picture: profile._json.picture,
             gender: profile._json.gender
         }
-        
+
         user.userGetOrCreate(googleUser, 'googleid', done)
     })
 )
+
+app.domain = '127.0.0.1:8000'
 
 passport.use(
     new GitHubStrategy({
