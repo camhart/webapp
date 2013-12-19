@@ -3,7 +3,7 @@ Final Report
 
 Description
 -----------
-Virtual Pedigree allows users to quickly view and edit geneological data, without having to switch contexts.  They can import a gedcom file to import existing data into our system.
+Virtual Pedigree allows users to quickly view, edit, and search genealogical data without having to switch contexts.  You can import a gedcom file to populate existing data into our system.  The minimap gives an overview of where you are in the tree.  Changes occur in real time and are saved to the user's account.
 
 Database Schema
 ---------------
@@ -37,7 +37,7 @@ Data Table
     "wife":  "1_19M7-48"
   } ,...
 ```
-This table consist of data for an individual person.  It links their children and spouse(s) to them as well.
+This table consist of genealogical data for an individual person.  It links their children and spouse(s) to them as well.
 
 Contributions
 -------------
@@ -54,3 +54,11 @@ Future Work
 - [ ] topological dates
 - [ ] speed up gui
 - [ ] real time updates across users
+
+Link to site
+virtualpedigree.no-ip.org
+virtualpedigree.byu.edu
+(both point to same server)
+
+Link to github
+https://github.com/camhart/webapp
