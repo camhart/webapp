@@ -6,26 +6,37 @@ app.controller('Content', function($scope)
 
 	$scope.initialize = function(reposition)
 	{
+		delete $scope.people
+
 		if (isSignedIn())
 		{
 			$.ajax({
 				url:'/api/user/' + getUserID() + '/data',
 				type: 'get',
+				async: false,
 				success: function(response)
 				{
-					console.log(response)
+					$scope.response = response
+
+					var hasPerson = false
+					for (var i in response.people)
+					{
+						hasPerson = true
+						break
+					}
+
+					if (!hasPerson)
+						return
+
 					// calculate paths
-					var people = {}
+					$scope.people = {}
 
 					if (response.root)
-						people['.'] = response.people[response.root]
+						$scope.people['.'] = response.people[response.root]
 					else
-						people['.'] = response.people['.']
+						$scope.people['.'] = response.people['.']
 
-					$scope.people = {}
-					buildPeopleList(response.people, people['.'], '.', $scope.people)
-
-					console.log(people)
+					buildPeopleList(response.people, $scope.people['.'], '.', $scope.people)
 				},
 				error: function(jqXHR, textStatus, errorThrown)
 				{
@@ -34,48 +45,51 @@ app.controller('Content', function($scope)
 			})
 		}
 
-		$scope.people = {
-			'.': {
-				givenname: 'Jack',
-				surname: 'Doe',
-				gender: 'M',
-				empty: false
-			},
-			'.0': {
-				givenname: 'John',
-				surname: 'Doe',
-				gender: 'M',
-				empty: false
-			},
-			'.1': {
-				givenname: 'Jane',
-				surname: 'Johnson',
-				gender: 'F',
-				empty: false
-			},
-			'.00': {
-				givenname: 'Robert',
-				surname: 'Doe',
-				gender: 'M',
-				empty: false
-			},
-			'.01': {
-				givenname: 'Elizabeth',
-				surname: 'Smith',
-				gender: 'F',
-				empty: false
-			},
-			'.10': {
-				givenname: 'William',
-				surname: 'Johnson',
-				gender: 'M',
-				empty: false
-			},
-			'.11': {
-				givenname: 'Mary',
-				surname: 'Jones',
-				gender: 'F',
-				empty: false
+		if (!('people' in $scope))
+		{
+			$scope.people = {
+				'.': {
+					givenname: 'Jack',
+					surname: 'Doe',
+					gender: 'M',
+					empty: false
+				},
+				'.0': {
+					givenname: 'John',
+					surname: 'Doe',
+					gender: 'M',
+					empty: false
+				},
+				'.1': {
+					givenname: 'Jane',
+					surname: 'Johnson',
+					gender: 'F',
+					empty: false
+				},
+				'.00': {
+					givenname: 'Robert',
+					surname: 'Doe',
+					gender: 'M',
+					empty: false
+				},
+				'.01': {
+					givenname: 'Elizabeth',
+					surname: 'Smith',
+					gender: 'F',
+					empty: false
+				},
+				'.10': {
+					givenname: 'William',
+					surname: 'Johnson',
+					gender: 'M',
+					empty: false
+				},
+				'.11': {
+					givenname: 'Mary',
+					surname: 'Jones',
+					gender: 'F',
+					empty: false
+				}
 			}
 		}
 

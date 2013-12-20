@@ -11,7 +11,7 @@ app.controller('ParseResults', function($scope)
 		people['.'] = $scope.data.people[rootid]
 		$scope.rootid = rootid
 
-		buildPeopleList(people, people['.'], '.', $scope.data.people)
+		buildPeopleList($scope.data.people, people['.'], '.', people)
 
 		$scope.newpeople = people
 		$scope.dataReady = true
@@ -143,16 +143,16 @@ function buildPeopleList(people, person, path, target)
 	if (person.father)
 	{
 		var fp = path + '0'
-		var f = target[person.father]
-		people[fp] = f
+		var f = people[person.father]
+		target[fp] = f
 		buildPeopleList(people, f, fp, target)
 	}
 
 	if (person.mother)
 	{
 		var mp = path + '1'
-		var m = target[person.mother]
-		people[mp] = m
+		var m = people[person.mother]
+		target[mp] = m
 		buildPeopleList(people, m, mp, target)
 	}
 }
