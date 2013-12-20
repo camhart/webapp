@@ -87,7 +87,7 @@
 					<label ng-if='g.empty' for='add-{{g.ahn}}-show' ng-click='addPerson(g.ahn)'>Save</label>
 					<label ng-if='g.empty' for='add-{{g.ahn}}-show'>Cancel</label>
 					<label ng-if='!g.empty && path.length > 1 && graphics[path + "0"].empty && graphics[path + "1"].empty' for='add-{{g.ahn}}-show' ng-click='removePerson(g.ahn)'>Remove</label>
-					<label ng-if='!g.empty' for='add-{{g.ahn}}-show'>Done</label>
+					<label ng-if='!g.empty' for='add-{{g.ahn}}-show' ng-click='updatePerson(g.ahn)'>Done</label>
 				</form>
 			</div>
 		</div>

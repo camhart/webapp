@@ -40,7 +40,12 @@ function dataDelete(ids, callback){
 
 function dataUpsert(data, callback){
     dataToList(data, function(err, list){
-        r.db(app.db_name).table(app.tbl_data).insert(list).run(app.con, callback)
+        console.log(data)
+        console.log(list)
+        r.db(app.db_name).table(app.tbl_data).insert(list).run(app.con, function(err, result)
+        {
+            r.db(app.db_name).table(app.tbl_data).update(list).run(app.con, callback)
+        })
     })
 }
 

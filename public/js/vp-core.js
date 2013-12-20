@@ -193,6 +193,33 @@ app.controller('Content', function($scope)
 		}
 	}
 
+	$scope.updatePerson = function(id)
+	{
+		var path = $('#path-' + id).val()
+		console.log('updating', id, path, content.people[path])
+		console.log(content.graphics[path])
+
+		content.people[path].givenname = content.graphics[path].givenname
+		content.people[path].surname = content.graphics[path].surname
+		content.people[path].fullname = content.people[path].givenname + ' /' + content.people[path].surname + '/'
+
+		console.log('updated person with ahn', id)
+
+		var data = {}
+		data.people = {}
+		data.people[path] = content.people[path]
+
+		$.ajax({
+			url: '/api/data/' + content.people[path].id,
+			type: 'post',
+			data: data,
+			success: function(response)
+			{
+				console.log(response)
+			}
+		})
+	}
+
 	$scope.moving = false
 	$scope.motionClass = function()
 	{
