@@ -3,7 +3,7 @@ Final Report
 
 Description
 -----------
-Virtual Pedigree allows users to quickly view, edit, and search genealogical data without having to switch contexts.  You can import a gedcom file to populate existing data into our system.  The minimap gives an overview of where you are in the tree.  Changes occur in real time and are saved to the user's account.
+Virtual Pedigree allows users to quickly view, edit, and search genealogical data without having to switch contexts.  You can import a gedcom file to populate existing data into our system.  The minimap gives an overview of where you are in the tree.
 
 Database Schema
 ---------------
@@ -55,6 +55,7 @@ Future Work
 - [ ] topological dates
 - [ ] speed up gui
 - [ ] real time updates across users
+- [ ] persistent data changes
 
 Link to site
 <br>
